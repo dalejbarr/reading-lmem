@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Variance-covariance matrices | Mixed-effects models for longitudinal data</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content='5.1 Resources Slides Bivariate distributions app Note that the "code" pane of the app shows the code you would need to simulated data with the desired properties. This will be useful for the data...'>
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Variance-covariance matrices | Mixed-effects models for longitudinal data">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/variance-covariance-matrices.html">
+<meta property="og:description" content='5.1 Resources Slides Bivariate distributions app Note that the "code" pane of the app shows the code you would need to simulated data with the desired properties. This will be useful for the data...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Variance-covariance matrices | Mixed-effects models for longitudinal data">
+<meta name="twitter:description" content='5.1 Resources Slides Bivariate distributions app Note that the "code" pane of the app shows the code you would need to simulated data with the desired properties. This will be useful for the data...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Workshop Overview</a></li>
+<li><a class="" href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></li>
+<li><a class="" href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="" href="interactions.html"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="" href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></li>
+<li><a class="active" href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="" href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="" href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="" href="going-further.html"><span class="header-section-number">8</span> Going further</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="installing-and-configuring-rrstudio.html"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="" href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></li>
+<li><a class="" href="references-and-further-reading.html"><span class="header-section-number">C</span> References and Further Reading</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dalejbarr/basel-longitudinal">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="variance-covariance-matrices" class="section level1">
+<h1>
+<span class="header-section-number">5</span> Variance-covariance matrices<a class="anchor" aria-label="anchor" href="#variance-covariance-matrices"><i class="fas fa-link"></i></a>
+</h1>
+<div id="resources-3" class="section level2">
+<h2>
+<span class="header-section-number">5.1</span> Resources<a class="anchor" aria-label="anchor" href="#resources-3"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="slides/05_vcov/index.html">Slides</a></p>
+<p><a href="https://dalejbarr.github.io/bivariate/index.html">Bivariate distributions app</a></p>
+<p>Note that the "code" pane of the app shows the code you would need to simulated data with the desired properties. This will be useful for the data simulation activity below.</p>
+<p><a href="https://psyteachr.github.io/stat-models-v1/correlation-and-regression.html">My book chapter on correlation</a> goes over the topic in more depth, including a discussion of the relationship between correlation and regression.</p>
+</div>
+<div id="activities-2" class="section level2">
+<h2>
+<span class="header-section-number">5.2</span> Activities<a class="anchor" aria-label="anchor" href="#activities-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>Play around with the app below until you are confident in interpreting variance-covariance matrices.</p>
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px" data-external="1">
+</iframe>
+<div id="simulating-data-from-covariance-matrices" class="section level3">
+<h3>
+<span class="header-section-number">5.2.1</span> Simulating data from covariance matrices<a class="anchor" aria-label="anchor" href="#simulating-data-from-covariance-matrices"><i class="fas fa-link"></i></a>
+</h3>
+<p>Below are some simulation exercises that call upon the function <code>mvrnorm()</code> from the <code>MASS</code> package. See the "code" pane of the first web app on this page for example code. You might want to step through it if you haven't encountered the <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> function before. The <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> function has a <code>byrow</code> option that allows you to enter the data row-by-row instead of column-by-column (the default), which makes life easier.</p>
+<div class="warning">
+<p><strong>WATCH OUT! Always use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code> without loading <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>.</strong></p>
+<p>The <strong><code>MASS</code></strong> package comes pre-installed with R. But the only function you'll probably ever want to use from <strong><code>MASS</code></strong> is <code>mvrnorm()</code>, so rather than load in the package using <code><a href="http://www.stats.ox.ac.uk/pub/MASS4/">library("MASS")</a></code>, it is preferable to use <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>, especially as <strong><code>MASS</code></strong> and the <strong><code>dplyr</code></strong> package from <strong><code>tidyverse</code></strong> don't play well together, due to both packages having the function <code>select()</code>. So if you load in <strong><code>MASS</code></strong> after you load in <strong><code>tidyverse</code></strong>, you'll end up getting the <strong><code>MASS</code></strong> version of <code>select()</code> instead of the <strong><code>dplyr</code></strong> version. It will do your head in trying to debug your code.</p>
+</div>
+<div id="a-2x2-matrix" class="section level4">
+<h4>
+<span class="header-section-number">5.2.1.1</span> A 2x2 matrix<a class="anchor" aria-label="anchor" href="#a-2x2-matrix"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>Simulate 12 observations for a 2x2 matrix for variables X and Y with the following parameter values:</p>
+<ul>
+<li>
+<span class="math inline">\(\mu_X = -3.5\)</span>; <span class="math inline">\(\mu_Y = 57\)</span>;</li>
+<li>
+<span class="math inline">\(\sigma_X = 9\)</span>;</li>
+<li>
+<span class="math inline">\(\sigma_Y = 11\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{XY} = -.24\)</span>.</li>
+</ul>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cov_xy</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">.24</span> <span class="op">*</span> <span class="fl">9</span> <span class="op">*</span> <span class="fl">11</span>
+<span class="va">mx1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span><span class="op">^</span><span class="fl">2</span>,    <span class="va">cov_xy</span>,
+                <span class="va">cov_xy</span>, <span class="fl">11</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,
+              nrow <span class="op">=</span> <span class="fl">2</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
+<span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span><span class="op">(</span><span class="fl">12</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>X <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, Y <span class="op">=</span> <span class="fl">57</span><span class="op">)</span>, <span class="va">mx1</span><span class="op">)</span></code></pre></div>
+<pre><code>##                X        Y
+##  [1,]  -9.814510 64.21756
+##  [2,]   6.855451 65.42452
+##  [3,]  11.215571 44.67337
+##  [4,]  -3.521887 57.93585
+##  [5,] -22.805532 76.67087
+##  [6,]  -8.682815 55.37389
+##  [7,] -16.711472 62.43408
+##  [8,]   3.123118 44.84744
+##  [9,]   6.588177 62.92306
+## [10,]  -6.436933 43.12737
+## [11,]  -5.181376 44.23210
+## [12,] -18.449782 63.56265</code></pre>
+</div>
+</div>
+</div>
+<div id="a-4x4-matrix" class="section level4">
+<h4>
+<span class="header-section-number">5.2.1.2</span> A 4x4 matrix<a class="anchor" aria-label="anchor" href="#a-4x4-matrix"><i class="fas fa-link"></i></a>
+</h4>
+<p>A 4x4 covariance matrix with variables W, X, Y, Z has the following structure.</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+{\sigma_w}^2              &amp; \rho_{wx} \sigma_w\sigma_x &amp; \rho_{wy}\sigma_w\sigma_y &amp; \rho_{wz}\sigma_w\sigma_z \\
+\rho_{xw}\sigma_x\sigma_w &amp; {\sigma_x}^2 &amp; \rho_{xy}\sigma_x\sigma_y &amp; \rho_{xz}\sigma_x\sigma_z \\
+\rho_{yw}\sigma_y\sigma_w &amp; \rho_{yx}\sigma_y\sigma_x &amp; {\sigma_y}^2 &amp; \rho_{yz}\sigma_y\sigma_z \\
+\rho_{zw}\sigma_z\sigma_w &amp; \rho_{zx}\sigma_z\sigma_x &amp; \rho_{zy}\sigma_z\sigma_y &amp; {\sigma_z}^2 \\
+\end{pmatrix}
+\]</span></p>
+<div class="try">
+<p>Simulate 10 observations for a 4x4 matrix for variables W, X, Y, and Z with the following parameter values:</p>
+<ul>
+<li>
+<span class="math inline">\(\mu_W = 5\)</span>; <span class="math inline">\(\mu_X = -7\)</span>; <span class="math inline">\(\mu_Y = 40\)</span>; <span class="math inline">\(\mu_Z = -99\)</span>
+</li>
+<li>
+<span class="math inline">\(\sigma_W = 2.64\)</span>;</li>
+<li>
+<span class="math inline">\(\sigma_X = 1.93\)</span>;</li>
+<li>
+<span class="math inline">\(\sigma_Y = 2.10\)</span>;</li>
+<li>
+<span class="math inline">\(\sigma_Z = 2.92\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{WX} = .39\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{WY} = -.45\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{WZ} = -.08\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{XY} = -.03\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{XZ} = .17\)</span>;</li>
+<li>
+<span class="math inline">\(\rho_{YZ} = -.23\)</span>;</li>
+</ul>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## It might be easiest to create variables representing the variances</span>
+<span class="co">## and covariances first and then reference them when building the matrix</span>
+<span class="va">sw</span> <span class="op">&lt;-</span> <span class="fl">2.64</span>
+<span class="va">sx</span> <span class="op">&lt;-</span> <span class="fl">1.63</span>
+<span class="va">cwx</span> <span class="op">&lt;-</span> <span class="va">cxw</span> <span class="op">&lt;-</span> <span class="fl">.39</span> <span class="op">*</span> <span class="va">sw</span> <span class="op">*</span> <span class="va">sx</span>
+<span class="co">## etc...</span></code></pre></div>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sw</span> <span class="op">&lt;-</span> <span class="fl">2.64</span>
+<span class="va">sx</span> <span class="op">&lt;-</span> <span class="fl">1.93</span>
+<span class="va">sy</span> <span class="op">&lt;-</span> <span class="fl">2.10</span>
+<span class="va">sz</span> <span class="op">&lt;-</span> <span class="fl">2.92</span>
+<span class="va">cwx</span> <span class="op">&lt;-</span> <span class="va">cxw</span> <span class="op">&lt;-</span> <span class="fl">.39</span> <span class="op">*</span> <span class="va">sw</span> <span class="op">*</span> <span class="va">sx</span>
+<span class="va">cwy</span> <span class="op">&lt;-</span> <span class="va">cyw</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">.45</span> <span class="op">*</span> <span class="va">sw</span> <span class="op">*</span> <span class="va">sy</span>
+<span class="va">cwz</span> <span class="op">&lt;-</span> <span class="va">czw</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">.08</span> <span class="op">*</span> <span class="va">sw</span> <span class="op">*</span> <span class="va">sz</span>
+<span class="va">cxy</span> <span class="op">&lt;-</span> <span class="va">cyx</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">.40</span> <span class="op">*</span> <span class="va">sx</span> <span class="op">*</span> <span class="va">sy</span>
+<span class="va">cxz</span> <span class="op">&lt;-</span> <span class="va">czx</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">.07</span> <span class="op">*</span> <span class="va">sx</span> <span class="op">*</span> <span class="va">sz</span>
+<span class="va">cyz</span> <span class="op">&lt;-</span> <span class="va">czy</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">.23</span> <span class="op">*</span> <span class="va">sy</span> <span class="op">*</span> <span class="va">sz</span>
+
+<span class="va">mx2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sw</span><span class="op">^</span><span class="fl">2</span>, <span class="va">cwx</span>,  <span class="va">cwy</span>,  <span class="va">cwz</span>,
+                <span class="va">cxw</span>,  <span class="va">sx</span><span class="op">^</span><span class="fl">2</span>, <span class="va">cxy</span>,  <span class="va">cxz</span>,
+                <span class="va">cyw</span>,  <span class="va">cyx</span>,  <span class="va">sy</span><span class="op">^</span><span class="fl">2</span>, <span class="va">cyz</span>,
+                <span class="va">czw</span>,  <span class="va">czx</span>,  <span class="va">czy</span>,  <span class="va">sz</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,
+              nrow <span class="op">=</span> <span class="fl">4</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span>
+<span class="va">simdata</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span><span class="op">(</span><span class="fl">10</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>W <span class="op">=</span> <span class="fl">5</span>, X <span class="op">=</span> <span class="op">-</span><span class="fl">7</span>, Y <span class="op">=</span> <span class="fl">40</span>, Z <span class="op">=</span> <span class="op">-</span><span class="fl">99</span><span class="op">)</span>, <span class="va">mx2</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div id="converting-matrices-to-tibbles-and-combining-with-joins" class="section level3">
+<h3>
+<span class="header-section-number">5.2.2</span> Converting matrices to tibbles and combining with joins<a class="anchor" aria-label="anchor" href="#converting-matrices-to-tibbles-and-combining-with-joins"><i class="fas fa-link"></i></a>
+</h3>
+<p>Now that you know how to simulate data from multivariate normal distributions, an important coding skill is to convert these matrices to tabular data and then combine them with information in other tables using an <code>inner_join()</code>. We will call upon these skills in the next activity, when we simulate random intercepts and random slopes for a set of participants and then combine them with trial data. Here we'll just keep things simple so you can see the general approach.</p>
+<p>First, to convert a matrix to a tibble, you can just use <code>as_tibble()</code>. However, when you're going to combine matrix data to another table, you need to have a 'key' column (such as participant ID) so that the values in the table can be appropriately matched. You can add this using <code>mutate()</code>, like below. Finally combine the information using the join.</p>
+<p>Walk through the code step by step and make sure you understand what each command is doing.</p>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># need for as_tibble(), %&gt;%, mutate(), row_number(), inner_join()</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span> 
+
+<span class="co">## use the data from the 4x4 simulation above</span>
+<span class="co">## (see solution for definition of simdata matrix)</span>
+<span class="va">simtbl</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">simdata</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>id <span class="op">=</span> <span class="fu">row_number</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># the participant id (arbitrary)</span>
+
+<span class="co">## create a table we need to join to with trial information</span>
+<span class="va">trials</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, each <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,
+                 condition <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"control"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## now combine the information</span>
+<span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu">inner_join</span><span class="op">(</span><span class="va">trials</span>, <span class="va">simtbl</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span>
+
+<span class="va">combined</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 6
+##       id condition     W     X     Y     Z
+##    &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1 test       6.24 -3.06  39.6 -101.
+##  2     1 test       6.24 -3.06  39.6 -101.
+##  3     1 test       6.24 -3.06  39.6 -101.
+##  4     1 test       6.24 -3.06  39.6 -101.
+##  5     1 test       6.24 -3.06  39.6 -101.
+##  6     1 control    6.24 -3.06  39.6 -101.
+##  7     1 control    6.24 -3.06  39.6 -101.
+##  8     1 control    6.24 -3.06  39.6 -101.
+##  9     1 control    6.24 -3.06  39.6 -101.
+## 10     1 control    6.24 -3.06  39.6 -101.
+## # … with 90 more rows</code></pre>
+
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script><div class="chapter-nav">
+<div class="prev"><a href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></div>
+<div class="next"><a href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#variance-covariance-matrices"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="nav-link" href="#resources-3"><span class="header-section-number">5.1</span> Resources</a></li>
+<li>
+<a class="nav-link" href="#activities-2"><span class="header-section-number">5.2</span> Activities</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#simulating-data-from-covariance-matrices"><span class="header-section-number">5.2.1</span> Simulating data from covariance matrices</a></li>
+<li><a class="nav-link" href="#converting-matrices-to-tibbles-and-combining-with-joins"><span class="header-section-number">5.2.2</span> Converting matrices to tibbles and combining with joins</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dalejbarr/basel-longitudinal/blob/main/05_variance-covariance.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dalejbarr/basel-longitudinal/edit/main/05_variance-covariance.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

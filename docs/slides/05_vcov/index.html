@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Variance-covariance matrices</title>
+<meta name="author" content="(Dale Barr (University of Glasgow))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
+
+<link rel="stylesheet" href="../css/mods.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Variance-covariance matrices</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+</section>
+
+<section>
+<section id="slide-org4bab67e">
+<h2 id="org4bab67e">what?</h2>
+<ul>
+<li>covariance(X,Y): \(\rho_{xy}\sigma_x\sigma_y\)</li>
+<li>covariance(X,X): \(\rho_{xx}\sigma_x\sigma_x = \sigma^2\)</li>
+
+</ul>
+
+<p>
+\(\mathbf{\Sigma}\)
+</p>
+
+<p>
+<b>A matrix that characterizes the spread of multivariate values.</b> 
+</p>
+
+<div>
+\begin{pmatrix}
+{\sigma_x}^2                & \rho_{xy} \sigma_x \sigma_y \\
+\rho_{yx} \sigma_y \sigma_x & {\sigma_y}^2 \\
+\end{pmatrix}
+
+</div>
+
+<p>
+Must be <b>symmetric</b> and <b>positive definite</b>
+</p>
+
+<aside class="notes">
+<p>
+A variance-covariance matrix characterizes the spread of a multivariate distribution.
+</p>
+
+<p>
+Think about variance-covariance matrices as a <i>close relative to correlation matrices</i>.
+</p>
+
+<p>
+Think about variance-covariance matrices as a <i>generalization of the notion of standard deviation from univariate to multivariate data</i>.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgb83ca5e">
+<h3 id="orgb83ca5e">bivariate distribution</h3>
+<iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="610" style="border: none; background: white;"></iframe>
+
+</section>
+<section id="slide-org33ca574">
+<h3 id="org33ca574">4x4</h3>
+<p>
+A 4x4 covariance matrix with variables W, X, Y, Z.
+</p>
+
+<div>
+\begin{pmatrix}
+\rho_{ww}\sigma_w\sigma_w & \rho_{wx}\sigma_w\sigma_x & \rho_{wy}\sigma_w\sigma_y & \rho_{wz}\sigma_w\sigma_z \\
+\rho_{xw}\sigma_x\sigma_w & \rho_{xx}\sigma_x\sigma_x & \rho_{xy}\sigma_x\sigma_y & \rho_{xz}\sigma_x\sigma_z \\
+\rho_{yw}\sigma_y\sigma_w & \rho_{yx}\sigma_y\sigma_x & \rho_{yy}\sigma_y\sigma_y & \rho_{yz}\sigma_y\sigma_z \\
+\rho_{zw}\sigma_z\sigma_w & \rho_{zx}\sigma_z\sigma_x & \rho_{zy}\sigma_z\sigma_y & \rho_{zz}\sigma_z\sigma_z \\
+\end{pmatrix}
+
+</div>
+
+</section>
+<section id="slide-org98bb237">
+<h3 id="org98bb237">4x4</h3>
+<p>
+A 4x4 covariance matrix with variables W, X, Y, Z.
+</p>
+
+<div>
+\begin{pmatrix}
+{\sigma_w}^2              & \rho_{wx} \sigma_w\sigma_x & \rho_{wy}\sigma_w\sigma_y & \rho_{wz}\sigma_w\sigma_z \\
+\rho_{xw}\sigma_x\sigma_w & {\sigma_x}^2 & \rho_{xy}\sigma_x\sigma_y & \rho_{xz}\sigma_x\sigma_z \\
+\rho_{yw}\sigma_y\sigma_w & \rho_{yx}\sigma_y\sigma_x & {\sigma_y}^2 & \rho_{yz}\sigma_y\sigma_z \\
+\rho_{zw}\sigma_z\sigma_w & \rho_{zx}\sigma_z\sigma_x & \rho_{zy}\sigma_z\sigma_y & {\sigma_z}^2 \\
+\end{pmatrix}
+
+</div>
+
+</section>
+<section id="slide-orgd718086">
+<h3 id="orgd718086">diagonal matrix</h3>
+<div>
+\begin{pmatrix}
+{\sigma_w}^2 &            0 &            0 &            0 \\
+           0 & {\sigma_x}^2 &            0 &            0 \\
+           0 &            0 & {\sigma_y}^2 &            0 \\
+           0 &            0 &            0 & {\sigma_z}^2 \\
+\end{pmatrix}
+
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org8545bb8">
+<h2 id="org8545bb8">simulating bivariate data</h2>
+<iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="610" style="border: none; background: white;"></iframe>
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown,RevealZoom,RevealNotes],
+transition:"fade",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+]
+});
+
+
+</script>
+</body>
+</html>

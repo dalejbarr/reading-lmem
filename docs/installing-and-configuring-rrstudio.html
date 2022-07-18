@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>A Installing and Configuring R/RStudio | Mixed-effects models for longitudinal data</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content="In this course, we will be developing scripts in the R programming language using the RStudio Desktop Integrated Development Environment. This document provides instructions on installing R and...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="A Installing and Configuring R/RStudio | Mixed-effects models for longitudinal data">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/installing-and-configuring-rrstudio.html">
+<meta property="og:description" content="In this course, we will be developing scripts in the R programming language using the RStudio Desktop Integrated Development Environment. This document provides instructions on installing R and...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Installing and Configuring R/RStudio | Mixed-effects models for longitudinal data">
+<meta name="twitter:description" content="In this course, we will be developing scripts in the R programming language using the RStudio Desktop Integrated Development Environment. This document provides instructions on installing R and...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Workshop Overview</a></li>
+<li><a class="" href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></li>
+<li><a class="" href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="" href="interactions.html"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="" href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></li>
+<li><a class="" href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="" href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="" href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="" href="going-further.html"><span class="header-section-number">8</span> Going further</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="active" href="installing-and-configuring-rrstudio.html"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="" href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></li>
+<li><a class="" href="references-and-further-reading.html"><span class="header-section-number">C</span> References and Further Reading</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dalejbarr/basel-longitudinal">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="installing-and-configuring-rrstudio" class="section level1">
+<h1>
+<span class="header-section-number">A</span> Installing and Configuring R/RStudio<a class="anchor" aria-label="anchor" href="#installing-and-configuring-rrstudio"><i class="fas fa-link"></i></a>
+</h1>
+<p>In this course, we will be developing scripts in the R programming language using the RStudio Desktop Integrated Development Environment. This document provides instructions on installing R and RStudio on your laptop. If you have older versions of these applications already installed, please perform fresh installs of the latest versions (at the time of writing, R 4.0.3 and RStudio Desktop 1.4.1103).</p>
+<p>Once you have these applications installed and working, you'll also need to install some additional packages that add functionality to the base install.</p>
+<div id="what-is-r" class="section level2">
+<h2>
+<span class="header-section-number">A.1</span> What is R?<a class="anchor" aria-label="anchor" href="#what-is-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>R is a programming environment for data analysis that was developed almost two decades ago, and has a longer history as a derivative language of the scripting language S-PLUS developed in Bell Labs in the 70s and 80s.</p>
+<p>“Base R” has an <strong>interactive mode</strong> that consists of a “Read Evaluate Print Loop” (REPL) command interpreter, in which you type in text commands, which are evaluated, and the results of which are printed to the screen. This “R Console” window looks something like this.</p>
+<div class="inline-figure"><img src="images/01_walkthrough/repl.png"></div>
+<p>You can access all the functionality of R by interactively typing commands into the console, but it is far more convenient to interact with R through an Integrated Development Environment, such as RStudio.</p>
+</div>
+<div id="the-rstudio-integrated-development-environment-ide" class="section level2">
+<h2>
+<span class="header-section-number">A.2</span> The RStudio Integrated Development Environment (IDE)<a class="anchor" aria-label="anchor" href="#the-rstudio-integrated-development-environment-ide"><i class="fas fa-link"></i></a>
+</h2>
+<p><a name="rstudio_ide"></a></p>
+<p>When you are developing a script, you will generally type into a text editor and send the commands you type to the console, rather than typing commands directly into the console. The RStudio Desktop IDE is integrated with the R console and offers additional functionality that helps you write code more accurately and efficiently. Other IDEs are available, including <a href="https://jupyter.org/">Jupyter notebooks</a> and <a href="https://orgmode.org/">emacs org-mode</a>, but for most users---and especially, for novices---<a href="http://www.rstudio.com">RStudio</a> is the best option.</p>
+</div>
+<div id="install" class="section level2">
+<h2>
+<span class="header-section-number">A.3</span> Installation<a class="anchor" aria-label="anchor" href="#install"><i class="fas fa-link"></i></a>
+</h2>
+<p><a name="installr"></a></p>
+<p>You will be installing three things:</p>
+<ol style="list-style-type: decimal">
+<li>Base R (and RTools if you're a Windows user)</li>
+<li>The RStudio Desktop IDE</li>
+<li>Add-on packages for R</li>
+</ol>
+<p>Installing R and RStudio is fairly easy. The sections below explain how.</p>
+<div id="installing-base-r" class="section level3">
+<h3>
+<span class="header-section-number">A.3.1</span> 1. Installing Base R<a class="anchor" aria-label="anchor" href="#installing-base-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Go to <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a> and choose the
+download link for your operating system (Linux, Mac OS X, or Windows)
+and install ‘base’ binaries for distribution. If you are using Linux
+or Mac OS, you are done; skip to the next section on RStudio.</p>
+<p>If you are installing on Windows, after you install R, you should
+also install <a href="https://cloud.r-project.org/bin/windows/Rtools/">RTools</a>. Click on the
+‘recommended’ (not the experimental) version near the top of the list (<code>Rtools35.exe</code> at the
+time of writing).</p>
+</div>
+<div id="installing-rstudio-desktop" class="section level3">
+<h3>
+<span class="header-section-number">A.3.2</span> 2. Installing RStudio Desktop<a class="anchor" aria-label="anchor" href="#installing-rstudio-desktop"><i class="fas fa-link"></i></a>
+</h3>
+<p>Only install RStudio Desktop IDE <strong>after</strong> you have successfully installed base R. Go to <a href="https://www.rstudio.com/products/rstudio/download/#download" class="uri">https://www.rstudio.com/products/rstudio/download/#download</a> and under the heading "Installers for Supported Platforms" and download the version for your operating system.</p>
+<div id="launch-rstudio" class="section level4">
+<h4>
+<span class="header-section-number">A.3.2.1</span> Launch RStudio<a class="anchor" aria-label="anchor" href="#launch-rstudio"><i class="fas fa-link"></i></a>
+</h4>
+<p>After installation, you will have icons for both RStudio and “R commander” on your system. R Commander is a primitive IDE that comes packaged with R. Don't use this; always use RStudio.</p>
+<p>Make sure you launch the RStudio IDE and not R commander by clicking on the correct icon. Launching RStudio will also launch the R console, which will appear embedded in a window pane within the application.</p>
+<div class="inline-figure">
+ALWAYS REMEMBER:
+<img src="images/01_walkthrough/launch.png">
+</div>
+<p>If your installation was successful, once you launch RStudio, you should see a screen that looks like this:</p>
+<div class="figure">
+<img src="images/01_walkthrough/rstudio.png" alt="Screenshot of the RStudio IDE"><p class="caption">Screenshot of the RStudio IDE</p>
+</div>
+</div>
+</div>
+<div id="installing-add-on-packages" class="section level3">
+<h3>
+<span class="header-section-number">A.3.3</span> 3. Installing add-on packages<a class="anchor" aria-label="anchor" href="#installing-add-on-packages"><i class="fas fa-link"></i></a>
+</h3>
+<p>There is a large number of <strong>add-on packages</strong> that add additional functionality to R. Below we'll take you step by step through the process.</p>
+<p>To install packages, we're going to type commands into the R console window. The console is the part of the RStudio IDE that looks like this:</p>
+<div class="inline-figure"><img src="images/just_the_console.png"></div>
+<p>There is a cursor just next to the caret <code><a href="https://rdrr.io/r/base/Comparison.html">&gt;</a></code> symbol at the bottom where you type in your commands.</p>
+<div id="install-the-tidyverse" class="section level4">
+<h4>
+<span class="header-section-number">A.3.3.1</span> Install the <code>tidyverse</code><a class="anchor" aria-label="anchor" href="#install-the-tidyverse"><i class="fas fa-link"></i></a>
+</h4>
+<p>The first thing we will install is the <a href="http://www.tidyverse.org">tidyverse</a>. The tidyverse is actually a <strong>meta-package</strong>---a collection of packages---which are useful for data processing and visualization. Depending on the speed of your computer, it might take a few minutes or maybe even 10 minutes or more for the install process to complete.</p>
+<p>To install the tidyverse, type the following code in the console and press return.</p>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></code></pre></div>
+<p>It will first download all the packages, so you'll see a lot of text fly by that looks like this:</p>
+<pre><code>trying URL 'https://cloud.r-project.org/src/contrib/packagename_X.XX.tar.gz'
+Content type 'application/x-gzip' length 3146818 bytes (3.0 MB)
+==================================================
+downloaded 3.0 MB</code></pre>
+<p>That is perfectly normal behavior. Some packages are compiled from source, and after download, a lot of gibberish will appear on the screen. Again, this is perfectly normal and should not be a cause for panic. Here is an example of what this gibberish looks like:</p>
+<pre><code>/home/dalebarr/R/x86_64-pc-linux-gnu-library/3.4/TMB/include/atomic_math.hpp:426:1:   required from ‘void atomic::matmul(const CppAD::vector&lt;Type&gt;&amp;, CppAD::vector&lt;Type&gt;&amp;) [with Double = double]’
+/home/dalebarr/R/x86_64-pc-linux-gnu-library/3.4/TMB/include/atomic_math.hpp:426:1:   required from ‘bool atomic::atomicmatmul&lt;Type&gt;::forward(size_t, size_t, const CppAD::vector&lt;bool&gt;&amp;, CppAD::vector&lt;bool&gt;&amp;, const CppAD::vector&lt;Type&gt;&amp;, CppAD::vector&lt;Type&gt;&amp;) [with Type = double; size_t = long unsigned int]’
+glmmTMB.cpp:863:1:   required from here</code></pre>
+<p>When each package installs successfully, you'll see text that looks like this:</p>
+<pre><code>* installing *source* package ‘dplyr’ ...
+** package ‘dplyr’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (dplyr)</code></pre>
+<p>Hopefully, none of the packages will result in errors and you'll be returned to the caret <code><a href="https://rdrr.io/r/base/Comparison.html">&gt;</a></code> prompt. But if you get errors happens, we can help you diagnose any problems on the first morning after arrival.</p>
+<p>If you want to learn more about what packages are included in the tidyverse and what they do, check out <a href="http://www.tidyverse.org" class="uri">http://www.tidyverse.org</a>.</p>
+</div>
+<div id="install-additional-packages" class="section level4">
+<h4>
+<span class="header-section-number">A.3.3.2</span> Install additional packages<a class="anchor" aria-label="anchor" href="#install-additional-packages"><i class="fas fa-link"></i></a>
+</h4>
+<p>We will also need the package <strong><a href="https://github.com/lme4/lme4/">lme4</a></strong> which provides functions for mixed-effects modeling.</p>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"lme4"</span><span class="op">)</span></code></pre></div>
+<p>This will probably take a few minutes to complete, and you'll see lots more gibberish appear in the console while the package installs.</p>
+</div>
+<div id="optional-install-rmarkdown-and-related-packages" class="section level4">
+<h4>
+<span class="header-section-number">A.3.3.3</span> (Optional) Install RMarkdown and related packages<a class="anchor" aria-label="anchor" href="#optional-install-rmarkdown-and-related-packages"><i class="fas fa-link"></i></a>
+</h4>
+<p>When completing exercises, it is useful to create files that can be compiled into <strong>dynamic reports</strong> using RMarkdown, which is a text-based format for integrating code, text, and graphics.</p>
+<p>The easiest way to install the packages you need for this is to just create a new RMarkdown document, and RStudio will prompt you to install the packages that are required.</p>
+<p>From the pull down menu, choose <code>File -&gt; New File -&gt; RMarkdown...</code> and this will lead you to the prompt to install packages.</p>
+<p>Once they're installed, you're ready to go!</p>
+</div>
+</div>
+</div>
+<div id="additional-tweaks-you-might-want-to-try" class="section level2">
+<h2>
+<span class="header-section-number">A.4</span> Additional tweaks you might want to try<a class="anchor" aria-label="anchor" href="#additional-tweaks-you-might-want-to-try"><i class="fas fa-link"></i></a>
+</h2>
+<p>After installing R and RStudio is itself very easy, you might want to tweak your installation a bit.</p>
+<div id="changing-how-rstudio-looks" class="section level3">
+<h3>
+<span class="header-section-number">A.4.1</span> Changing how RStudio looks<a class="anchor" aria-label="anchor" href="#changing-how-rstudio-looks"><i class="fas fa-link"></i></a>
+</h3>
+<p>The appearance of RStudio is fully configurable. You can try out different options by going to <code>Tools --&gt; Global Options</code> and then choosing the Appearance icon. You can choose a bigger font or change the color theme. Express yourself!</p>
+</div>
+<div id="compiling-pdf-reports" class="section level3">
+<h3>
+<span class="header-section-number">A.4.2</span> Compiling PDF reports<a class="anchor" aria-label="anchor" href="#compiling-pdf-reports"><i class="fas fa-link"></i></a>
+</h3>
+<p>This tweak is a bit harder and completely optional. If you want to be able to compile reports to PDF, then you'll need to install LaTeX typesetting on your system. Without this additional tweak, you will be able to produce reports in HTML but not PDF. There are various options, but the easiest is probably TinyTeX: <a href="https://yihui.name/tinytex" class="uri">https://yihui.name/tinytex</a>.</p>
+
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script><div class="chapter-nav">
+<div class="prev"><a href="going-further.html"><span class="header-section-number">8</span> Going further</a></div>
+<div class="next"><a href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#installing-and-configuring-rrstudio"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="nav-link" href="#what-is-r"><span class="header-section-number">A.1</span> What is R?</a></li>
+<li><a class="nav-link" href="#the-rstudio-integrated-development-environment-ide"><span class="header-section-number">A.2</span> The RStudio Integrated Development Environment (IDE)</a></li>
+<li>
+<a class="nav-link" href="#install"><span class="header-section-number">A.3</span> Installation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#installing-base-r"><span class="header-section-number">A.3.1</span> 1. Installing Base R</a></li>
+<li><a class="nav-link" href="#installing-rstudio-desktop"><span class="header-section-number">A.3.2</span> 2. Installing RStudio Desktop</a></li>
+<li><a class="nav-link" href="#installing-add-on-packages"><span class="header-section-number">A.3.3</span> 3. Installing add-on packages</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#additional-tweaks-you-might-want-to-try"><span class="header-section-number">A.4</span> Additional tweaks you might want to try</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#changing-how-rstudio-looks"><span class="header-section-number">A.4.1</span> Changing how RStudio looks</a></li>
+<li><a class="nav-link" href="#compiling-pdf-reports"><span class="header-section-number">A.4.2</span> Compiling PDF reports</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dalejbarr/basel-longitudinal/blob/main/90_installation.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dalejbarr/basel-longitudinal/edit/main/90_installation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

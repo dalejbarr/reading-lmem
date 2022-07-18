@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Linear mixed-effects models | Mixed-effects models for longitudinal data</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content="6.1 Resources Slides My book chapter contains in-depth discussion and links to further resources. A web application that allows you to simulate sleepstudy data and adjust the parameters and...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Linear mixed-effects models | Mixed-effects models for longitudinal data">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/linear-mixed-effects-models.html">
+<meta property="og:description" content="6.1 Resources Slides My book chapter contains in-depth discussion and links to further resources. A web application that allows you to simulate sleepstudy data and adjust the parameters and...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Linear mixed-effects models | Mixed-effects models for longitudinal data">
+<meta name="twitter:description" content="6.1 Resources Slides My book chapter contains in-depth discussion and links to further resources. A web application that allows you to simulate sleepstudy data and adjust the parameters and...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Workshop Overview</a></li>
+<li><a class="" href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></li>
+<li><a class="" href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="" href="interactions.html"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="" href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></li>
+<li><a class="" href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="active" href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="" href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="" href="going-further.html"><span class="header-section-number">8</span> Going further</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="installing-and-configuring-rrstudio.html"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="" href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></li>
+<li><a class="" href="references-and-further-reading.html"><span class="header-section-number">C</span> References and Further Reading</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dalejbarr/basel-longitudinal">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-mixed-effects-models" class="section level1">
+<h1>
+<span class="header-section-number">6</span> Linear mixed-effects models<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-models"><i class="fas fa-link"></i></a>
+</h1>
+<div id="resources-4" class="section level2">
+<h2>
+<span class="header-section-number">6.1</span> Resources<a class="anchor" aria-label="anchor" href="#resources-4"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="slides/06_lmm1/index.html">Slides</a></p>
+<p><a href="https://psyteachr.github.io/stat-models-v1/introducing-linear-mixed-effects-models.html">My book chapter</a> contains in-depth discussion and links to further resources.</p>
+<p><a href="https://shiny.psy.gla.ac.uk/Dale/multilevel">A web application</a> that allows you to simulate sleepstudy data and adjust the parameters and compare complete pooling, no pooling, and partial pooling (mixed-effects) models.</p>
+</div>
+<div id="activities-3" class="section level2">
+<h2>
+<span class="header-section-number">6.2</span> Activities<a class="anchor" aria-label="anchor" href="#activities-3"><i class="fas fa-link"></i></a>
+</h2>
+<div id="data-simulation" class="section level3">
+<h3>
+<span class="header-section-number">6.2.1</span> Data simulation<a class="anchor" aria-label="anchor" href="#data-simulation"><i class="fas fa-link"></i></a>
+</h3>
+<p>The general GLM for the sleepstudy data was:</p>
+<p><span class="math display">\[Y_{ij} = \beta_0 + \beta_1 X_{ij} + e_{ij}\]</span></p>
+<p><span class="math display">\[\beta_0 = \gamma_{00} + S_{0i}\]</span></p>
+<p><span class="math display">\[\beta_1 = \gamma_{10} + S_{1i}\]</span></p>
+<p><span class="math display">\[\left&lt; S_{0i}, S_{1i} \right&gt; \sim N\left(\left&lt;0, 0\right&gt;, \mathbf \Sigma\right)\]</span></p>
+<p><span class="math display">\[\mathbf\Sigma = \left(\begin{array}{cc}{\tau_{00}}^2 &amp; \rho\tau_{00}\tau_{11}\\\rho\tau_{00}\tau_{11} &amp; {\tau_{11}}^2\end{array}\right)\]</span></p>
+<p><span class="math display">\[e_{ij} \sim N(0, \sigma^2).\]</span></p>
+<p>In this part, we will be making our own simulated <code>sleepstudy</code> data for 18 subjects. Your parameter values should reflect the data-generating process below:</p>
+<p><span class="math display">\[Y_{ij} = \beta_0 + \beta_1 X_{ij} + e_{ij}\]</span>
+<span class="math display">\[\beta_0 = 310 + S_{0i}\]</span>
+<span class="math display">\[\beta_1 = 4 + S_{1i}\]</span>
+<span class="math display">\[\left&lt; S_{0i}, S_{1i} \right&gt; \sim N\left(\left&lt;0, 0\right&gt;, \mathbf \Sigma\right)\]</span>
+<span class="math display">\[\mathbf\Sigma = \left(\begin{array}{cc}{30}^2
+&amp; (0.9)(30)(33)\\
+(0.9)(30)(33) &amp; 
+{33}^2\end{array}\right)\]</span>
+<span class="math display">\[e_{ij} \sim N(0, 25^2)\\\]</span></p>
+<p>We will proceed in three steps.</p>
+<ol style="list-style-type: decimal">
+<li><p>Generate random effects (intercept and slope offsets) for 18 subjects from a bivariate normal distribution using the parameter values for the variance components.</p></li>
+<li><p>Generate a tibble containing the fixed effects <span class="math inline">\(\gamma_{00}\)</span> and <span class="math inline">\(\gamma_{10}\)</span>, and random noise according to the value of <span class="math inline">\(\sigma^2\)</span>.</p></li>
+<li><p>Combine the random effects generated in part 1 with the fixed effects and error generated in part 2, and calculate the <span class="math inline">\(Y\)</span> values according to the DGP.</p></li>
+</ol>
+<p><strong>Setting up.</strong> Load tidyverse, lme4, and set the random number seed.</p>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">62</span><span class="op">)</span></code></pre></div>
+<div id="step-1-generate-random-effects" class="section level4">
+<h4>
+<span class="header-section-number">6.2.1.1</span> Step 1: Generate random effects<a class="anchor" aria-label="anchor" href="#step-1-generate-random-effects"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>You will need to generate data for a matrix called <code>rmx</code>, where the first column should have the random intercepts <span class="math inline">\(S_{0i}\)</span> and the second column should have the random slopes <span class="math inline">\(S_{1i}\)</span>.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p>Look back at <a href="variance-covariance.html">the last chapter</a>. You'll need to use <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> and <code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>.</p>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">covmx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">30</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">.9</span> <span class="op">*</span> <span class="fl">30</span> <span class="op">*</span> <span class="fl">33</span>,
+                  <span class="fl">.9</span> <span class="op">*</span> <span class="fl">30</span> <span class="op">*</span> <span class="fl">33</span>, <span class="fl">33</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+
+<span class="co">## 'rmx' should be an 18x2 matrix</span>
+<span class="va">rmx</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">mvrnorm</a></span><span class="op">(</span><span class="fl">18</span>, mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>S0i <span class="op">=</span> <span class="fl">0</span>, S1i <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
+                     Sigma <span class="op">=</span> <span class="va">covmx</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="step-2-make-a-tibble-with-fixed-effects-and-random-error-noise" class="section level4">
+<h4>
+<span class="header-section-number">6.2.1.2</span> Step 2: Make a tibble with fixed effects and random error (noise)<a class="anchor" aria-label="anchor" href="#step-2-make-a-tibble-with-fixed-effects-and-random-error-noise"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>In the next chunk, make a table containing the values for <span class="math inline">\(\gamma_{00}\)</span>, <span class="math inline">\(\gamma_{10}\)</span>, and <span class="math inline">\(e_{ij}\)</span>.</p>
+<p>This should be a tibble with 180 observations (18 subjects, observed over 10 days). The target table structure is shown below (your values for e_ij will vary because they are randomly generated).</p>
+<pre><code>## # A tibble: 180 × 5
+##    Subject  Days gamma_00 gamma_10    e_ij
+##    &lt;fct&gt;   &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 1           0      310        4  28.6  
+##  2 1           1      310        4 -20.0  
+##  3 1           2      310        4  17.8  
+##  4 1           3      310        4   0.363
+##  5 1           4      310        4  26.6  
+##  6 1           5      310        4  -4.06 
+##  7 1           6      310        4 -18.3  
+##  8 1           7      310        4   7.09 
+##  9 1           8      310        4  -4.84 
+## 10 1           9      310        4  38.7  
+## # … with 170 more rows</code></pre>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p>Something like: <code>tibble(... e_ij = rnorm(...))</code></p>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>Subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,
+              Days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">18</span><span class="op">)</span>,
+              gamma_00 <span class="op">=</span> <span class="fl">310</span>,  <span class="co"># replace with correct values</span>
+              gamma_10 <span class="op">=</span> <span class="fl">4</span>,  <span class="co"># replace with correct values</span>
+              e_ij <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">18</span> <span class="op">*</span> <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span>      <span class="co"># replace with correct values</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="step-3-combine" class="section level4">
+<h4>
+<span class="header-section-number">6.2.1.3</span> Step 3: Combine<a class="anchor" aria-label="anchor" href="#step-3-combine"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>Now find a way to combine the information in the <code>obs</code> table with the info in <code>rmx</code> so that you create a table that looks like the <code>sleepstudy</code> table. (<em>Hint: this is where the information at the end of the <a href="https://dalejbarr.github.io/basel-longitudinal/variance-covariance-matrices.html#converting-matrices-to-tibbles-and-combining-with-joins">last chapter</a> will come in handy.</em>)</p>
+<p>The resulting <code>simdata</code> table should <em>only</em> have the columns <code>Reaction</code>, <code>Days</code>, and <code>Subject</code>. Hint: check the simulated tables of data in the <a href="https://shiny.psy.gla.ac.uk/Dale/multilevel">multilevel web app</a>.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">rmx_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb80-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(??)</a>
+<a class="sourceLine" id="cb80-3" title="3"></a>
+<a class="sourceLine" id="cb80-4" title="4">simdata &lt;-<span class="st"> </span><span class="kw">inner_join</span>(?, ?, <span class="st">"?"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb80-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Reaction =</span> .....??) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb80-6" title="6"><span class="st">  </span><span class="kw">select</span>(...)</a></code></pre></div>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rmx_tbl</span> <span class="op">&lt;-</span> <span class="va">rmx</span> <span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>Subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">simdata</span> <span class="op">&lt;-</span> <span class="fu">inner_join</span><span class="op">(</span><span class="va">obs</span>, <span class="va">rmx_tbl</span>, <span class="st">"Subject"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>Reaction <span class="op">=</span> <span class="va">gamma_00</span> <span class="op">+</span> <span class="va">S0i</span> <span class="op">+</span> <span class="op">(</span><span class="va">gamma_10</span> <span class="op">+</span> <span class="va">S1i</span><span class="op">)</span> <span class="op">*</span> <span class="va">Days</span> <span class="op">+</span> <span class="va">e_ij</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">Subject</span>, <span class="va">Days</span>, <span class="va">Reaction</span><span class="op">)</span>
+
+<span class="va">simdata</span></code></pre></div>
+<pre><code>## # A tibble: 180 × 3
+##    Subject  Days Reaction
+##    &lt;fct&gt;   &lt;int&gt;    &lt;dbl&gt;
+##  1 1           0     353.
+##  2 1           1     342.
+##  3 1           2     418.
+##  4 1           3     438.
+##  5 1           4     502.
+##  6 1           5     509.
+##  7 1           6     532.
+##  8 1           7     595.
+##  9 1           8     621.
+## 10 1           9     702.
+## # … with 170 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="estimate-the-model" class="section level3">
+<h3>
+<span class="header-section-number">6.2.2</span> Estimate the model<a class="anchor" aria-label="anchor" href="#estimate-the-model"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Now we're going to try to recover the original population parameters from the sample. Let's see how close we get.</p>
+<p>Just so we're all working with the same data, let's work with some different data <code>simdata2</code> that you'll need to <a href="data/simdata2.rds" target="_download">download</a>, place in your working directory, and import using the code below.</p>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">simdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"simdata2.rds"</span><span class="op">)</span></code></pre></div>
+<p>Now use the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> function from <em><a href="https://github.com/lme4/lme4/">lme4</a></em> to estimate the population parameters for <code>simdata2</code>. Print out the results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sleepmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>,
+                 data <span class="op">=</span> <span class="va">simdata2</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">sleepmod</span><span class="op">)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML ['lmerMod']
+## Formula: Reaction ~ Days + (Days | Subject)
+##    Data: simdata2
+## 
+## REML criterion at convergence: 1799.1
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.51460 -0.59435 -0.01494  0.60344  2.43897 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr
+##  Subject  (Intercept)  984.1   31.37        
+##           Days        1270.1   35.64    0.88
+##  Residual              680.9   26.09        
+## Number of obs: 180, groups:  Subject, 18
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  306.741      8.231  37.268
+## Days           5.493      8.427   0.652
+## 
+## Correlation of Fixed Effects:
+##      (Intr)
+## Days 0.757</code></pre>
+</div>
+</div>
+<div class="try">
+<p>Now let's identify the estimates of the DGP in the output. Type in the values (rounded to one decimal point).</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Population Value</th>
+<th align="right">Estimate</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\gamma_{00}\)</span></td>
+<td align="right">310</td>
+<td align="right"><input class="webex-solveme nospaces" data-tol="0.2" size="16" data-answer='["306.740572663889"]'></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\gamma_{10}\)</span></td>
+<td align="right">4</td>
+<td align="right"><input class="webex-solveme nospaces" data-tol="0.2" size="16" data-answer='["5.49316399909361"]'></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\tau_{00}\)</span></td>
+<td align="right">30</td>
+<td align="right"><input class="webex-solveme nospaces" data-tol="0.2" size="16" data-answer='["31.3710206322219"]'></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\tau_{11}\)</span></td>
+<td align="right">33</td>
+<td align="right"><input class="webex-solveme nospaces" data-tol="0.2" size="16" data-answer='["35.6390378256499"]'></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\rho\)</span></td>
+<td align="right">.9</td>
+<td align="right"><input class="webex-solveme nospaces" data-tol="0.2" size="17" data-answer='["0.878787903597919",".878787903597919"]'></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\sigma\)</span></td>
+<td align="right">25</td>
+<td align="right"><input class="webex-solveme nospaces" data-tol="0.2" size="15" data-answer='["26.094061637718"]'></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script><div class="chapter-nav">
+<div class="prev"><a href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></div>
+<div class="next"><a href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#linear-mixed-effects-models"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="nav-link" href="#resources-4"><span class="header-section-number">6.1</span> Resources</a></li>
+<li>
+<a class="nav-link" href="#activities-3"><span class="header-section-number">6.2</span> Activities</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-simulation"><span class="header-section-number">6.2.1</span> Data simulation</a></li>
+<li><a class="nav-link" href="#estimate-the-model"><span class="header-section-number">6.2.2</span> Estimate the model</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dalejbarr/basel-longitudinal/blob/main/06_lmem-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dalejbarr/basel-longitudinal/edit/main/06_lmem-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

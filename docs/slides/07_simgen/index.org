@@ -1,0 +1,237 @@
+#+SETUPFILE: ../reveal.org
+#+TITLE: Specifying random effects structure
+#+PROPERTY: header-args:R :session *R* :exports both :results value
+
+* Setup                                                            :noexport:
+
+#+BEGIN_SRC R
+  options(crayon.enabled = FALSE, tidyverse.quiet = TRUE)
+  library("tidyverse")
+  library("lme4")
+  library("funfact")
+  ##source("../theme_jetblack.R")
+  ##theme_set(theme_jetblack(14L))
+  
+  three_way_mixed <- function() {
+    my_design <- list(ivs = c(A = 2, B = 2, C = 2),
+		      n_item = 16,
+		      between_subj = sample(LETTERS[1:3], 1))
+  
+    dat <- sim_norm(my_design, 8, params = gen_pop(my_design, 8)) %>%
+      as_tibble() %>%
+      select(subj_id, A, B, C, DV = Y) %>%
+      sample_n(nrow(.))
+  
+    list(my_design, dat)
+  }
+  
+  three_way_mixed_both <- function() {
+    n_subj <- 16L
+    n_item <- 16L
+    if (sample(c(TRUE, FALSE), 1L)) {
+      n_subj <- 8L
+    } else {
+      n_item <- 8L
+    }
+    my_design <- c(list(ivs = c(A = 2, B = 2, C = 2),
+			n_item = n_item))
+  
+    dat <- sim_norm(my_design, n_subj, params = gen_pop(my_design, n_subj)) %>%
+      as_tibble() %>%
+      select(subj_id, item_id, A, B, C, DV = Y) %>%
+      sample_n(nrow(.))
+  
+    list(my_design, dat)  
+  }  
+  
+  set.seed(9122005)
+  dat1 <- three_way_mixed()[[2]]
+  dat2 <- three_way_mixed_both()[[2]]
+  
+#+END_SRC
+
+* Generalizing over subjects and stimuli
+
+** Clark's Fallacy
+
+- Psycholinguistic experiments sample language materials as well as subjects
+- Language stimuli should be treated as a random, not fixed factor
+- Clark's suggestion: \(F'\), min-\(F'\)
+- Modern solution: Linear-mixed effects with crossed random factors of subjects and stimuli
+
+#+begin_citation
+Baayen, R. H., Davidson, D. J., & Bates, D. M. (2008). [[https://doi.org/10.1016/j.jml.2007.12.005][Mixed-effects modeling with crossed random effects for subjects and items.]] /Journal of Memory and Language/, /59/, 390-412.
+
+Clark, H. H. (1973). [[https://doi.org/10.1016/S0022-5371(73)80014-3][The language-as-fixed-effect fallacy: A critique of language statistics in psychological research]]. /Journal of Verbal Learning and Verbal Behavior/, /12/, 335-359.
+#+end_citation
+
+** generalizing over encounters
+
+The target of inference in much of psychology and related fields has
+been misidentified as a population of /subjects/ or /stimuli/, when the
+actual target of inference is a population of events: *encounters*
+
+#+begin_smaller
+- readers encountering particular types of words
+- male participants judging attractiveness of female faces, or vice versa
+- gamers encountering particular types of violent games
+- audience members encountering particular types of dance movements
+- insomniacs (versus controls) encountering emotional expressions
+- birds hearing particular types of birdsongs
+#+end_smaller
+
+#+begin_citation
+Barr, D. J. (2018). Generalizing Over Encounters. In the /Oxford Handbook of Psycholinguistics./
+#+end_citation
+
+** maximal random effects
+
+- all sampling units get random intercepts
+- any factor gets by-unit random slope if:
+  - levels administered within-unit
+  - multiple obs per level per unit
+- for interaction terms, need slope for the highest-order combination
+  of within-unit terms in the interaction
+
+#+begin_citation
+Barr, D. J. (2013). [[https://doi.org/10.3389/fpsyg.2013.00328][Random effects structure for testing interactions in linear mixed-effects models]]. /Frontiers in Psychology/, /4/, 328.
+
+Barr, D. J., Levy, R., Scheepers, C., & Tily, H. J. (2013). [[https://doi.org/10.1016/j.jml.2012.11.001][Random effects structure for confirmatory hypothesis testing: Keep it maximal]]. /Journal of Memory and Language/, /68/, 255-278.
+#+end_citation
+
+** 
+
+[[https://shiny.psy.gla.ac.uk/Dale/crossed/][crossed web app]]
+
+* design from data
+
+- three way design =DV ~ A * B * C + ...=
+
+#+begin_src R :exports both :results output
+count(dat1, subj_id, A, B, C)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 32 × 5
+   subj_id A     B     C         n
+     <int> <chr> <chr> <chr> <int>
+ 1       1 A2    B1    C1        4
+ 2       1 A2    B1    C2        4
+ 3       1 A2    B2    C1        4
+ 4       1 A2    B2    C2        4
+ 5       2 A2    B1    C1        4
+ 6       2 A2    B1    C2        4
+ 7       2 A2    B2    C1        4
+ 8       2 A2    B2    C2        4
+ 9       3 A1    B1    C1        4
+10       3 A1    B1    C2        4
+# … with 22 more rows
+#+end_example
+
+** specifying the model
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 35%">
+| $A$   | ✗      |
+| $B$   | ✓      |
+| $C$   | ✓      |
+| $AB$  | ✗      |
+| $AC$  | ✗      |
+| $BC$  | ✓      |
+| $ABC$ | ✗      |
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 65%">
+
+: DV ~ A + B + C + A:B + A:C + B:C + A:B:C + 
+:                         (B + C + B:C | subj_id)
+
+or, more simply:
+
+: DV ~ A * B * C + (B * C | subj_id)
+
+#+REVEAL_HTML: </div>
+
+** 
+
+example with crossed subjects and stimuli
+
+=DV ~ A * B * C +=
+
+=(? | subj_id) +=
+
+=(? | item_id)=
+
+** by subject
+
+#+begin_src R :results output
+ count(dat2, subj_id, A, B, C)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 64 × 5
+   subj_id A     B     C         n
+     <int> <chr> <chr> <chr> <int>
+ 1       1 A1    B1    C1        2
+ 2       1 A1    B1    C2        2
+ 3       1 A1    B2    C1        2
+ 4       1 A1    B2    C2        2
+ 5       1 A2    B1    C1        2
+ 6       1 A2    B1    C2        2
+ 7       1 A2    B2    C1        2
+ 8       1 A2    B2    C2        2
+ 9       2 A1    B1    C1        2
+10       2 A1    B1    C2        2
+# … with 54 more rows
+#+end_example
+
+** by stimuli
+
+#+begin_src R :results output
+  count(dat2, item_id, A, B, C)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 128 × 5
+   item_id A     B     C         n
+     <int> <chr> <chr> <chr> <int>
+ 1       1 A1    B1    C1        1
+ 2       1 A1    B1    C2        1
+ 3       1 A1    B2    C1        1
+ 4       1 A1    B2    C2        1
+ 5       1 A2    B1    C1        1
+ 6       1 A2    B1    C2        1
+ 7       1 A2    B2    C1        1
+ 8       1 A2    B2    C2        1
+ 9       2 A1    B1    C1        1
+10       2 A1    B1    C2        1
+# … with 118 more rows
+#+end_example
+
+** model
+
+#+begin_src R :eval never :results silent
+DV ~ A * B * C + (A * B * C | subj_id) + (1 | item_id)
+#+end_src
+
+* troubleshooting
+
+*non-convergence warning*
+
+/Parameter estimates from a non-converging model are not to be trusted, but can be used as a guide to simplification./
+
+*'singularity' message*
+
+/One or more of the estimated covariance matrices is 'singular'. You're probably fine to ignore it, but it's sometimes preferable to simplify to get rid of it./
+
+** strategy
+
+1. make sure the random effects structure is appropriately specified
+2. scale your predictor variables, use deviation coding for categorical predictors
+3. consider zero-covariances model
+4. drop smallest random effect
+
+/iterate until the warning/message goes away/
+

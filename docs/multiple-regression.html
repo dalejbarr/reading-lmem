@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 Multiple Regression | Mixed-effects models for longitudinal data</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content="2.1 Resources Slides My textbook chapter on multiple regression covers a lot of the material in greater depth.  2.2 Activity For this set of exercises, you're going to be working with some real...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 2 Multiple Regression | Mixed-effects models for longitudinal data">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/multiple-regression.html">
+<meta property="og:description" content="2.1 Resources Slides My textbook chapter on multiple regression covers a lot of the material in greater depth.  2.2 Activity For this set of exercises, you're going to be working with some real...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 Multiple Regression | Mixed-effects models for longitudinal data">
+<meta name="twitter:description" content="2.1 Resources Slides My textbook chapter on multiple regression covers a lot of the material in greater depth.  2.2 Activity For this set of exercises, you're going to be working with some real...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Workshop Overview</a></li>
+<li><a class="" href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></li>
+<li><a class="active" href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="" href="interactions.html"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="" href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></li>
+<li><a class="" href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="" href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="" href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="" href="going-further.html"><span class="header-section-number">8</span> Going further</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="installing-and-configuring-rrstudio.html"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="" href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></li>
+<li><a class="" href="references-and-further-reading.html"><span class="header-section-number">C</span> References and Further Reading</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dalejbarr/basel-longitudinal">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="multiple-regression" class="section level1">
+<h1>
+<span class="header-section-number">2</span> Multiple Regression<a class="anchor" aria-label="anchor" href="#multiple-regression"><i class="fas fa-link"></i></a>
+</h1>
+<div id="resources" class="section level2">
+<h2>
+<span class="header-section-number">2.1</span> Resources<a class="anchor" aria-label="anchor" href="#resources"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="slides/02_multreg/index.html">Slides</a></p>
+<p>My textbook chapter on <a href="https://psyteachr.github.io/stat-models-v1/multiple-regression.html">multiple regression</a> covers a lot of the material in greater depth.</p>
+</div>
+<div id="activity" class="section level2">
+<h2>
+<span class="header-section-number">2.2</span> Activity<a class="anchor" aria-label="anchor" href="#activity"><i class="fas fa-link"></i></a>
+</h2>
+<p>For this set of exercises, you're going to be working with some real data collected about students from a previous year of student in statistics at the University of Glasgow. The data have been anonymized, and no demographic or other sensitive information has been provided. Each student is identified by a unique value of the variable <code>id</code>.</p>
+<p>Students were given the STats Anxiety Rating Scale (STARS), a 51-item questionnaire which measures student's attitudes toward statistics <span class="citation">(Cruise et al., <a href="references-and-further-reading.html#ref-cruise1985">1985</a>)</span>. For each item, students are asked to rate either agreement with a statement on a 1 to 5 scale (1 = strongly disagree, 5 = strongly agree), or rate how anxious they would feel on a 1 to 5 scale (1 = no anxiety, 5 = strong anxiety). Higher numbers mean more anxiety or more negative attitudes toward statistics. If you're interested, you can see the individual survey items below.</p>
+<div class="webex-solution">
+<button>
+Click here to view the 51 STARS items
+</button>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="4%">
+<col width="89%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">item_id</th>
+<th align="left">item</th>
+<th align="left">subscale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">i1</td>
+<td align="left">Studying for an examination in a statistics course</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i2</td>
+<td align="left">Interpreting the meaning of a table in a journal article</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i3</td>
+<td align="left">Going to ask my statistics teacher for individual help with material I am having difficulty understanding</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i4</td>
+<td align="left">Doing the coursework for a statistics course</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i5</td>
+<td align="left">Making an objective decision based on empirical data</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i6</td>
+<td align="left">Reading a journal article that includes some statistical analyses</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i7</td>
+<td align="left">Trying to decide which analysis is appropriate for my research project</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i8</td>
+<td align="left">Doing an examination in a statistics course</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i9</td>
+<td align="left">Reading an advertisement for a car which includes figures on miles per gallon, depreciation, etc.</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i10</td>
+<td align="left">Walking into the room to take a statistics test</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i11</td>
+<td align="left">Interpreting the meaning of a probability value once I have found it</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i12</td>
+<td align="left">Arranging to have a body of data put into the computer</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i13</td>
+<td align="left">Finding that another student in class got a different answer than I did to a statistical problem</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i14</td>
+<td align="left">Determining whether to reject or retain the null hypothesis</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i15</td>
+<td align="left">Waking up in the morning on the day of a statistics test</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i16</td>
+<td align="left">Asking one of your lecturers for help in understanding a printout</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i17</td>
+<td align="left">Trying to understand the odds in a lottery</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i18</td>
+<td align="left">Watching a student search through a load of computer printouts from his/her research</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i19</td>
+<td align="left">Asking someone in the computer lab for help in understanding a printout</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i20</td>
+<td align="left">Trying to understand the statistical analyses described in the abstract of a journal article</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i21</td>
+<td align="left">Enrolling in a statistics course</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i22</td>
+<td align="left">Going over a final examination in statistics after it has been marked</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="odd">
+<td align="left">i23</td>
+<td align="left">Asking a fellow student for help in understanding a printout</td>
+<td align="left">Anxiety</td>
+</tr>
+<tr class="even">
+<td align="left">i24</td>
+<td align="left">I am a subjective person, so the objectivity of statistics is inappropriate for me</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i25</td>
+<td align="left">I have not done maths for a long time. I know I will have problems getting through statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i26</td>
+<td align="left">I wonder why I have to do all these things in statistics when in actual life I will never use them</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i27</td>
+<td align="left">Statistics is worthless to me since it is empirical and my area of specialization is abstract</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i28</td>
+<td align="left">Statistics takes more time than it is worth</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i29</td>
+<td align="left">I feel statistics is a waste</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i30</td>
+<td align="left">Statistics teachers are so abstract they seem inhuman</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i31</td>
+<td align="left">I cannot even understand secondary school maths; how can I possibly do statistics?</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i32</td>
+<td align="left">Most statistics teachers are not human</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i33</td>
+<td align="left">I lived this long without knowing statistics, why should I learn it now?</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i34</td>
+<td align="left">Since I have never enjoyed maths I do not see how I can enjoy statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i35</td>
+<td align="left">I do not want to learn to like statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i36</td>
+<td align="left">Statistics is for people who have a natural leaning toward maths</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i37</td>
+<td align="left">Statistics is a pain I could do without</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i38</td>
+<td align="left">I do not have enough brains to get through statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i39</td>
+<td align="left">I could enjoy statistics if it were not so mathematical</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i40</td>
+<td align="left">I wish the statistics requirement would be removed from my academic program</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i41</td>
+<td align="left">I do not understand why someone in my field needs statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i42</td>
+<td align="left">I do not see why I have to fill my head with statistics. It will have no use in my career</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i43</td>
+<td align="left">Statistics teachers speak a different language</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i44</td>
+<td align="left">Statisticians are more number oriented than they are people oriented</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i45</td>
+<td align="left">I cannot tell you why, but I just do not like statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i46</td>
+<td align="left">Statistics teachers talk so fast you cannot logically follow them</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i47</td>
+<td align="left">Statistical figures are not fit for human consumption</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i48</td>
+<td align="left">Statistics is not really bad. It is just too mathematical</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i49</td>
+<td align="left">Affective (emotional) skills are so important in my (future) profession that I do not want to clutter my thinking with something as cognitive as statistics</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="even">
+<td align="left">i50</td>
+<td align="left">I am never going to use statistics so why should I have to take it?</td>
+<td align="left">Agreement</td>
+</tr>
+<tr class="odd">
+<td align="left">i51</td>
+<td align="left">I am too slow in my thinking to get through statistics</td>
+<td align="left">Agreement</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>The STARS items can be divided up into six different subscales <span class="citation">(Hanna et al., <a href="references-and-further-reading.html#ref-hanna2008">2008</a>)</span>, which reflect different aspects of statistics training that students may feel anxiety toward: Asking For Help, Interpretation, Self Concept, Teacher, Test, and (Self-)Worth.</p>
+<p>Students in this course were allowed to freely choose what software they used to perform the class assignments, either SPSS or R.</p>
+<p>The data is in the file <a href="data/stars-wide.csv" target="_download">stars-wide.csv</a></p>
+<p>Your task is to use multiple regression examine the relationship between the stats anxiety subscales and overall performance in the class, as measured by the students' final grades.</p>
+</div>
+<div id="tasks" class="section level2">
+<h2>
+<span class="header-section-number">2.3</span> Tasks<a class="anchor" aria-label="anchor" href="#tasks"><i class="fas fa-link"></i></a>
+</h2>
+<p>Open up a new RMarkdown file and create separate code chunks for each of the following tasks. Alternatively, you can write your code into an R script and mark each task using comments.</p>
+<div id="import-the-data" class="section level3">
+<h3>
+<span class="header-section-number">2.3.1</span> Import the data<a class="anchor" aria-label="anchor" href="#import-the-data"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>You will need to use the <strong><code>tidyverse</code></strong> package as well as the <strong><code>corrr</code></strong> package. Load in those packages and then import <code>stars-wide.csv</code>. You might want to look at the <a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf" target="_blank">Data Import Cheat Sheet</a>.</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/tidymodels/corrr">"corrr"</a></span><span class="op">)</span>
+
+<span class="va">stars</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/stars-wide.csv"</span>,
+                  col_types <span class="op">=</span> <span class="st">"iiddddddc"</span><span class="op">)</span>
+
+<span class="co">## remember to look at your data before proceeding!</span>
+<span class="va">stars</span></code></pre></div>
+<pre><code>## # A tibble: 50 × 9
+##       id grade Ask_For_Help Interpretation Self_Concept Teacher  Test Worth
+##    &lt;int&gt; &lt;int&gt;        &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     3    18         1              1            1        1    1.25  1.06
+##  2     7    15         3.25           3.18         2.29     1.8  3     2.56
+##  3    12    18         2.5            1.8          1.5      2    2.88  2.5 
+##  4    16    17         4              3.18         2.71     1.2  3.14  2.81
+##  5    19    19         1.75           3            1.43     1.6  2.88  1.44
+##  6    21    15         2              2.18         3.43     1.2  2.75  2   
+##  7    23    20         1.75           1.55         1.86     2    2.12  1.44
+##  8    24    22         1.75           2.45         1.43     1.2  3.12  1.38
+##  9    26    22         1              1            1        1    1.38  1   
+## 10    29    16         1.5            2.64         1.29     1    2.88  1.25
+## # … with 40 more rows, and 1 more variable: software &lt;chr&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="create-a-correlation-matrix" class="section level3">
+<h3>
+<span class="header-section-number">2.3.2</span> Create a correlation matrix<a class="anchor" aria-label="anchor" href="#create-a-correlation-matrix"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Create a correlation matrix using <code><a href="https://corrr.tidymodels.org/reference/correlate.html">corrr::correlate()</a></code> showing the bivariate correlation between your response variable (<code>grade</code>) and the six subscale means.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p>Select the variables that you need and then use <code><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate()</a></code> from the <code>corrr</code> package.</p>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stars</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">id</span>, <span class="op">-</span><span class="va">software</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://corrr.tidymodels.org/reference/correlate.html">correlate</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://corrr.tidymodels.org/reference/shave.html">shave</a></span><span class="op">(</span>upper <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://corrr.tidymodels.org/reference/fashion.html">fashion</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Correlation method: 'pearson'
+## Missing treated using: 'pairwise.complete.obs'</code></pre>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="right">term</th>
+<th align="right">grade</th>
+<th align="right">Ask_For_Help</th>
+<th align="right">Interpretation</th>
+<th align="right">Self_Concept</th>
+<th align="right">Teacher</th>
+<th align="right">Test</th>
+<th align="right">Worth</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">grade</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">Ask_For_Help</td>
+<td align="right">-.35</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">Interpretation</td>
+<td align="right">-.42</td>
+<td align="right">.62</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">Self_Concept</td>
+<td align="right">-.59</td>
+<td align="right">.60</td>
+<td align="right">.58</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">Teacher</td>
+<td align="right">-.14</td>
+<td align="right">.42</td>
+<td align="right">.45</td>
+<td align="right">.41</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">Test</td>
+<td align="right">-.46</td>
+<td align="right">.69</td>
+<td align="right">.65</td>
+<td align="right">.59</td>
+<td align="right">.37</td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">Worth</td>
+<td align="right">-.34</td>
+<td align="right">.47</td>
+<td align="right">.55</td>
+<td align="right">.70</td>
+<td align="right">.46</td>
+<td align="right">.47</td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div id="visualize-all-pairwise-correlations" class="section level3">
+<h3>
+<span class="header-section-number">2.3.3</span> Visualize all pairwise correlations<a class="anchor" aria-label="anchor" href="#visualize-all-pairwise-correlations"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Now visualize all of the pairwise correlations.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p>Use <code><a href="https://rdrr.io/r/graphics/pairs.html">pairs()</a></code>. See <code><a href="https://rdrr.io/r/graphics/pairs.html">?pairs</a></code> for help and examples.</p>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stars</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">id</span>, <span class="op">-</span><span class="va">software</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="02_multiple-regression_files/figure-html/pairs-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+</div>
+</div>
+<div id="run-the-multiple-regression" class="section level3">
+<h3>
+<span class="header-section-number">2.3.4</span> Run the multiple regression<a class="anchor" aria-label="anchor" href="#run-the-multiple-regression"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Estimate the parameters for the multiple regression, with grade as the response variable and the subscale means as the predictors. Don't forget to display your results using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, and take a moment to think about what all the numbers mean.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p><code>lm(dv ~ iv1 + iv2 + ..., data = ???)</code></p>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">Ask_For_Help</span> <span class="op">+</span> <span class="va">Interpretation</span> <span class="op">+</span> <span class="va">Self_Concept</span> <span class="op">+</span>
+              <span class="va">Teacher</span> <span class="op">+</span> <span class="va">Test</span> <span class="op">+</span> <span class="va">Worth</span>,
+            data <span class="op">=</span> <span class="va">stars</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = grade ~ Ask_For_Help + Interpretation + Self_Concept + 
+##     Teacher + Test + Worth, data = stars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.6127 -1.6329  0.0755  1.6458  4.8041 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     22.3326     1.5704  14.221  &lt; 2e-16 ***
+## Ask_For_Help     0.3845     0.5227   0.736  0.46599    
+## Interpretation  -0.6382     0.7675  -0.831  0.41032    
+## Self_Concept    -1.8611     0.5806  -3.206  0.00254 ** 
+## Teacher          0.6040     0.6394   0.945  0.35009    
+## Test            -0.8344     0.7129  -1.170  0.24827    
+## Worth            0.6492     0.8337   0.779  0.44044    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.494 on 43 degrees of freedom
+## Multiple R-squared:  0.4024, Adjusted R-squared:  0.319 
+## F-statistic: 4.826 on 6 and 43 DF,  p-value: 0.0007612</code></pre>
+</div>
+</div>
+</div>
+<div id="which-subscale-is-the-best-predictor" class="section level3">
+<h3>
+<span class="header-section-number">2.3.5</span> Which subscale is the 'best' predictor?<a class="anchor" aria-label="anchor" href="#which-subscale-is-the-best-predictor"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Is there one subscale that is more strongly linked to the final grade? The different subscales have different variances, so you need to re-run the regression after standardizing the variables.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p>calculate z-scores for each predictor; in tidyverse you can do this using</p>
+<pre><code>stars %&gt;%
+  mutate(zx = (x - mean(x)) / sd(x),
+         zy = (y - mean(y)) / sd(y), ... etc)</code></pre>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## two ways to do this:</span>
+<span class="co">## 1. just type it all out</span>
+<span class="va">zscores1</span> <span class="op">&lt;-</span> <span class="va">stars</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>Ask_For_Help <span class="op">=</span> <span class="op">(</span><span class="va">Ask_For_Help</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Ask_For_Help</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Ask_For_Help</span><span class="op">)</span>,
+         Interpretation <span class="op">=</span> <span class="op">(</span><span class="va">Interpretation</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Interpretation</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Interpretation</span><span class="op">)</span>,
+         Self_Concept <span class="op">=</span> <span class="op">(</span><span class="va">Self_Concept</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Self_Concept</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Self_Concept</span><span class="op">)</span>,
+         Teacher <span class="op">=</span> <span class="op">(</span><span class="va">Teacher</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Teacher</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Teacher</span><span class="op">)</span>,
+         Test <span class="op">=</span> <span class="op">(</span><span class="va">Test</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Test</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Test</span><span class="op">)</span>,
+         Worth <span class="op">=</span> <span class="op">(</span><span class="va">Worth</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Worth</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Worth</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## 2 (advanced). use 'scoping' variant of mutate; see ?mutate_at</span>
+<span class="va">zscores1</span> <span class="op">&lt;-</span> <span class="va">stars</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate_at</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="op">-</span><span class="va">id</span>, <span class="op">-</span><span class="va">grade</span>, <span class="op">-</span><span class="va">software</span><span class="op">)</span>, <span class="op">~</span> <span class="op">(</span><span class="va">.x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">model_z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">Ask_For_Help</span> <span class="op">+</span> <span class="va">Interpretation</span> <span class="op">+</span> <span class="va">Self_Concept</span> <span class="op">+</span>
+                <span class="va">Teacher</span> <span class="op">+</span> <span class="va">Test</span> <span class="op">+</span> <span class="va">Worth</span>,
+              data <span class="op">=</span> <span class="va">zscores1</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_z</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = grade ~ Ask_For_Help + Interpretation + Self_Concept + 
+##     Teacher + Test + Worth, data = zscores1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.6127 -1.6329  0.0755  1.6458  4.8041 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     17.7400     0.3527  50.293  &lt; 2e-16 ***
+## Ask_For_Help     0.3967     0.5393   0.736  0.46599    
+## Interpretation  -0.4405     0.5299  -0.831  0.41032    
+## Self_Concept    -1.8205     0.5679  -3.206  0.00254 ** 
+## Teacher          0.3973     0.4206   0.945  0.35009    
+## Test            -0.6414     0.5480  -1.170  0.24827    
+## Worth            0.4092     0.5255   0.779  0.44044    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.494 on 43 degrees of freedom
+## Multiple R-squared:  0.4024, Adjusted R-squared:  0.319 
+## F-statistic: 4.826 on 6 and 43 DF,  p-value: 0.0007612</code></pre>
+</div>
+</div>
+</div>
+<div id="compare-models" class="section level3">
+<h3>
+<span class="header-section-number">2.3.6</span> Compare models<a class="anchor" aria-label="anchor" href="#compare-models"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Could we do just as well predicting grades from the 'best' predictor as we could by including all six subscale predictors? Do an analysis to test this.</p>
+<div class="webex-solution">
+<button>
+hint
+</button>
+<p>Fit two models and compare using <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code></p>
+</div>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## we are doing it with the standardized scores;</span>
+<span class="co">## could also do it using the unstandardized scores and would get the same result</span>
+<span class="va">sc_only</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">Self_Concept</span>, <span class="va">zscores1</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">sc_only</span>, <span class="va">model_z</span><span class="op">)</span>
+<span class="co">## no evidence for improvement by adding other 5 predictors!</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">sc_only</span><span class="op">)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: grade ~ Self_Concept
+## Model 2: grade ~ Ask_For_Help + Interpretation + Self_Concept + Teacher + 
+##     Test + Worth
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     48 293.72                           
+## 2     43 267.50  5    26.218 0.8429 0.5269
+## 
+## Call:
+## lm(formula = grade ~ Self_Concept, data = zscores1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.0394 -1.5570  0.1842  2.1283  4.5136 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   17.7400     0.3498  50.710  &lt; 2e-16 ***
+## Self_Concept  -1.7722     0.3534  -5.015 7.66e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.474 on 48 degrees of freedom
+## Multiple R-squared:  0.3438, Adjusted R-squared:  0.3302 
+## F-statistic: 25.15 on 1 and 48 DF,  p-value: 7.658e-06</code></pre>
+</div>
+</div>
+</div>
+<div id="choice-of-software-and-grade" class="section level3">
+<h3>
+<span class="header-section-number">2.3.7</span> Choice of software and grade<a class="anchor" aria-label="anchor" href="#choice-of-software-and-grade"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Run a simple regression that predicts grades by choice of software (SPSS versus R).</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model_gxs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">~</span> <span class="va">software</span>, <span class="va">stars</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_gxs</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = grade ~ software, data = stars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.5000 -1.3235 -0.3235  2.2941  5.5000 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   18.3235     0.5021  36.493   &lt;2e-16 ***
+## softwareSPSS  -1.8235     0.8876  -2.054   0.0454 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.928 on 48 degrees of freedom
+## Multiple R-squared:  0.08082,    Adjusted R-squared:  0.06168 
+## F-statistic: 4.221 on 1 and 48 DF,  p-value: 0.0454</code></pre>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script><div class="chapter-nav">
+<div class="prev"><a href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></div>
+<div class="next"><a href="interactions.html"><span class="header-section-number">3</span> Interactions</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#multiple-regression"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="nav-link" href="#resources"><span class="header-section-number">2.1</span> Resources</a></li>
+<li><a class="nav-link" href="#activity"><span class="header-section-number">2.2</span> Activity</a></li>
+<li>
+<a class="nav-link" href="#tasks"><span class="header-section-number">2.3</span> Tasks</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#import-the-data"><span class="header-section-number">2.3.1</span> Import the data</a></li>
+<li><a class="nav-link" href="#create-a-correlation-matrix"><span class="header-section-number">2.3.2</span> Create a correlation matrix</a></li>
+<li><a class="nav-link" href="#visualize-all-pairwise-correlations"><span class="header-section-number">2.3.3</span> Visualize all pairwise correlations</a></li>
+<li><a class="nav-link" href="#run-the-multiple-regression"><span class="header-section-number">2.3.4</span> Run the multiple regression</a></li>
+<li><a class="nav-link" href="#which-subscale-is-the-best-predictor"><span class="header-section-number">2.3.5</span> Which subscale is the 'best' predictor?</a></li>
+<li><a class="nav-link" href="#compare-models"><span class="header-section-number">2.3.6</span> Compare models</a></li>
+<li><a class="nav-link" href="#choice-of-software-and-grade"><span class="header-section-number">2.3.7</span> Choice of software and grade</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dalejbarr/basel-longitudinal/blob/main/02_multiple-regression.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dalejbarr/basel-longitudinal/edit/main/02_multiple-regression.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

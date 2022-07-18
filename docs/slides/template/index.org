@@ -1,0 +1,22 @@
+#+SETUPFILE: ../reveal.org
+#+TITLE: Generalized linear models vs ordinary linear models
+#+PROPERTY: header-args:R :session *R* :exports both :results value
+
+* TODO Tweaks							   :noexport:
+
+* Setup                                                            :noexport:
+
+#+BEGIN_SRC R
+  options(crayon.enabled = FALSE, tidyverse.quiet = TRUE)
+  library("tidyverse")
+  source("../theme_jetblack.R")
+  theme_set(theme_jetblack(14L))
+#+END_SRC
+
+* overview
+
+- blah blah
+
+#+begin_notes
+here are some notes
+#+end_notes

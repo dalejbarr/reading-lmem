@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Modeling trends</title>
+<meta name="author" content="(Dale Barr (University of Glasgow))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
+
+<link rel="stylesheet" href="../css/mods.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Modeling trends</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+</section>
+
+<section>
+<section id="slide-orgb0d1a43">
+<h2 id="orgb0d1a43">modeling latent change</h2>
+<p>
+a.k.a., &ldquo;growth curve analysis&rdquo;, &ldquo;latent trend models&rdquo;
+</p>
+
+<p>
+approach: assume the pattern of growth/change develops following the parameters of some unobserved (latent) function
+</p>
+
+<aside class="notes">
+<ul>
+<li>could be basically anything, ideally, &ldquo;functional form&rdquo; driven by theory, but can also be data driven</li>
+
+<li>focus on single-level data, but often multilevel</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-org9ceb3ff">
+<h3 id="org9ceb3ff">simplest model</h3>
+<div class="column" style="float:left; width: 50%">
+
+
+<div id="org2188d4b" class="figure">
+<p><img src="belenky.png" alt="belenky.png" />
+</p>
+</div>
+
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<p>
+\[Y_i = \beta_0 + \beta_1 t_i + e_i\]
+</p>
+
+<p>
+linear trend is <b>assumed</b> as an approximation
+</p>
+
+<p>
+\(\beta_0\) = <code>244</code> 
+</p>
+
+<p>
+\(\beta_1\) = <code>22</code> 
+</p>
+
+</div>
+
+<aside class="notes">
+<p>
+one possible consequence of model misspecification: residuals will be non-normal
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org760b3fb">
+<h3 id="org760b3fb">Other possible models</h3>
+<div class="column" style="float:left; width: 30%">
+
+<p>
+quadratic
+</p>
+
+
+<div id="orgf380489" class="figure">
+<p><img src="belenky2.png" alt="belenky2.png" />
+</p>
+</div>
+
+</div>
+
+
+<div class="column" style="float:left; width: 30%">
+
+<p>
+cubic
+</p>
+
+
+<div id="orgda4541b" class="figure">
+<p><img src="belenky3.png" alt="belenky3.png" />
+</p>
+</div>
+
+
+</div>
+
+
+<div class="column" style="float:left; width: 30%">
+
+<p>
+&ldquo;wiggly&rdquo;
+</p>
+
+
+<div id="org97f89bc" class="figure">
+<p><img src="belenky4.png" alt="belenky4.png" />
+</p>
+</div>
+
+</div>
+
+</section>
+<section id="slide-orgb59bed6">
+<h3 id="orgb59bed6">polynomial models</h3>
+<p>
+Order:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">first (linear)</td>
+<td class="org-left">\(Y_i = \beta_0 + \beta_1 t_i + e_i\)</td>
+</tr>
+
+<tr>
+<td class="org-left">second (quadratic)</td>
+<td class="org-left">\(Y_i = \beta_0 + \beta_1 t_i + \beta_2 {t_i}^2 +e_i\)</td>
+</tr>
+
+<tr>
+<td class="org-left">third (cubic)</td>
+<td class="org-left">\(Y_i = \beta_0 + \beta_1 t_i + \beta_2 {t_i}^2 + \beta_3 {t_i}^3 +e_i\)</td>
+</tr>
+</tbody>
+</table>
+
+<aside class="notes">
+<p>
+order: the highest order of exponent
+</p>
+
+<p>
+can go arbitrarily high
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org7b87da3">
+<h3 id="org7b87da3">data-driven functional form</h3>
+<div class="column" style="float:left; width: 60%">
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>lin <span style="color: #008b8b;">&lt;-</span> lm(Reaction ~ Days, s308)
+quad <span style="color: #008b8b;">&lt;-</span>
+  lm(Reaction ~ Days + 
+       I(Days^2), s308)
+
+cub <span style="color: #008b8b;">&lt;-</span>
+  lm(Reaction ~ Days +
+       I(Days^2) + I(Days^3), s308)
+
+quar <span style="color: #008b8b;">&lt;-</span>
+  lm(Reaction ~ Days +
+       I(Days^2) + I(Days^3) +
+       I(Days^4), s308)
+
+quin <span style="color: #008b8b;">&lt;-</span>
+  lm(Reaction ~ Days +
+       I(Days^2) + I(Days^3) +
+       I(Days^4) + I(Days^5), s308)
+</code></pre>
+</div>
+
+</div>
+
+<div class="column" style="float:left; width: 40%">
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>AIC(lin, quad, cub,
+    quar, quin)
+</code></pre>
+</div>
+
+<pre class="example">
+
+     df      AIC
+lin   3 109.4793
+quad  4 111.4623
+cub   5 112.9690
+quar  6 109.6509
+quin  7 111.6476
+</pre>
+
+
+</div>
+
+</section>
+<section id="slide-org0ecae21">
+<h3 id="org0ecae21">natural vs orthogonal polynomials</h3>
+
+</section>
+<section id="slide-orga1da844">
+<h3 id="orga1da844">comparing trends across groups</h3>
+<div class="column" style="float:left; width: 30%">
+
+
+<div id="org17ea818" class="figure">
+<p><img src="stwo.png" alt="stwo.png" />
+</p>
+</div>
+
+</div>
+
+<div class="column" style="float:right; width: 70%">
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>mod2 <span style="color: #008b8b;">&lt;-</span> lm(Reaction ~ (Days + Days2) * group,
+     data = stwo)
+
+summary(mod2)
+</code></pre>
+</div>
+
+<pre class="example" id="org4e1e665">
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 268.2169    22.1882  12.088 8.51e-09 ***
+Days         11.0770    11.4816   0.965    0.351    
+Days2         0.2709     1.2281   0.221    0.829    
+group        53.8655    44.3765   1.214    0.245    
+Days:group  -25.7381    22.9632  -1.121    0.281    
+Days2:group   1.0266     2.4563   0.418    0.682    
+---
+codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 39.91 on 14 degrees of freedom
+Multiple R-squared:  0.6785,	Adjusted R-squared:  0.5637 
+F-statistic:  5.91 on 5 and 14 DF,  p-value: 0.003852
+</pre>
+
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown,RevealZoom,RevealNotes],
+transition:"fade",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+]
+});
+
+
+</script>
+</body>
+</html>

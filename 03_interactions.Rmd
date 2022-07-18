@@ -1,0 +1,307 @@
+# Interactions
+
+## Resources
+
+[Slides](slides/03_intx/index.html)
+
+[My book chapter on interactions](https://psyteachr.github.io/stat-models-v1/interactions.html) provides an in-depth treatment
+
+[Factorial web app](https://shiny.psy.gla.ac.uk/Dale/factorial2) allows you to play around with main effects and interactions in a 2x2 factorial design
+
+## Activities
+
+
+### Categorical-by-continuous interactions
+
+:::{.try}
+
+Are cat owners more frugal than dog owners? You run a study looking at the relationship between age (`AGE`) and net savings in British pounds sterling (`SAVE`) for dog versus cat owners (`HAS_DOG`: 0 = cat owner, 1 = dog owner). You run a multiple regression and get the following output (numbers are made up):
+
+```
+Call:
+lm(formula = SAVE ~ HAS_DOG * AGE, data = dat)
+
+Coefficients:
+            Estimate Std.Error t value    Pr(>|t|)
+(Intercept)   1043.3  58.28492   17.90 0.000000000
+HAS_DOG        -97.8 -48.17734    2.03 0.042356539
+AGE            165.9  53.51613    3.10 0.001935206
+HAS_DOG:AGE    -14.1 -10.07143    1.40 0.161513318
+```
+
+**Answer the following questions about this output.**
+
+What is the intercept of the regression line relating age to savings for cat owners (to 1 decimal place)?
+
+`r fitb(1043.3)`
+
+```{r fitb1, webex.hide="solution"}
+1043.3 # the value of `(Intercept)`
+```
+
+What is the slope of the regression line relating age to savings for cat owners?
+
+`r fitb(165.9)`
+
+```{r fitb2, webex.hide="solution"}
+165.9 # the value of the `AGE` coefficient
+```
+
+How much savings does the model predict for a 46-year-old cat owner?
+
+`r fitb(8674.7)`
+
+```{r fitb3, webex.hide="solution", eval=FALSE}
+1043.3 + 165.9 * 46 # = 8674.7
+```
+
+What is the intercept of the regression line relating age to savings for dog owners?
+
+`r fitb(945.5)`
+
+```{r fitb4, webex.hide="solution", eval=FALSE}
+1043.3 + (-97.8) # = 945.5
+```
+
+What is the slope of the regression line relating age to savings for dog owners? (type the value)
+
+`r fitb(151.8)`
+
+```{r fitb5, webex.hide="solution", eval=FALSE}
+165.9 + (-14.1) # = 151.8
+```
+
+How much savings would you predict for a 18-year-old dog owner? (type the value)
+
+`r fitb(3677.9)`
+
+```{r fitb6, webex.hide="solution", eval=FALSE}
+(1043.3 - 97.8) + (165.9 - 14.1) * 18 # = 3677.9
+```
+
+True or false: The relationship between age and savings is statistically different for cat and dog owners ($\alpha = .05$).
+
+`r torf(FALSE)`
+
+`r hide("solution")`
+
+The statement is `FALSE` because the test of the null hypothesis for the interaction coefficient is not significant (p = .162).
+
+`r unhide()`
+
+:::
+
+### Categorical-by-categorical interactions
+
+For the next questions, assume that you are given **population means** that have been measured without error.
+
+:::{.warning}
+
+Note that with real data you will be dealing with **sample means** that have been measured with error rather than **population means**. With real data, you can't just look at the cell means to tell whether or not there is an effect. There may be a numerical difference, but you'd have to run an inferential test to see whether the difference is unlikely to be due to chance.
+
+:::
+
+#### Dataset 1
+
+:::{.try}
+
+Consider these population cell means from a 2x2 factorial design.
+
+|   | B1| B2|
+|:--|--:|--:|
+|A1 | 83| 77|
+|A2 | 83| 77|
+
+Is there a main effect of A? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+FALSE. The mean of the row A1 is equal to the mean of A2, therefore no main effect of A.
+
+`r unhide()`
+
+Is there a main effect of B? `r torf(TRUE)`
+
+`r hide("explanation")`
+
+TRUE. The mean of column B1 is not equal to the mean of column B2, therefore there is a main effect of B.
+
+`r unhide()`
+
+Is there an AB interaction? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+The simple effect of B at A1 is 83 - 77 = 6.
+
+The simple effect of B at A2 is also 83 - 77 = 6.
+
+The simple effects are the same, therefore no interaction. (FALSE)
+
+`r unhide()`
+
+:::
+
+#### Dataset 2
+
+:::{.try}
+
+Consider these population cell means from a 2x2 factorial design.
+
+|   | B1| B2|
+|:--|--:|--:|
+|A1 | 82| 92|
+|A2 | 92| 82|
+
+Is there a main effect of A? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+FALSE. The mean of the row A1 is equal to the mean of A2, therefore no main effect.
+
+`r unhide()`
+
+Is there a main effect of B? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+FALSE. The mean of column B1 is equal to the mean of column B2, therefore no main effect.
+
+`r unhide()`
+
+Is there an AB interaction? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+The simple effect of B at A1 is 82 - 92 = -10.
+
+The simple effect of B at A2 is 92 - 82 = +10.
+
+The simple effects are different, therefore interaction. (TRUE)
+
+`r unhide()`
+
+:::
+
+#### Dataset 3
+
+:::{.try}
+
+Consider these population cell means from a 2x2 factorial design.
+
+|   |  B1| B2|
+|:--|---:|--:|
+|A1 |  69| 85|
+|A2 | 101| 93|
+
+Is there a main effect of A? `r torf(TRUE)`
+
+`r hide("explanation")`
+
+TRUE. The mean of the row A1 is NOT equal to the mean of A2, therefore main effect.
+
+`r unhide()`
+
+Is there a main effect of B? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+TRUE. The mean of column B1 is NOT equal to the mean of column B2, therefore main effect.
+
+`r unhide()`
+
+Is there an AB interaction? `r torf(FALSE)`
+
+`r hide("explanation")`
+
+The simple effect of B at A1 is 69 - 85 = -16.
+
+The simple effect of B at A2 is 101 - 93 = 8.
+
+The simple effects are different, therefore interaction. (TRUE)
+
+`r unhide()`
+
+:::
+
+### Coding categorical predictors in regression
+
+:::{.try}
+
+Imagine you have run a study with a 2x3 design (two factors, one with two levels and one with three levels). Copy the code below into your R session and run it to create the variable `facdata` in your session which contains the data for this hypothetical experiment.
+
+```{r make-facdata, echo=TRUE}
+library("tidyverse")
+
+facdata <- tibble(A = rep(c("A1", "A2"), each = 12),
+                  B = rep(rep(c("B1", "B2", "B3"), each = 4), 2),
+                  Y = c(9, 8, 7, 9, 4, 3, 4, 3, 6, 5, 6, 6,
+                        4, 3, 4, 3, 9, 8, 7, 8, 5, 6, 6, 6))
+```
+
+Now use simple linear regression to test the main effect of A, main effect of B, and AxB interaction, and answer the following questions.
+
+Is the main effect of A signficant? `r torf(FALSE)`
+
+Is the main effect of B significant? `r torf(FALSE)`
+
+Is the AxB interaction significant? `r torf(TRUE)`
+
+`r hide("solution")`
+
+- main effect of A: **FALSE**
+- main effect of B: **FALSE**
+- AxB interaction: **TRUE**
+
+Here's how to perform the analysis.
+
+First, need to deviation code (or sum code) numeric predictor variables.
+
+```{r facdev-solution}
+facdev <- facdata %>%
+  mutate(Ad = if_else(A == "A2", 1/2, -1/2),
+         B2vB1 = if_else(B == "B2", 2/3, -1/3),
+         B3vB1 = if_else(B == "B3", 2/3, -1/3))
+
+## double check (important!)
+facdev %>%
+  distinct(A, B, Ad, B2vB1, B3vB1)
+```
+
+Now let's fit the base model with all the predictors.
+
+```{r facdev-solution2}
+## fit a model
+mod <- lm(Y ~ (B2vB1 + B3vB1) * Ad, facdev)
+
+summary(mod)
+```
+
+Use model comparison to test effects. First, main effect of A.
+
+```{r facdev-mainA}
+mod_noA <- update(mod, . ~ . -Ad)
+
+anova(mod, mod_noA)
+```
+
+Now main effect of B.
+
+```{r facdev-mainB}
+mod_noB <- update(mod, . ~ . -B2vB1 -B3vB1)
+
+anova(mod, mod_noB)
+```
+
+Finally, AxB interaction.
+
+```{r facdev-AB}
+mod_noAB <- update(mod, . ~ . -B2vB1:Ad -B3vB1:Ad)
+
+anova(mod, mod_noAB)
+```
+
+`r unhide()`
+
+:::
+

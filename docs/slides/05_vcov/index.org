@@ -1,0 +1,77 @@
+#+SETUPFILE: ../reveal.org
+#+TITLE: Variance-covariance matrices
+#+PROPERTY: header-args:R :session *R* :exports both :results value
+
+* TODO Tweaks							   :noexport:
+
+* Setup                                                            :noexport:
+
+#+BEGIN_SRC R
+  options(crayon.enabled = FALSE, tidyverse.quiet = TRUE)
+  library("tidyverse")
+  source("../theme_jetblack.R")
+  theme_set(theme_jetblack(14L))
+#+END_SRC
+
+* what?
+
+- covariance(X,Y): \(\rho_{xy}\sigma_x\sigma_y\)
+- covariance(X,X): \(\rho_{xx}\sigma_x\sigma_x = \sigma^2\)
+
+\(\mathbf{\Sigma}\)
+
+*A matrix that characterizes the spread of multivariate values.* 
+
+\begin{pmatrix}
+{\sigma_x}^2                & \rho_{xy} \sigma_x \sigma_y \\
+\rho_{yx} \sigma_y \sigma_x & {\sigma_y}^2 \\
+\end{pmatrix}
+
+Must be *symmetric* and *positive definite*
+
+#+begin_notes
+A variance-covariance matrix characterizes the spread of a multivariate distribution.
+
+Think about variance-covariance matrices as a /close relative to correlation matrices/.
+
+Think about variance-covariance matrices as a /generalization of the notion of standard deviation from univariate to multivariate data/.
+#+end_notes
+
+** bivariate distribution
+
+#+REVEAL_HTML: <iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="610" style="border: none; background: white;"></iframe>
+
+** 4x4
+
+A 4x4 covariance matrix with variables W, X, Y, Z.
+
+\begin{pmatrix}
+\rho_{ww}\sigma_w\sigma_w & \rho_{wx}\sigma_w\sigma_x & \rho_{wy}\sigma_w\sigma_y & \rho_{wz}\sigma_w\sigma_z \\
+\rho_{xw}\sigma_x\sigma_w & \rho_{xx}\sigma_x\sigma_x & \rho_{xy}\sigma_x\sigma_y & \rho_{xz}\sigma_x\sigma_z \\
+\rho_{yw}\sigma_y\sigma_w & \rho_{yx}\sigma_y\sigma_x & \rho_{yy}\sigma_y\sigma_y & \rho_{yz}\sigma_y\sigma_z \\
+\rho_{zw}\sigma_z\sigma_w & \rho_{zx}\sigma_z\sigma_x & \rho_{zy}\sigma_z\sigma_y & \rho_{zz}\sigma_z\sigma_z \\
+\end{pmatrix}
+
+** 4x4
+
+A 4x4 covariance matrix with variables W, X, Y, Z.
+
+\begin{pmatrix}
+{\sigma_w}^2              & \rho_{wx} \sigma_w\sigma_x & \rho_{wy}\sigma_w\sigma_y & \rho_{wz}\sigma_w\sigma_z \\
+\rho_{xw}\sigma_x\sigma_w & {\sigma_x}^2 & \rho_{xy}\sigma_x\sigma_y & \rho_{xz}\sigma_x\sigma_z \\
+\rho_{yw}\sigma_y\sigma_w & \rho_{yx}\sigma_y\sigma_x & {\sigma_y}^2 & \rho_{yz}\sigma_y\sigma_z \\
+\rho_{zw}\sigma_z\sigma_w & \rho_{zx}\sigma_z\sigma_x & \rho_{zy}\sigma_z\sigma_y & {\sigma_z}^2 \\
+\end{pmatrix}
+
+** diagonal matrix
+
+\begin{pmatrix}
+{\sigma_w}^2 &            0 &            0 &            0 \\
+           0 & {\sigma_x}^2 &            0 &            0 \\
+           0 &            0 & {\sigma_y}^2 &            0 \\
+           0 &            0 &            0 & {\sigma_z}^2 \\
+\end{pmatrix}
+
+* simulating bivariate data
+
+#+REVEAL_HTML: <iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="610" style="border: none; background: white;"></iframe>

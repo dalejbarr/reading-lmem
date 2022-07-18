@@ -1,0 +1,9 @@
+#+REVEAL_INIT_OPTIONS: transition:"fade"
+#+REVEAL_THEME: black
+#+REVEAL_ROOT: ../reveal.js
+#+REVEAL_TITLE_SLIDE_BACKGROUND: ../img/titlescreen.png
+#+REVEAL_TITLE_SLIDE: <font color="yellow"><b>%t</b></font><p><i>%a</i></p><p>%d</p>
+#+REVEAL_EXTRA_CSS: ../css/mods.css
+#+options: num:nil toc:nil
+#+AUTHOR: Dale Barr (University of Glasgow)
+#+DATE: Mixed-effects workshop, March 3-4, 2022 (Basel)

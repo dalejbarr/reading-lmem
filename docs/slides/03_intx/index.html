@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Interactions</title>
+<meta name="author" content="(Dale Barr (University of Glasgow))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
+
+<link rel="stylesheet" href="../css/mods.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Interactions</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+</section>
+
+<section>
+<section id="slide-orgbec23ae">
+<h2 id="orgbec23ae">Interactions</h2>
+<p>
+&ldquo;It depends.&rdquo;
+</p>
+
+<p>
+<b>The effect of a predictor variable on the response variable may depend upon
+the value(s) of one or more other predictor variables.</b>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org14f7ba3">
+<h2 id="org14f7ba3">continuous-by-categorical interactions</h2>
+<div class="outline-text-2" id="text-org14f7ba3">
+</div>
+</section>
+<section id="slide-org8d99e74">
+<h3 id="org8d99e74">strength and voice</h3>
+<p>
+<i>Do stronger people tend to have lower voices?</i>
+</p>
+
+<p>
+Han, C., Wang, H., Fasolt, V., Hahn, A. C., Holzleitner, I. J., DeBruine, L. M., &amp; Jones, B. C. (2017). No evidence for correlations between handgrip strength and sexually dimorphic acoustic properties of voices. bioRxiv, 227165.
+</p>
+
+<p>
+<a href="https://osf.io/na6be/">https://osf.io/na6be/</a>
+</p>
+
+</section>
+<section id="slide-org2b3ada2">
+<h3 id="org2b3ada2">the data</h3>
+<ul>
+<li>HGS: Hand grip strength</li>
+<li>F0: voice fundamental frequency</li>
+
+</ul>
+
+<pre class="example" id="org830c51a">
+# A tibble: 221 × 4
+      ID sex     HGS    F0
+   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     4 male   45.5 115. 
+ 2     7 male   31   147. 
+ 3     8 male   40   123. 
+ 4    19 male   37   120. 
+ 5    21 male   45    94.7
+ 6    22 male   50    98.8
+ 7    30 male   31    94.7
+ 8    31 male   47.5 124. 
+ 9    35 male   34    92.6
+10    36 male   30   111. 
+# … with 211 more rows
+</pre>
+
+</section>
+<section id="slide-org404debb">
+<h3 id="org404debb"></h3>
+
+<div id="org1afdadc" class="figure">
+<p><img src="img/scatterplot1.png" alt="scatterplot1.png" />
+</p>
+</div>
+
+<p>
+N = <code>221</code>
+</p>
+
+</section>
+<section id="slide-org89a6638">
+<h3 id="org89a6638">GLM</h3>
+<p>
+\(HGS_i = \beta_0 + \beta_1 F0_i + e_i\)
+</p>
+
+<div class="column" style="float:left; width: 30%">
+
+<div id="orgeaac1a9" class="figure">
+<p><img src="img/scatterplot1.png" alt="scatterplot1.png" />
+</p>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 70%">
+<pre class="example" id="orge6ba852">
+
+Call:
+lm(formula = HGS ~ F0, data = hgs)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-23.408  -4.115  -0.161   4.252  34.157 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 56.699687   1.491239   38.02   &lt;2e-16 ***
+F0          -0.144729   0.008509  -17.01   &lt;2e-16 ***
+---
+codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 7.008 on 219 degrees of freedom
+Multiple R-squared:  0.5692,	Adjusted R-squared:  0.5672 
+F-statistic: 289.3 on 1 and 219 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+</div>
+
+</section>
+<section id="slide-org21f0eb1">
+<h3 id="org21f0eb1"></h3>
+
+<div id="org79fdd56" class="figure">
+<p><img src="img/scatterplot2.png" alt="scatterplot2.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org286bc94">
+<h3 id="org286bc94"></h3>
+<p>
+\(HGS_i = \beta_0 + \beta_1 F0_i + \beta_2 SEX_i + \beta_3 F0_i SEX_i + e_i\)
+</p>
+
+<p>
+\(= \beta_0 + \beta_2 SEX_i + (\beta_1 + \beta_3 SEX_i) F0_i + e_i \)
+</p>
+
+<p>
+<code>HGS ~ F0 + sex + F0:sex</code>
+</p>
+
+<p>
+<code>HGS ~ F0 * sex</code>
+</p>
+
+<hr>
+
+<div class="column" style="float:left; width: 30%">
+
+<div id="org07731cc" class="figure">
+<p><img src="img/scatterplot2.png" alt="scatterplot2.png" />
+</p>
+</div>
+</div>
+
+<div class="column" style="float:left; width: 70%">
+<ul>
+<li>SEX: 0 = female, 1 = male</li>
+
+<li>female: \(\beta_0 + \beta_1 F0_i\)</li>
+<li>male: \(\beta_0 + \beta_2 + (\beta_1 + \beta_3) F0_i\)</li>
+
+</ul>
+</div>
+
+</section>
+<section id="slide-org6e1dae1">
+<h3 id="org6e1dae1">dummy coding</h3>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>hgs2 <span style="color: #008b8b;">&lt;-</span> hgs <span style="color: #008b8b;">%&gt;%</span>
+  mutate(sex_male = if_else(sex == <span style="color: #8b2252;">"male"</span>, 1, 0))
+
+<span style="color: #b22222;">## </span><span style="color: #b22222;">double check</span>
+hgs2 <span style="color: #008b8b;">%&gt;%</span> distinct(sex, sex_male)
+</code></pre>
+</div>
+
+<pre class="example">
+
+# A tibble: 2 × 2
+  sex    sex_male
+  &lt;chr&gt;     &lt;dbl&gt;
+1 male          1
+2 female        0
+</pre>
+
+</section>
+<section id="slide-orgb2a4fe5">
+<h3 id="orgb2a4fe5">Analysis</h3>
+<div class="column" style="float:left; width: 30%">
+
+<div id="org15e46af" class="figure">
+<p><img src="img/scatterplot2.png" alt="scatterplot2.png" />
+</p>
+</div>
+</div>
+
+<div class="column" style="float:left; width: 70%">
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>lm(HGS ~ sex_male * F0, hgs2) <span style="color: #008b8b;">%&gt;%</span> summary()
+</code></pre>
+</div>
+
+<pre class="example" id="org4bbacbb">
+
+Call:
+lm(formula = HGS ~ sex_male * F0, data = hgs2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-21.859  -3.540  -0.421   3.361  33.163 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 29.75789    6.50985   4.571 8.14e-06 ***
+sex_male    15.91254    7.87733   2.020   0.0446 *  
+F0          -0.02508    0.02965  -0.846   0.3985    
+sex_male:F0 -0.01642    0.04847  -0.339   0.7351    
+---
+codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.643 on 217 degrees of freedom
+Multiple R-squared:  0.6163,	Adjusted R-squared:  0.611 
+F-statistic: 116.2 on 3 and 217 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org1625787">
+<h2 id="org1625787">categorical-by-categorical interactions</h2>
+<div class="outline-text-2" id="text-org1625787">
+</div>
+</section>
+<section id="slide-org1a69189">
+<h3 id="org1a69189">Factorial designs</h3>
+<ul>
+<li>Used to address question involving more than one factor that can
+influence a DV, with each factor acting alone <i>or in combination
+with other factors</i>
+
+<ul>
+<li>What are the effects of cognitive therapy and drug therapy on mood
+in depressed individuals?</li>
+<li>Do male and female students learn better with male or female
+teachers?</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org105b85a">
+<h3 id="org105b85a">Full Factorial Designs</h3>
+<ul>
+<li>A study has a full factorial design if it has more than one IV and
+the levels of the IVs are &ldquo;fully crossed&rdquo;</li>
+<li>designs are designated using RxC (row-by-column) format</li>
+<li><b>cell:</b> unique combination of the levels of the factors</li>
+
+</ul>
+
+
+<div id="orgf7d2e48" class="figure">
+<p><img src="img/factorial.png" alt="factorial.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org8abcb1c">
+<h3 id="org8abcb1c">Factorial Plots and Interpretation</h3>
+
+<div id="org9f5440b" class="figure">
+<p><img src="img/scenarios.png" alt="scenarios.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org09c1b92">
+<h3 id="org09c1b92">Effects in Factorial Designs</h3>
+<ul>
+<li>Main Effects: tests of <i>marginal means</i>
+<ul>
+<li>\(H_0: \mu_{A_1} = \mu_{A_2}\)</li>
+<li>\(H_0: \mu_{B_1} = \mu_{B_2}\)</li>
+
+</ul></li>
+
+<li>Simple Effects: effect of factor at level of other
+<ul>
+<li>eff of \(B\) at \(A_1\), \(H_0: \mu_{A_1B_1} = \mu_{A_1B_2} \)</li>
+<li>eff of \(B\) at \(A_2\), \(H_0: \mu_{A_2B_1} = \mu_{A_2B_2} \)</li>
+
+</ul></li>
+
+<li>Interaction: equivalence of simple effects
+<ul>
+<li>\(H_0: \mu_{A_1B_2}-\mu_{A_1B_1} = \mu_{A_2B_2}-\mu_{A_2B_1}\)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgaf52df5">
+<h3 id="orgaf52df5">A Common Fallacy</h3>
+<div style="border: 2px solid white;">
+
+<p>
+&ldquo;The percentage of neurons showing cue-related activity increased with training in the mutant mice (\(p < 0.05\)), but not in the control mice (\(p > 0.05\)).&rdquo;
+</p>
+
+</div>
+
+<ul>
+<li>saying the simple effect is significant in one case but not in another does not imply that the simple effects are statistically different</li>
+
+</ul>
+
+<div class="citation" id="org2ff7c36">
+<p>
+Gelman, A., &amp; Stern, H. (2012). <a href="https://amstat.tandfonline.com/doi/abs/10.1198/000313006X152649#.XbAog_fTXeQ">The difference between &ldquo;significant&rdquo; and &ldquo;not significant&rdquo; is not itself statistically significant.</a> <i>The American Statistician</i>, <i>60</i>, 328&#x2013;331.
+</p>
+
+<p>
+Nieuwenhuis, S., Forstmann, B. U., &amp; Wagenmakers, E. J. (2011). <a href="https://www.nature.com/articles/nn.2886?draft=collection">Erroneous analyses of interactions in neuroscience: a problem of significance.</a> <i>Nature Neuroscience</i>, <i>14</i>, 1105-1107.
+</p>
+
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf64cc4b">
+<h2 id="orgf64cc4b">Coding categorical predictors</h2>
+<div class="outline-text-2" id="text-orgf64cc4b">
+</div>
+</section>
+<section id="slide-orgce5f346">
+<h3 id="orgce5f346">main schemes</h3>
+<div class="smalltbl2" id="orgbab7069">
+<p>
+
+</p>
+
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Scheme </th>
+   <th style="text-align:right;"> \(A_1\) </th>
+   <th style="text-align:right;"> \(A_2\) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Treatment (dummy) </td>
+   <td style="text-align:right;"> \(0\) </td>
+   <td style="text-align:right;"> \(1\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sum </td>
+   <td style="text-align:right;"> \(-1\) </td>
+   <td style="text-align:right;"> \(1\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Deviation </td>
+   <td style="text-align:right;"> \(-\frac{1}{2}\) </td>
+   <td style="text-align:right;"> \(\frac{1}{2}\) </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+
+<p>
+Choice of a coding scheme impacts interpretation of:
+</p>
+
+<ol>
+<li>the intercept term; and</li>
+<li>the interpretation of the tests for all but the highest-order effects and interactions in a factorial design.</li>
+
+</ol>
+
+</section>
+<section id="slide-org2863f31">
+<h3 id="org2863f31">Interpretation</h3>
+<div class="smalltbl2">
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:center;"> term </th>
+   <th style="text-align:center;"> treatment </th>
+   <th style="text-align:center;"> sum </th>
+   <th style="text-align:center;"> deviation </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> \(\mu\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{111}\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{...}\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{...}\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> \(A\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{211} - \bar{Y}_{111}\) </td>
+   <td style="text-align:center;"> \(\frac{(\bar{Y}_{2..} - \bar{Y}_{1..})}{2}\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{2..} - \bar{Y}_{1..}\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> \(B\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{121} - \bar{Y}_{111}\) </td>
+   <td style="text-align:center;"> \(\frac{(\bar{Y}_{.2.} - \bar{Y}_{.1.})}{2}\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{.2.} - \bar{Y}_{.1.}\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> \(C\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{112} - \bar{Y}_{111}\) </td>
+   <td style="text-align:center;"> \(\frac{(\bar{Y}_{..2} - \bar{Y}_{..1})}{2}\) </td>
+   <td style="text-align:center;"> \(\bar{Y}_{..2} - \bar{Y}_{..1}\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> \(AB\) </td>
+   <td style="text-align:center;"> \((\bar{Y}_{221} - \bar{Y}_{121}) - (\bar{Y}_{211} - \bar{Y}_{111})\) </td>
+   <td style="text-align:center;"> \(\frac{(\bar{Y}_{22.} - \bar{Y}_{12.}) - (\bar{Y}_{21.} - \bar{Y}_{11.})}{4}\) </td>
+   <td style="text-align:center;"> \((\bar{Y}_{22.} - \bar{Y}_{12.}) - (\bar{Y}_{21.} - \bar{Y}_{11.})\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> \(AC\) </td>
+   <td style="text-align:center;"> \((\bar{Y}_{212} - \bar{Y}_{211}) - (\bar{Y}_{112} - \bar{Y}_{111})\) </td>
+   <td style="text-align:center;"> \(\frac{(\bar{Y}_{2.2} - \bar{Y}_{1.2}) - (\bar{Y}_{2.1} - \bar{Y}_{1.1})}{4}\) </td>
+   <td style="text-align:center;"> \((\bar{Y}_{2.2} - \bar{Y}_{1.2}) - (\bar{Y}_{2.1} - \bar{Y}_{1.1})\) </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> \(BC\) </td>
+   <td style="text-align:center;"> \((\bar{Y}_{122} - \bar{Y}_{112}) - (\bar{Y}_{121} - \bar{Y}_{111})\) </td>
+   <td style="text-align:center;"> \(\frac{(\bar{Y}_{.22} - \bar{Y}_{.12}) - (\bar{Y}_{.21} - \bar{Y}_{.11})}{4}\) </td>
+   <td style="text-align:center;"> \((\bar{Y}_{.22} - \bar{Y}_{.12}) - (\bar{Y}_{.21} - \bar{Y}_{.11})\) </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+
+
+</section>
+<section id="slide-org243a488">
+<h3 id="org243a488">\(k > 2\): dummy coding</h3>
+<p>
+Arbitrarily choose one as &ldquo;baseline&rdquo;.
+</p>
+
+<div class="column" style="float:left; width: 40%">
+
+<p>
+\(k = 3\)
+</p>
+
+<div class="smalltbl2" id="orgc957eba">
+<p>
+
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right"><code>A2v1</code></th>
+<th scope="col" class="org-right"><code>A3v1</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(A_1\)</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_2\)</td>
+<td class="org-right">1</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_3\)</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="column" style="float:left; width: 60%">
+
+<p>
+\(k = 4\)
+</p>
+
+<div class="smalltbl2" id="org5b689b4">
+<p>
+
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right"><code>A2v1</code></th>
+<th scope="col" class="org-right"><code>A3v1</code></th>
+<th scope="col" class="org-right"><code>A4v1</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(A_1\)</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_2\)</td>
+<td class="org-right">1</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_3\)</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_4\)</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</section>
+<section id="slide-org3e224c7">
+<h3 id="org3e224c7">\(k > 2\): deviation coding</h3>
+<p>
+target level: \(\frac{k - 1}{k}\)
+</p>
+
+<p>
+otherwise: \(-\frac{1}{k}\)
+</p>
+
+<div class="column" style="float:left; width: 40%">
+
+<p>
+\(k = 3\)
+</p>
+
+<div class="smalltbl2" id="org7507b6a">
+<p>
+
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>A2v1</code></th>
+<th scope="col" class="org-left"><code>A3v1</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(A_1\)</td>
+<td class="org-left">-1/3</td>
+<td class="org-left">-1/3</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_2\)</td>
+<td class="org-left">2/3</td>
+<td class="org-left">-1/3</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_3\)</td>
+<td class="org-left">-1/3</td>
+<td class="org-left">2/3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="column" style="float:left; width: 60%">
+
+<p>
+\(k = 4\)
+</p>
+
+<div class="smalltbl2" id="org39bce9a">
+<p>
+
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>A2v1</code></th>
+<th scope="col" class="org-left"><code>A3v1</code></th>
+<th scope="col" class="org-left"><code>A4v1</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(A_1\)</td>
+<td class="org-left">-1/4</td>
+<td class="org-left">-1/4</td>
+<td class="org-left">-1/4</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_2\)</td>
+<td class="org-left">3/4</td>
+<td class="org-left">-1/4</td>
+<td class="org-left">-1/4</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_3\)</td>
+<td class="org-left">-1/4</td>
+<td class="org-left">3/4</td>
+<td class="org-left">-1/4</td>
+</tr>
+
+<tr>
+<td class="org-left">\(A_4\)</td>
+<td class="org-left">-1/4</td>
+<td class="org-left">-1/4</td>
+<td class="org-left">3/4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</section>
+<section id="slide-orgc430037">
+<h3 id="orgc430037">R implementation</h3>
+<p>
+Use <code>dplyr::if_else()</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>dat2 <span style="color: #008b8b;">&lt;-</span> dat <span style="color: #008b8b;">%&gt;%</span>
+  mutate(A2vA1 = if_else(A == <span style="color: #8b2252;">"A2"</span>, 2/3, -1/3),
+         A3vA1 = if_else(A == <span style="color: #8b2252;">"A3"</span>, 2/3, -1/3))
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>dat2 <span style="color: #008b8b;">%&gt;%</span> distinct(A, A2vA1, A3vA1)  
+</code></pre>
+</div>
+
+<pre class="example">
+# A tibble: 3 × 3
+  A      A2vA1  A3vA1
+  &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 A1    -0.333 -0.333
+2 A2     0.667 -0.333
+3 A3    -0.333  0.667
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-org1680ef8">
+<h2 id="org1680ef8">Formulas in R</h2>
+<div class="outline-text-2" id="text-org1680ef8">
+</div>
+</section>
+<section id="slide-org7b6c563">
+<h3 id="org7b6c563">shorthand form</h3>
+<pre class="example">
+y ~ a * b * c
+</pre>
+
+
+<p>
+is shorthand for
+</p>
+
+<pre class="example">
+y ~ a + b + c + a:b + a:c + b:c + a:b:c
+</pre>
+
+</section>
+<section id="slide-org3f77c3c">
+<h3 id="org3f77c3c">when \(k > 2\)</h3>
+<pre class="example">
+y ~ (a1 + a2) * b
+</pre>
+
+
+<p>
+is shorthand for
+</p>
+
+<pre class="example">
+y ~ a1 + a2 + b + a1:b + a2:b
+</pre>
+
+
+<p>
+and
+</p>
+
+<pre class="example">
+y ~ (a1 + a2) * (b1 + b2)
+</pre>
+
+
+<p>
+is shorthand for
+</p>
+
+<pre class="example">
+y ~ a1 + a2 + b1 + b2 + a1:b1 + a1:b2 + a2:b1 + a2:b2
+</pre>
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown,RevealZoom,RevealNotes],
+transition:"fade",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+]
+});
+
+
+</script>
+</body>
+</html>

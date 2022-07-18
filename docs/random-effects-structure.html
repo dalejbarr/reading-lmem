@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 7 Random effects structure | Mixed-effects models for longitudinal data</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 7 Random effects structure | Mixed-effects models for longitudinal data">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/random-effects-structure.html">
+<meta property="og:description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 7 Random effects structure | Mixed-effects models for longitudinal data">
+<meta name="twitter:description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Workshop Overview</a></li>
+<li><a class="" href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></li>
+<li><a class="" href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="" href="interactions.html"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="" href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></li>
+<li><a class="" href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="" href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="active" href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="" href="going-further.html"><span class="header-section-number">8</span> Going further</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="installing-and-configuring-rrstudio.html"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="" href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></li>
+<li><a class="" href="references-and-further-reading.html"><span class="header-section-number">C</span> References and Further Reading</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dalejbarr/basel-longitudinal">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="random-effects-structure" class="section level1">
+<h1>
+<span class="header-section-number">7</span> Random effects structure<a class="anchor" aria-label="anchor" href="#random-effects-structure"><i class="fas fa-link"></i></a>
+</h1>
+<div id="resources-5" class="section level2">
+<h2>
+<span class="header-section-number">7.1</span> Resources<a class="anchor" aria-label="anchor" href="#resources-5"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="slides/07_simgen/index.html">Slides</a></p>
+<p><a href="https://shiny.psy.gla.ac.uk/Dale/crossed">Crossed web app</a> demonstrating random effects for a simple crossed design</p>
+</div>
+<div id="maximal-random-effects" class="section level2">
+<h2>
+<span class="header-section-number">7.2</span> Maximal random effects<a class="anchor" aria-label="anchor" href="#maximal-random-effects"><i class="fas fa-link"></i></a>
+</h2>
+<div class="try">
+<p>For this first part, you will load in datasets created for you. Your task is to inspect the data and then to write the formula corresponding to the 'maximal' random effects structure.</p>
+<p>Download the following files and place them in your working directory.</p>
+<ul>
+<li><a href="data/fdata1.rds"><code>fdata1.rds</code></a></li>
+<li><a href="data/fdata2.rds"><code>fdata2.rds</code></a></li>
+<li><a href="data/fdata3.rds"><code>fdata3.rds</code></a></li>
+<li><a href="data/fdata4.rds"><code>fdata4.rds</code></a></li>
+</ul>
+<p>Then load them in using</p>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+
+<span class="va">fdata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata1.rds"</span><span class="op">)</span>
+<span class="va">fdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata2.rds"</span><span class="op">)</span>
+<span class="va">fdata3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata3.rds"</span><span class="op">)</span>
+<span class="va">fdata4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata4.rds"</span><span class="op">)</span></code></pre></div>
+<p>The dataset <code>fdata1</code> is from a factorial experiment with design factors <code>C</code>, <code>E</code>, and <code>W</code> and dependent variable <code>rtime</code>. Individual subjects are identified by the variable <code>subject_id</code>.</p>
+<p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects (just the formula, e.g., <code>Y ~ Z + (Z | id)</code>, not the full <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> call).</p>
+<p><strong>You do not need to create numeric predictors to use in the formula. Just use <code>C</code>, <code>E</code>, and <code>W</code> as they are.</strong></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rtime</span> <span class="op">~</span> <span class="va">C</span> <span class="op">*</span> <span class="va">E</span> <span class="op">*</span> <span class="va">W</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">*</span> <span class="va">E</span> <span class="op">*</span> <span class="va">W</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span></code></pre></div>
+</div>
+<p>The dataset <code>fdata2</code> is from a factorial experiment with design factors <code>J</code>, <code>T</code>, and <code>W</code> and dependent variable <code>depvar</code>. Individual subjects are identified by the variable <code>subject_id</code>.</p>
+<p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects.</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">depvar</span> <span class="op">~</span> <span class="va">J</span> <span class="op">*</span> <span class="cn">T</span> <span class="op">*</span> <span class="va">W</span> <span class="op">+</span> <span class="op">(</span><span class="va">W</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span></code></pre></div>
+</div>
+<p>The dataset <code>fdata3</code> is from a factorial experiment with independent variables <code>B</code>, <code>P</code>, and <code>U</code> and dependent variable <code>rtime</code>. The design includes crossed random factors of subjects and stimuli, with subjects identified by variable <code>subject_id</code>, and stimuli by variable <code>stim_id</code>.</p>
+<p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects.</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rtime</span> <span class="op">~</span> <span class="va">B</span> <span class="op">*</span> <span class="va">P</span> <span class="op">*</span> <span class="va">U</span> <span class="op">+</span> <span class="op">(</span><span class="va">B</span> <span class="op">*</span> <span class="va">U</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">P</span> <span class="op">|</span> <span class="va">stim_id</span><span class="op">)</span></code></pre></div>
+</div>
+<p>The dataset <code>fdata4</code> is from a factorial experiment with independent variables <code>G</code>, <code>L</code>, and <code>T</code> and dependent variable <code>rtime</code>. The design includes crossed random factors of subjects and stimuli, with subjects identified by variable <code>sub_id</code>, and stimuli by variable <code>stm_id</code>.</p>
+<p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects.</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rtime</span> <span class="op">~</span> <span class="va">G</span> <span class="op">*</span> <span class="va">L</span> <span class="op">*</span> <span class="cn">T</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">sub_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">L</span> <span class="op">|</span> <span class="va">stm_id</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="re-analysis-of-keysar-barr-balin-brauner-experiment-2" class="section level2">
+<h2>
+<span class="header-section-number">7.3</span> Re-analysis of Keysar, Barr, Balin &amp; Brauner, Experiment 2<a class="anchor" aria-label="anchor" href="#re-analysis-of-keysar-barr-balin-brauner-experiment-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>For this task, you will be re-analyzing data from <strong>Experiment 2</strong> of this paper:</p>
+<p>Keysar, B., Barr, D. J., Balin, J. A. &amp; Brauner, J. S. (2000). <a href="https://journals.sagepub.com/doi/abs/10.1111/1467-9280.00211">Taking Perspective In Conversation: The Role of Mutual Knowledge In Comprehension</a>. <em>Psychological Science</em>, 11, 32--38.</p>
+<div class="figure">
+<img src="images/KBBB2000Setup.png" alt="view of basic experimental task"><p class="caption">view of basic experimental task</p>
+</div>
+<p>This experiment examined perspective taking during conversation. In the experiment, participants ("addressees") sat across from a confederate director who instructed them to move objects around in a grid placed between them while their eyes were tracked. For example, the director might say, "move the truck one space down." The grid contained some objects hidden from the director's view. The experiment was structured such that the director would occasionally refer to a mutually visible object ("move the small candle...") in a way that would also happen to match a "competitor" object visible only to themselves (and presumably unknown to the director). This was the main "experimental" condition of the study (<code>cond</code> = <code>E</code>). In a control condition (<code>cond</code> = <code>C</code>), the competitor object was replaced with something that would not match the description (e.g., an apple). The experiment previous to this established that these hidden competitor produced "egocentric interference" that delayed interpretation.</p>
+<p>In the current experiment (Experiment 2), the question was whether the "source" of these hidden objects mattered. In one condition (<code>psource = EX</code>) the experimenter gave the participants the objects to hide. In another condition (<code>psource = RN</code>), participants drew numbers from a bag, believing that this random lottery determined which objects went in the hidden spaces.</p>
+<p>Thus, the experiment was a 2 (source, EX or RN) by 2 (condition, E or C) design. The experiment had crossed random factors of subject (<code>subj</code>) and stimulus (<code>object</code>), but was analyzed using separate by-subjects and by-items analysis. Your task is to re-analyze the analyses of the DVs <code>firstfix</code> and <code>rt</code> using linear mixed-effects model with appropriately specified random effects for subjects ('subj') and stimuli (<code>object</code>).</p>
+<p>Make a new working directory, download the R binary (<code>.rds</code>) file <a href="data/kbbb_2000.rds">kbbb_2000.rds</a>, and place it in the directory. Start and new R script (or RMarkdown script) and save it in the working directory along with the data.</p>
+<p>At the top of your script, type the following lines to set up your session (you might want to restart R before doing this):</p>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+
+<span class="va">kbbb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"kbbb_2000.rds"</span><span class="op">)</span></code></pre></div>
+<p>Have a look at the tibble <code>kbbb</code>. A description of the fields is below.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="43%">
+<col width="56%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>subj</code></td>
+<td align="left">unique integer identifying each subject</td>
+</tr>
+<tr class="even">
+<td align="left"><code>psource</code></td>
+<td align="left">source of hidden objects (<code>EX</code> = experimenter, <code>RN</code> = random)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>object</code></td>
+<td align="left">experimental stimulus identifier</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cond</code></td>
+<td align="left">whether critical hidden object was competitor (<code>E</code>) or noncompetitor (<code>C</code>)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>firstfix</code></td>
+<td align="left">first fixation on the target (in milliseconds)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>rt</code></td>
+<td align="left">final fixation on the target (in milliseconds)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>regrab</code></td>
+<td align="left">reaches/grabs of critical hidden object (<code>R</code> = reach, <code>G</code> = grab, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> = none)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>nfix</code></td>
+<td align="left">number of fixations on the critical hidden object</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>totfix</code></td>
+<td align="left">total fixation time on critical hidden object (in milliseconds)</td>
+</tr>
+</tbody>
+</table></div>
+<p>The DVs you should analyze is <code>firstfix</code>.</p>
+<p>From this point on, you're on your own. Don't peek at the solution until you have given it your best shot. Good luck!</p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## make deviation-coded predictors</span>
+<span class="va">kbbb2</span> <span class="op">&lt;-</span> <span class="va">kbbb</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>C <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"E"</span>, <span class="fl">.5</span>, <span class="op">-</span><span class="fl">.5</span><span class="op">)</span>,
+         PS <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">psource</span> <span class="op">==</span> <span class="st">"EX"</span>, <span class="fl">.5</span>, <span class="op">-</span><span class="fl">.5</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## double check</span>
+<span class="va">kbbb2</span> <span class="op">%&gt;%</span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">cond</span>, <span class="va">psource</span>, <span class="va">C</span>, <span class="va">PS</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+##   cond  psource     C    PS     n
+##   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 C     EX       -0.5   0.5   100
+## 2 C     RN       -0.5  -0.5   100
+## 3 E     EX        0.5   0.5   100
+## 4 E     RN        0.5  -0.5   100</code></pre>
+<p><strong>First fixation analysis</strong></p>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## just get some descriptive stats</span>
+<span class="va">ff_means</span> <span class="op">&lt;-</span> <span class="va">kbbb2</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarise</span><span class="op">(</span>m <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">firstfix</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, 
+            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">firstfix</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+            .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span>
+
+<span class="va">ff_means</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 4
+##   psource cond      m    sd
+##   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 EX      C     1764. 1386.
+## 2 EX      E     2907. 3312.
+## 3 RN      C     1796. 1459.
+## 4 RN      E     2743. 3513.</code></pre>
+<p>(<em>Note</em>: it's a good idea to plot the data before analysis as well, so we'll make a factorial plot)</p>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">ff_means</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">cond</span>, <span class="va">m</span>, colour <span class="op">=</span> <span class="va">psource</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">psource</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">psource</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="07_random-effects-structure_files/figure-html/solution2-1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Check out the random effects structure, by subject.</p>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">kbbb2</span> <span class="op">%&gt;%</span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">subj</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 80 × 4
+##    subj  psource cond      n
+##    &lt;fct&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
+##  1 S01   EX      C         5
+##  2 S01   EX      E         5
+##  3 S02   EX      C         5
+##  4 S02   EX      E         5
+##  5 S04   RN      C         5
+##  6 S04   RN      E         5
+##  7 S05   RN      C         5
+##  8 S05   RN      E         5
+##  9 S06   EX      C         5
+## 10 S06   EX      E         5
+## # … with 70 more rows</code></pre>
+<p>Need a by-subject random slope for <code>cond</code>.</p>
+<p>Check out the random effects structure, by stimulus.</p>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">kbbb2</span> <span class="op">%&gt;%</span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">object</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 40 × 4
+##    object psource cond      n
+##    &lt;fct&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
+##  1 blkpen EX      C        10
+##  2 blkpen EX      E        10
+##  3 blkpen RN      C        10
+##  4 blkpen RN      E        10
+##  5 brush  EX      C        10
+##  6 brush  EX      E        10
+##  7 brush  RN      C        10
+##  8 brush  RN      E        10
+##  9 cards  EX      C        10
+## 10 cards  EX      E        10
+## # … with 30 more rows</code></pre>
+<p>Need by-stimulus random slopes for <code>psource</code>, <code>cond</code>, and their interaction.</p>
+<p>Now we're ready to fit the model</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ff_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">|</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">|</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,
+               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></code></pre></div>
+<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## we get boundary (singular) fit: see ?isSingular</span>
+<span class="co">## look at the results and see if we should simplify</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: firstfix ~ PS * C + (C | subj) + (PS * C | object)
+##    Data: kbbb2
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   7304.8   7376.5  -3634.4   7268.8      379 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.7730 -0.4516 -0.1774  0.3196  7.3645 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr          
+##  subj     (Intercept)  530742   728.5                 
+##           C           1240695  1113.9   1.00          
+##  object   (Intercept) 1155440  1074.9                 
+##           PS           241786   491.7   1.00          
+##           C           1509593  1228.7   1.00 1.00     
+##           PS:C         135976   368.7   1.00 1.00 1.00
+##  Residual             4408338  2099.6                 
+## Number of obs: 397, groups:  subj, 40; object, 10
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   2300.9      374.1   6.151
+## PS              65.2      348.8   0.187
+## C             1049.0      475.8   2.205
+## PS:C           197.3      561.6   0.351
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ff_mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">||</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">||</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,
+               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></code></pre></div>
+<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## still, boundary (singular) fit: see ?isSingular</span>
+<span class="co">## look at the results and see if we should simplify</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) +  
+##     (0 + PS | object) + (0 + C | object) + (0 + PS:C | object))
+##    Data: kbbb2
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   7332.4   7376.2  -3655.2   7310.4      386 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.5222 -0.4645 -0.1832  0.2605  7.7264 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  subj     (Intercept)  397373   630.4  
+##  subj.1   C            474525   688.9  
+##  object   (Intercept) 1102159  1049.8  
+##  object.1 PS            59018   242.9  
+##  object.2 C           1113391  1055.2  
+##  object.3 PS:C              0     0.0  
+##  Residual             4917572  2217.6  
+## Number of obs: 397, groups:  subj, 40; object, 10
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  2301.52     364.07   6.322
+## PS             66.24     308.59   0.215
+## C            1047.79     415.68   2.521
+## PS:C          195.19     495.80   0.394
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ff_mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">||</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">+</span> <span class="va">C</span> <span class="op">||</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,
+               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
+## Formula: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) +  
+##     (0 + PS | object) + (0 + C | object))
+##    Data: kbbb2
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   7330.4   7370.3  -3655.2   7310.4      387 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.5222 -0.4645 -0.1832  0.2605  7.7265 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  subj     (Intercept)  397383   630.4  
+##  subj.1   C            474304   688.7  
+##  object   (Intercept) 1101968  1049.7  
+##  object.1 PS            59073   243.0  
+##  object.2 C           1113742  1055.3  
+##  Residual             4917593  2217.6  
+## Number of obs: 397, groups:  subj, 40; object, 10
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  2301.52     364.04   6.322
+## PS             66.24     308.60   0.215
+## C            1047.79     415.72   2.520
+## PS:C          195.19     495.78   0.394</code></pre>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ff_mod_PS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">PS</span><span class="op">)</span>
+<span class="va">ff_mod_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">C</span><span class="op">)</span>
+<span class="va">ff_mod_PSC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">PS</span><span class="op">:</span><span class="va">C</span><span class="op">)</span>
+
+<span class="co">## test of main effect of PS</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_PS</span>, <span class="va">ff_mod3</span><span class="op">)</span>
+
+<span class="co">## test of main effect of C</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_C</span>, <span class="va">ff_mod3</span><span class="op">)</span>
+
+<span class="co">## test of PS:C interaction</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_PSC</span>, <span class="va">ff_mod3</span><span class="op">)</span></code></pre></div>
+<pre><code>## Data: kbbb2
+## Models:
+## ff_mod_PS: firstfix ~ C + (1 | subj) + (0 + C | subj) + (1 | object) + (0 + PS | object) + (0 + C | object) + PS:C
+## ff_mod3: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) + (0 + PS | object) + (0 + C | object))
+##           npar    AIC    BIC  logLik deviance Chisq Df Pr(&gt;Chisq)
+## ff_mod_PS    9 7328.5 7364.3 -3655.2   7310.5                    
+## ff_mod3     10 7330.4 7370.3 -3655.2   7310.4 0.046  1     0.8302
+## Data: kbbb2
+## Models:
+## ff_mod_C: firstfix ~ PS + (1 | subj) + (0 + C | subj) + (1 | object) + (0 + PS | object) + (0 + C | object) + PS:C
+## ff_mod3: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) + (0 + PS | object) + (0 + C | object))
+##          npar    AIC    BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)  
+## ff_mod_C    9 7333.4 7369.3 -3657.7   7315.4                       
+## ff_mod3    10 7330.4 7370.3 -3655.2   7310.4 4.9974  1    0.02539 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Data: kbbb2
+## Models:
+## ff_mod_PSC: firstfix ~ PS + C + (1 | subj) + (0 + C | subj) + (1 | object) + (0 + PS | object) + (0 + C | object)
+## ff_mod3: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) + (0 + PS | object) + (0 + C | object))
+##            npar    AIC    BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)
+## ff_mod_PSC    9 7328.6 7364.4 -3655.3   7310.6                     
+## ff_mod3      10 7330.4 7370.3 -3655.2   7310.4 0.1547  1     0.6941</code></pre>
+
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script>
+
+</div>
+<div class="chapter-nav">
+<div class="prev"><a href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></div>
+<div class="next"><a href="going-further.html"><span class="header-section-number">8</span> Going further</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#random-effects-structure"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="nav-link" href="#resources-5"><span class="header-section-number">7.1</span> Resources</a></li>
+<li><a class="nav-link" href="#maximal-random-effects"><span class="header-section-number">7.2</span> Maximal random effects</a></li>
+<li><a class="nav-link" href="#re-analysis-of-keysar-barr-balin-brauner-experiment-2"><span class="header-section-number">7.3</span> Re-analysis of Keysar, Barr, Balin &amp; Brauner, Experiment 2</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dalejbarr/basel-longitudinal/blob/main/07_random-effects-structure.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dalejbarr/basel-longitudinal/edit/main/07_random-effects-structure.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Specifying random effects structure</title>
+<meta name="author" content="(Dale Barr (University of Glasgow))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
+
+<link rel="stylesheet" href="../css/mods.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Specifying random effects structure</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+</section>
+
+<section>
+<section id="slide-org29fa068">
+<h2 id="org29fa068">Generalizing over subjects and stimuli</h2>
+<div class="outline-text-2" id="text-org29fa068">
+</div>
+</section>
+<section id="slide-org612cd79">
+<h3 id="org612cd79">Clark&rsquo;s Fallacy</h3>
+<ul>
+<li>Psycholinguistic experiments sample language materials as well as subjects</li>
+<li>Language stimuli should be treated as a random, not fixed factor</li>
+<li>Clark&rsquo;s suggestion: \(F'\), min-\(F'\)</li>
+<li>Modern solution: Linear-mixed effects with crossed random factors of subjects and stimuli</li>
+
+</ul>
+
+<div class="citation" id="orgd94b378">
+<p>
+Baayen, R. H., Davidson, D. J., &amp; Bates, D. M. (2008). <a href="https://doi.org/10.1016/j.jml.2007.12.005">Mixed-effects modeling with crossed random effects for subjects and items.</a> <i>Journal of Memory and Language</i>, <i>59</i>, 390-412.
+</p>
+
+<p>
+Clark, H. H. (1973). <a href="https://doi.org/10.1016/S0022-5371(73)80014-3">The language-as-fixed-effect fallacy: A critique of language statistics in psychological research</a>. <i>Journal of Verbal Learning and Verbal Behavior</i>, <i>12</i>, 335-359.
+</p>
+
+</div>
+
+</section>
+<section id="slide-org13ad649">
+<h3 id="org13ad649">generalizing over encounters</h3>
+<p>
+The target of inference in much of psychology and related fields has
+been misidentified as a population of <i>subjects</i> or <i>stimuli</i>, when the
+actual target of inference is a population of events: <b>encounters</b>
+</p>
+
+<div class="smaller" id="orgebc242e">
+<ul>
+<li>readers encountering particular types of words</li>
+<li>male participants judging attractiveness of female faces, or vice versa</li>
+<li>gamers encountering particular types of violent games</li>
+<li>audience members encountering particular types of dance movements</li>
+<li>insomniacs (versus controls) encountering emotional expressions</li>
+<li>birds hearing particular types of birdsongs</li>
+
+</ul>
+
+</div>
+
+<div class="citation" id="org0a89314">
+<p>
+Barr, D. J. (2018). Generalizing Over Encounters. In the <i>Oxford Handbook of Psycholinguistics.</i>
+</p>
+
+</div>
+
+</section>
+<section id="slide-org9ec7aab">
+<h3 id="org9ec7aab">maximal random effects</h3>
+<ul>
+<li>all sampling units get random intercepts</li>
+<li>any factor gets by-unit random slope if:
+<ul>
+<li>levels administered within-unit</li>
+<li>multiple obs per level per unit</li>
+
+</ul></li>
+<li>for interaction terms, need slope for the highest-order combination
+of within-unit terms in the interaction</li>
+
+</ul>
+
+<div class="citation" id="orga132ee3">
+<p>
+Barr, D. J. (2013). <a href="https://doi.org/10.3389/fpsyg.2013.00328">Random effects structure for testing interactions in linear mixed-effects models</a>. <i>Frontiers in Psychology</i>, <i>4</i>, 328.
+</p>
+
+<p>
+Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). <a href="https://doi.org/10.1016/j.jml.2012.11.001">Random effects structure for confirmatory hypothesis testing: Keep it maximal</a>. <i>Journal of Memory and Language</i>, <i>68</i>, 255-278.
+</p>
+
+</div>
+
+</section>
+<section id="slide-org748db54">
+<h3 id="org748db54"></h3>
+<p>
+<a href="https://shiny.psy.gla.ac.uk/Dale/crossed/">crossed web app</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org0b89b60">
+<h2 id="org0b89b60">design from data</h2>
+<ul>
+<li>three way design <code>DV ~ A * B * C + ...</code></li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>count(dat1, subj_id, A, B, C)
+</code></pre>
+</div>
+
+<pre class="example" id="orgdd75f06">
+# A tibble: 32 × 5
+   subj_id A     B     C         n
+     &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+ 1       1 A2    B1    C1        4
+ 2       1 A2    B1    C2        4
+ 3       1 A2    B2    C1        4
+ 4       1 A2    B2    C2        4
+ 5       2 A2    B1    C1        4
+ 6       2 A2    B1    C2        4
+ 7       2 A2    B2    C1        4
+ 8       2 A2    B2    C2        4
+ 9       3 A1    B1    C1        4
+10       3 A1    B1    C2        4
+# … with 22 more rows
+</pre>
+
+</section>
+<section id="slide-org7992186">
+<h3 id="org7992186">specifying the model</h3>
+<div class="column" style="float:left; width: 35%">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">\(A\)</td>
+<td class="org-left">✗</td>
+</tr>
+
+<tr>
+<td class="org-left">\(B\)</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">\(C\)</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">\(AB\)</td>
+<td class="org-left">✗</td>
+</tr>
+
+<tr>
+<td class="org-left">\(AC\)</td>
+<td class="org-left">✗</td>
+</tr>
+
+<tr>
+<td class="org-left">\(BC\)</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">\(ABC\)</td>
+<td class="org-left">✗</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="column" style="float:right; width: 65%">
+
+<pre class="example">
+DV ~ A + B + C + A:B + A:C + B:C + A:B:C + 
+                        (B + C + B:C | subj_id)
+</pre>
+
+
+<p>
+or, more simply:
+</p>
+
+<pre class="example">
+DV ~ A * B * C + (B * C | subj_id)
+</pre>
+
+
+</div>
+
+</section>
+<section id="slide-org3b91b5f">
+<h3 id="org3b91b5f"></h3>
+<p>
+example with crossed subjects and stimuli
+</p>
+
+<p>
+<code>DV ~ A * B * C +</code>
+</p>
+
+<p>
+<code>(? | subj_id) +</code>
+</p>
+
+<p>
+<code>(? | item_id)</code>
+</p>
+
+</section>
+<section id="slide-orgc39b243">
+<h3 id="orgc39b243">by subject</h3>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>count(dat2, subj_id, A, B, C)
+</code></pre>
+</div>
+
+<pre class="example" id="orgdf18d7e">
+# A tibble: 64 × 5
+   subj_id A     B     C         n
+     &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+ 1       1 A1    B1    C1        2
+ 2       1 A1    B1    C2        2
+ 3       1 A1    B2    C1        2
+ 4       1 A1    B2    C2        2
+ 5       1 A2    B1    C1        2
+ 6       1 A2    B1    C2        2
+ 7       1 A2    B2    C1        2
+ 8       1 A2    B2    C2        2
+ 9       2 A1    B1    C1        2
+10       2 A1    B1    C2        2
+# … with 54 more rows
+</pre>
+
+</section>
+<section id="slide-org8204865">
+<h3 id="org8204865">by stimuli</h3>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>count(dat2, item_id, A, B, C)
+</code></pre>
+</div>
+
+<pre class="example" id="org6a990a2">
+# A tibble: 128 × 5
+   item_id A     B     C         n
+     &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+ 1       1 A1    B1    C1        1
+ 2       1 A1    B1    C2        1
+ 3       1 A1    B2    C1        1
+ 4       1 A1    B2    C2        1
+ 5       1 A2    B1    C1        1
+ 6       1 A2    B1    C2        1
+ 7       1 A2    B2    C1        1
+ 8       1 A2    B2    C2        1
+ 9       2 A1    B1    C1        1
+10       2 A1    B1    C2        1
+# … with 118 more rows
+</pre>
+
+</section>
+<section id="slide-orgca8408a">
+<h3 id="orgca8408a">model</h3>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>DV ~ A * B * C + (A * B * C | subj_id) + (1 | item_id)
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org70e5493">
+<h2 id="org70e5493">troubleshooting</h2>
+<p>
+<b>non-convergence warning</b>
+</p>
+
+<p>
+<i>Parameter estimates from a non-converging model are not to be trusted, but can be used as a guide to simplification.</i>
+</p>
+
+<p>
+<b>&rsquo;singularity&rsquo; message</b>
+</p>
+
+<p>
+<i>One or more of the estimated covariance matrices is &rsquo;singular&rsquo;. You&rsquo;re probably fine to ignore it, but it&rsquo;s sometimes preferable to simplify to get rid of it.</i>
+</p>
+
+</section>
+<section id="slide-org885f3a3">
+<h3 id="org885f3a3">strategy</h3>
+<ol>
+<li>make sure the random effects structure is appropriately specified</li>
+<li>scale your predictor variables, use deviation coding for categorical predictors</li>
+<li>consider zero-covariances model</li>
+<li>drop smallest random effect</li>
+
+</ol>
+
+<p>
+<i>iterate until the warning/message goes away</i>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown,RevealZoom,RevealNotes],
+transition:"fade",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+]
+});
+
+
+</script>
+</body>
+</html>

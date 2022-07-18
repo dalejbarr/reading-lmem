@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Interactions | Mixed-effects models for longitudinal data</title>
+<meta name="author" content="Dale J. Barr">
+<meta name="description" content="3.1 Resources Slides My book chapter on interactions provides an in-depth treatment Factorial web app allows you to play around with main effects and interactions in a 2x2 factorial design  3.2...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Interactions | Mixed-effects models for longitudinal data">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/interactions.html">
+<meta property="og:description" content="3.1 Resources Slides My book chapter on interactions provides an in-depth treatment Factorial web app allows you to play around with main effects and interactions in a 2x2 factorial design  3.2...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Interactions | Mixed-effects models for longitudinal data">
+<meta name="twitter:description" content="3.1 Resources Slides My book chapter on interactions provides an in-depth treatment Factorial web app allows you to play around with main effects and interactions in a 2x2 factorial design  3.2...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6NP3MF25W3');
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Workshop Overview</a></li>
+<li><a class="" href="regression-basics.html"><span class="header-section-number">1</span> Regression basics</a></li>
+<li><a class="" href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></li>
+<li><a class="active" href="interactions.html"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="" href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></li>
+<li><a class="" href="variance-covariance-matrices.html"><span class="header-section-number">5</span> Variance-covariance matrices</a></li>
+<li><a class="" href="linear-mixed-effects-models.html"><span class="header-section-number">6</span> Linear mixed-effects models</a></li>
+<li><a class="" href="random-effects-structure.html"><span class="header-section-number">7</span> Random effects structure</a></li>
+<li><a class="" href="going-further.html"><span class="header-section-number">8</span> Going further</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="installing-and-configuring-rrstudio.html"><span class="header-section-number">A</span> Installing and Configuring R/RStudio</a></li>
+<li><a class="" href="coding-in-r-with-the-rstudio-ide.html"><span class="header-section-number">B</span> Coding in R with the RStudio IDE</a></li>
+<li><a class="" href="references-and-further-reading.html"><span class="header-section-number">C</span> References and Further Reading</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dalejbarr/basel-longitudinal">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="interactions" class="section level1">
+<h1>
+<span class="header-section-number">3</span> Interactions<a class="anchor" aria-label="anchor" href="#interactions"><i class="fas fa-link"></i></a>
+</h1>
+<div id="resources-1" class="section level2">
+<h2>
+<span class="header-section-number">3.1</span> Resources<a class="anchor" aria-label="anchor" href="#resources-1"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="slides/03_intx/index.html">Slides</a></p>
+<p><a href="https://psyteachr.github.io/stat-models-v1/interactions.html">My book chapter on interactions</a> provides an in-depth treatment</p>
+<p><a href="https://shiny.psy.gla.ac.uk/Dale/factorial2">Factorial web app</a> allows you to play around with main effects and interactions in a 2x2 factorial design</p>
+</div>
+<div id="activities-1" class="section level2">
+<h2>
+<span class="header-section-number">3.2</span> Activities<a class="anchor" aria-label="anchor" href="#activities-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="categorical-by-continuous-interactions" class="section level3">
+<h3>
+<span class="header-section-number">3.2.1</span> Categorical-by-continuous interactions<a class="anchor" aria-label="anchor" href="#categorical-by-continuous-interactions"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Are cat owners more frugal than dog owners? You run a study looking at the relationship between age (<code>AGE</code>) and net savings in British pounds sterling (<code>SAVE</code>) for dog versus cat owners (<code>HAS_DOG</code>: 0 = cat owner, 1 = dog owner). You run a multiple regression and get the following output (numbers are made up):</p>
+<pre><code>Call:
+lm(formula = SAVE ~ HAS_DOG * AGE, data = dat)
+
+Coefficients:
+            Estimate Std.Error t value    Pr(&gt;|t|)
+(Intercept)   1043.3  58.28492   17.90 0.000000000
+HAS_DOG        -97.8 -48.17734    2.03 0.042356539
+AGE            165.9  53.51613    3.10 0.001935206
+HAS_DOG:AGE    -14.1 -10.07143    1.40 0.161513318</code></pre>
+<p><strong>Answer the following questions about this output.</strong></p>
+<p>What is the intercept of the regression line relating age to savings for cat owners (to 1 decimal place)?</p>
+<p><input class="webex-solveme nospaces" size="6" data-answer='["1043.3"]'></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1043.3</span> <span class="co"># the value of `(Intercept)`</span></code></pre></div>
+<pre><code>## [1] 1043.3</code></pre>
+</div>
+<p>What is the slope of the regression line relating age to savings for cat owners?</p>
+<p><input class="webex-solveme nospaces" size="5" data-answer='["165.9"]'></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">165.9</span> <span class="co"># the value of the `AGE` coefficient</span></code></pre></div>
+<pre><code>## [1] 165.9</code></pre>
+</div>
+<p>How much savings does the model predict for a 46-year-old cat owner?</p>
+<p><input class="webex-solveme nospaces" size="6" data-answer='["8674.7"]'></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1043.3</span> <span class="op">+</span> <span class="fl">165.9</span> <span class="op">*</span> <span class="fl">46</span> <span class="co"># = 8674.7</span></code></pre></div>
+</div>
+<p>What is the intercept of the regression line relating age to savings for dog owners?</p>
+<p><input class="webex-solveme nospaces" size="5" data-answer='["945.5"]'></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1043.3</span> <span class="op">+</span> <span class="op">(</span><span class="op">-</span><span class="fl">97.8</span><span class="op">)</span> <span class="co"># = 945.5</span></code></pre></div>
+</div>
+<p>What is the slope of the regression line relating age to savings for dog owners? (type the value)</p>
+<p><input class="webex-solveme nospaces" size="5" data-answer='["151.8"]'></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">165.9</span> <span class="op">+</span> <span class="op">(</span><span class="op">-</span><span class="fl">14.1</span><span class="op">)</span> <span class="co"># = 151.8</span></code></pre></div>
+</div>
+<p>How much savings would you predict for a 18-year-old dog owner? (type the value)</p>
+<p><input class="webex-solveme nospaces" size="6" data-answer='["3677.9"]'></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="fl">1043.3</span> <span class="op">-</span> <span class="fl">97.8</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">165.9</span> <span class="op">-</span> <span class="fl">14.1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">18</span> <span class="co"># = 3677.9</span></code></pre></div>
+</div>
+<p>True or false: The relationship between age and savings is statistically different for cat and dog owners (<span class="math inline">\(\alpha = .05\)</span>).</p>
+<p><select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<p>The statement is <code>FALSE</code> because the test of the null hypothesis for the interaction coefficient is not significant (p = .162).</p>
+</div>
+</div>
+</div>
+<div id="categorical-by-categorical-interactions" class="section level3">
+<h3>
+<span class="header-section-number">3.2.2</span> Categorical-by-categorical interactions<a class="anchor" aria-label="anchor" href="#categorical-by-categorical-interactions"><i class="fas fa-link"></i></a>
+</h3>
+<p>For the next questions, assume that you are given <strong>population means</strong> that have been measured without error.</p>
+<div class="warning">
+<p>Note that with real data you will be dealing with <strong>sample means</strong> that have been measured with error rather than <strong>population means</strong>. With real data, you can't just look at the cell means to tell whether or not there is an effect. There may be a numerical difference, but you'd have to run an inferential test to see whether the difference is unlikely to be due to chance.</p>
+</div>
+<div id="dataset-1" class="section level4">
+<h4>
+<span class="header-section-number">3.2.2.1</span> Dataset 1<a class="anchor" aria-label="anchor" href="#dataset-1"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>Consider these population cell means from a 2x2 factorial design.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">B1</th>
+<th align="right">B2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">A1</td>
+<td align="right">83</td>
+<td align="right">77</td>
+</tr>
+<tr class="even">
+<td align="left">A2</td>
+<td align="right">83</td>
+<td align="right">77</td>
+</tr>
+</tbody>
+</table></div>
+<p>Is there a main effect of A? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>FALSE. The mean of the row A1 is equal to the mean of A2, therefore no main effect of A.</p>
+</div>
+<p>Is there a main effect of B? <select class="webex-select"><option value="blank"></option>
+<option value="answer">TRUE</option>
+<option value="">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>TRUE. The mean of column B1 is not equal to the mean of column B2, therefore there is a main effect of B.</p>
+</div>
+<p>Is there an AB interaction? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>The simple effect of B at A1 is 83 - 77 = 6.</p>
+<p>The simple effect of B at A2 is also 83 - 77 = 6.</p>
+<p>The simple effects are the same, therefore no interaction. (FALSE)</p>
+</div>
+</div>
+</div>
+<div id="dataset-2" class="section level4">
+<h4>
+<span class="header-section-number">3.2.2.2</span> Dataset 2<a class="anchor" aria-label="anchor" href="#dataset-2"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>Consider these population cell means from a 2x2 factorial design.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">B1</th>
+<th align="right">B2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">A1</td>
+<td align="right">82</td>
+<td align="right">92</td>
+</tr>
+<tr class="even">
+<td align="left">A2</td>
+<td align="right">92</td>
+<td align="right">82</td>
+</tr>
+</tbody>
+</table></div>
+<p>Is there a main effect of A? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>FALSE. The mean of the row A1 is equal to the mean of A2, therefore no main effect.</p>
+</div>
+<p>Is there a main effect of B? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>FALSE. The mean of column B1 is equal to the mean of column B2, therefore no main effect.</p>
+</div>
+<p>Is there an AB interaction? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>The simple effect of B at A1 is 82 - 92 = -10.</p>
+<p>The simple effect of B at A2 is 92 - 82 = +10.</p>
+<p>The simple effects are different, therefore interaction. (TRUE)</p>
+</div>
+</div>
+</div>
+<div id="dataset-3" class="section level4">
+<h4>
+<span class="header-section-number">3.2.2.3</span> Dataset 3<a class="anchor" aria-label="anchor" href="#dataset-3"><i class="fas fa-link"></i></a>
+</h4>
+<div class="try">
+<p>Consider these population cell means from a 2x2 factorial design.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">B1</th>
+<th align="right">B2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">A1</td>
+<td align="right">69</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="left">A2</td>
+<td align="right">101</td>
+<td align="right">93</td>
+</tr>
+</tbody>
+</table></div>
+<p>Is there a main effect of A? <select class="webex-select"><option value="blank"></option>
+<option value="answer">TRUE</option>
+<option value="">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>TRUE. The mean of the row A1 is NOT equal to the mean of A2, therefore main effect.</p>
+</div>
+<p>Is there a main effect of B? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>TRUE. The mean of column B1 is NOT equal to the mean of column B2, therefore main effect.</p>
+</div>
+<p>Is there an AB interaction? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+explanation
+</button>
+<p>The simple effect of B at A1 is 69 - 85 = -16.</p>
+<p>The simple effect of B at A2 is 101 - 93 = 8.</p>
+<p>The simple effects are different, therefore interaction. (TRUE)</p>
+</div>
+</div>
+</div>
+</div>
+<div id="coding-categorical-predictors-in-regression" class="section level3">
+<h3>
+<span class="header-section-number">3.2.3</span> Coding categorical predictors in regression<a class="anchor" aria-label="anchor" href="#coding-categorical-predictors-in-regression"><i class="fas fa-link"></i></a>
+</h3>
+<div class="try">
+<p>Imagine you have run a study with a 2x3 design (two factors, one with two levels and one with three levels). Copy the code below into your R session and run it to create the variable <code>facdata</code> in your session which contains the data for this hypothetical experiment.</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
+
+<span class="va">facdata</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,
+                  B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"B3"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,
+                  Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">9</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>,
+                        <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Now use simple linear regression to test the main effect of A, main effect of B, and AxB interaction, and answer the following questions.</p>
+<p>Is the main effect of A signficant? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<p>Is the main effect of B significant? <select class="webex-select"><option value="blank"></option>
+<option value="">TRUE</option>
+<option value="answer">FALSE</option></select></p>
+<p>Is the AxB interaction significant? <select class="webex-select"><option value="blank"></option>
+<option value="answer">TRUE</option>
+<option value="">FALSE</option></select></p>
+<div class="webex-solution">
+<button>
+solution
+</button>
+<ul>
+<li>main effect of A: <strong>FALSE</strong>
+</li>
+<li>main effect of B: <strong>FALSE</strong>
+</li>
+<li>AxB interaction: <strong>TRUE</strong>
+</li>
+</ul>
+<p>Here's how to perform the analysis.</p>
+<p>First, need to deviation code (or sum code) numeric predictor variables.</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">facdev</span> <span class="op">&lt;-</span> <span class="va">facdata</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>Ad <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="st">"A2"</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,
+         B2vB1 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">B</span> <span class="op">==</span> <span class="st">"B2"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,
+         B3vB1 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">B</span> <span class="op">==</span> <span class="st">"B3"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## double check (important!)</span>
+<span class="va">facdev</span> <span class="op">%&gt;%</span>
+  <span class="fu">distinct</span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">Ad</span>, <span class="va">B2vB1</span>, <span class="va">B3vB1</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
+##   A     B        Ad  B2vB1  B3vB1
+##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A1    B1     -0.5 -0.333 -0.333
+## 2 A1    B2     -0.5  0.667 -0.333
+## 3 A1    B3     -0.5 -0.333  0.667
+## 4 A2    B1      0.5 -0.333 -0.333
+## 5 A2    B2      0.5  0.667 -0.333
+## 6 A2    B3      0.5 -0.333  0.667</code></pre>
+<p>Now let's fit the base model with all the predictors.</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## fit a model</span>
+<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="op">(</span><span class="va">B2vB1</span> <span class="op">+</span> <span class="va">B3vB1</span><span class="op">)</span> <span class="op">*</span> <span class="va">Ad</span>, <span class="va">facdev</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Y ~ (B2vB1 + B3vB1) * Ad, data = facdev)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -1.25  -0.50   0.25   0.50   1.00 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  5.79167    0.13819  41.910  &lt; 2e-16 ***
+## B2vB1       -0.12500    0.33850  -0.369    0.716    
+## B3vB1       -0.12500    0.33850  -0.369    0.716    
+## Ad          -0.08333    0.27639  -0.302    0.766    
+## B2vB1:Ad     9.25000    0.67700  13.663 6.08e-11 ***
+## B3vB1:Ad     4.75000    0.67700   7.016 1.51e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.677 on 18 degrees of freedom
+## Multiple R-squared:  0.9122, Adjusted R-squared:  0.8878 
+## F-statistic:  37.4 on 5 and 18 DF,  p-value: 6.764e-09</code></pre>
+<p>Use model comparison to test effects. First, main effect of A.</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_noA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">Ad</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noA</span><span class="op">)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Y ~ (B2vB1 + B3vB1) * Ad
+## Model 2: Y ~ B2vB1 + B3vB1 + B2vB1:Ad + B3vB1:Ad
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     18 8.2500                           
+## 2     19 8.2917 -1 -0.041667 0.0909 0.7665</code></pre>
+<p>Now main effect of B.</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_noB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">B2vB1</span> <span class="op">-</span><span class="va">B3vB1</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noB</span><span class="op">)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Y ~ (B2vB1 + B3vB1) * Ad
+## Model 2: Y ~ Ad + B2vB1:Ad + B3vB1:Ad
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     18 8.2500                           
+## 2     20 8.3333 -2 -0.083333 0.0909 0.9135</code></pre>
+<p>Finally, AxB interaction.</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mod_noAB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">B2vB1</span><span class="op">:</span><span class="va">Ad</span> <span class="op">-</span><span class="va">B3vB1</span><span class="op">:</span><span class="va">Ad</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noAB</span><span class="op">)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Y ~ (B2vB1 + B3vB1) * Ad
+## Model 2: Y ~ B2vB1 + B3vB1 + Ad
+##   Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)    
+## 1     18  8.250                                 
+## 2     20 93.833 -2   -85.583 93.364 3.14e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script><div class="chapter-nav">
+<div class="prev"><a href="multiple-regression.html"><span class="header-section-number">2</span> Multiple Regression</a></div>
+<div class="next"><a href="modeling-trends.html"><span class="header-section-number">4</span> Modeling trends</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#interactions"><span class="header-section-number">3</span> Interactions</a></li>
+<li><a class="nav-link" href="#resources-1"><span class="header-section-number">3.1</span> Resources</a></li>
+<li>
+<a class="nav-link" href="#activities-1"><span class="header-section-number">3.2</span> Activities</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#categorical-by-continuous-interactions"><span class="header-section-number">3.2.1</span> Categorical-by-continuous interactions</a></li>
+<li><a class="nav-link" href="#categorical-by-categorical-interactions"><span class="header-section-number">3.2.2</span> Categorical-by-categorical interactions</a></li>
+<li><a class="nav-link" href="#coding-categorical-predictors-in-regression"><span class="header-section-number">3.2.3</span> Coding categorical predictors in regression</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dalejbarr/basel-longitudinal/blob/main/03_interactions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dalejbarr/basel-longitudinal/edit/main/03_interactions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

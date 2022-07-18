@@ -1,0 +1,245 @@
+# Multiple Regression
+
+## Resources
+
+[Slides](slides/02_multreg/index.html)
+
+My textbook chapter on [multiple regression](https://psyteachr.github.io/stat-models-v1/multiple-regression.html) covers a lot of the material in greater depth.
+
+## Activity
+
+For this set of exercises, you're going to be working with some real data collected about students from a previous year of student in statistics at the University of Glasgow. The data have been anonymized, and no demographic or other sensitive information has been provided. Each student is identified by a unique value of the variable `id`.
+
+Students were given the STats Anxiety Rating Scale (STARS), a 51-item questionnaire which measures student's attitudes toward statistics [@cruise1985]. For each item, students are asked to rate either agreement with a statement on a 1 to 5 scale (1 = strongly disagree, 5 = strongly agree), or rate how anxious they would feel on a 1 to 5 scale (1 = no anxiety, 5 = strong anxiety). Higher numbers mean more anxiety or more negative attitudes toward statistics.  If you're interested, you can see the individual survey items below.
+
+`r hide("Click here to view the 51 STARS items")`
+
+|item_id |item                                                                                                                                                        |subscale     |
+|:-------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|
+|i1      |Studying for an examination in a statistics course                                                                                                          |Anxiety   |
+|i2      |Interpreting the meaning of a table in a journal article                                                                                                    |Anxiety   |
+|i3      |Going to ask my statistics teacher for individual help with material I am having difficulty understanding                                                   |Anxiety   |
+|i4      |Doing the coursework for a statistics course                                                                                                                |Anxiety   |
+|i5      |Making an objective decision based on empirical data                                                                                                        |Anxiety   |
+|i6      |Reading a journal article that includes some statistical analyses                                                                                           |Anxiety   |
+|i7      |Trying to decide which analysis is appropriate for my research project                                                                                      |Anxiety   |
+|i8      |Doing an examination in a statistics course                                                                                                                 |Anxiety   |
+|i9      |Reading an advertisement for a car which includes figures on miles per gallon, depreciation, etc.                                                           |Anxiety   |
+|i10     |Walking into the room to take a statistics test                                                                                                             |Anxiety   |
+|i11     |Interpreting the meaning of a probability value once I have found it                                                                                        |Anxiety   |
+|i12     |Arranging to have a body of data put into the computer                                                                                                      |Anxiety   |
+|i13     |Finding that another student in class got a different answer than I did to a statistical problem                                                            |Anxiety   |
+|i14     |Determining whether to reject or retain the null hypothesis                                                                                                 |Anxiety   |
+|i15     |Waking up in the morning on the day of a statistics test                                                                                                    |Anxiety   |
+|i16     |Asking one of your lecturers for help in understanding a printout                                                                                           |Anxiety   |
+|i17     |Trying to understand the odds in a lottery                                                                                                                  |Anxiety   |
+|i18     |Watching a student search through a load of computer printouts from his/her research                                                                        |Anxiety   |
+|i19     |Asking someone in the computer lab for help in understanding a printout                                                                                     |Anxiety   |
+|i20     |Trying to understand the statistical analyses described in the abstract of a journal article                                                                |Anxiety   |
+|i21     |Enrolling in a statistics course                                                                                                                            |Anxiety   |
+|i22     |Going over a final examination in statistics after it has been marked                                                                                       |Anxiety   |
+|i23     |Asking a fellow student for help in understanding a printout                                                                                                |Anxiety   |
+|i24     |I am a subjective person, so the objectivity of statistics is inappropriate for me                                                                          |Agreement |
+|i25     |I have not done maths for a long time. I know I will have problems getting through statistics                                                               |Agreement |
+|i26     |I wonder why I have to do all these things in statistics when in actual life I will never use them                                                          |Agreement |
+|i27     |Statistics is worthless to me since it is empirical and my area of specialization is abstract                                                               |Agreement |
+|i28     |Statistics takes more time than it is worth                                                                                                                 |Agreement |
+|i29     |I feel statistics is a waste                                                                                                                                |Agreement |
+|i30     |Statistics teachers are so abstract they seem inhuman                                                                                                       |Agreement |
+|i31     |I cannot even understand secondary school maths; how can I possibly do statistics?                                                                          |Agreement |
+|i32     |Most statistics teachers are not human                                                                                                                      |Agreement |
+|i33     |I lived this long without knowing statistics, why should I learn it now?                                                                                    |Agreement |
+|i34     |Since I have never enjoyed maths I do not see how I can enjoy statistics                                                                                    |Agreement |
+|i35     |I do not want to learn to like statistics                                                                                                                   |Agreement |
+|i36     |Statistics is for people who have a natural leaning toward maths                                                                                            |Agreement |
+|i37     |Statistics is a pain I could do without                                                                                                                     |Agreement |
+|i38     |I do not have enough brains to get through statistics                                                                                                       |Agreement |
+|i39     |I could enjoy statistics if it were not so mathematical                                                                                                     |Agreement |
+|i40     |I wish the statistics requirement would be removed from my academic program                                                                                 |Agreement |
+|i41     |I do not understand why someone in my field needs statistics                                                                                                |Agreement |
+|i42     |I do not see why I have to fill my head with statistics. It will have no use in my career                                                                   |Agreement |
+|i43     |Statistics teachers speak a different language                                                                                                              |Agreement |
+|i44     |Statisticians are more number oriented than they are people oriented                                                                                        |Agreement |
+|i45     |I cannot tell you why, but I just do not like statistics                                                                                                    |Agreement |
+|i46     |Statistics teachers talk so fast you cannot logically follow them                                                                                           |Agreement |
+|i47     |Statistical figures are not fit for human consumption                                                                                                       |Agreement |
+|i48     |Statistics is not really bad. It is just too mathematical                                                                                                   |Agreement |
+|i49     |Affective (emotional) skills are so important in my (future) profession that I do not want to clutter my thinking with something as cognitive as statistics |Agreement |
+|i50     |I am never going to use statistics so why should I have to take it?                                                                                         |Agreement |
+|i51     |I am too slow in my thinking to get through statistics                                                                                                      |Agreement | 
+
+`r unhide()`
+
+The STARS items can be divided up into six different subscales [@hanna2008], which reflect different aspects of statistics training that students may feel anxiety toward: Asking For Help, Interpretation, Self Concept, Teacher, Test, and (Self-)Worth.
+
+Students in this course were allowed to freely choose what software they used to perform the class assignments, either SPSS or R.
+
+The data is in the file [stars-wide.csv](data/stars-wide.csv){target="_download"}
+
+Your task is to use multiple regression examine the relationship between the stats anxiety subscales and overall performance in the class, as measured by the students' final grades.
+
+## Tasks
+
+Open up a new RMarkdown file and create separate code chunks for each of the following tasks. Alternatively, you can write your code into an R script and mark each task using comments.
+
+
+### Import the data
+
+:::{.try}
+
+You will need to use the **`tidyverse`** package as well as the **`corrr`** package. Load in those packages and then import `stars-wide.csv`. You might want to look at the [Data Import Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf){target="_blank"}.
+
+```{r data-import, webex.hide="solution", message = FALSE}
+library("tidyverse")
+library("corrr")
+
+stars <- read_csv("data/stars-wide.csv",
+                  col_types = "iiddddddc")
+
+## remember to look at your data before proceeding!
+stars
+```
+:::
+
+### Create a correlation matrix
+
+:::{.try}
+
+Create a correlation matrix using `corrr::correlate()` showing the bivariate correlation between your response variable (`grade`) and the six subscale means.
+
+`r hide("hint")`
+
+Select the variables that you need and then use `correlate()` from the `corrr` package.
+
+`r unhide()`
+
+```{r corr-mx, webex.hide="solution"}
+stars %>%
+  select(-id, -software) %>%
+  correlate() %>%
+  shave(upper = TRUE) %>%
+  fashion() %>%
+  knitr::kable(align = "r")
+```
+
+:::
+
+### Visualize all pairwise correlations
+
+:::{.try}
+
+Now visualize all of the pairwise correlations.
+
+`r hide("hint")`
+
+Use `pairs()`. See `?pairs` for help and examples.
+
+`r unhide()`
+
+```{r pairs, fig.width = 6, fig.height = 6, webex.hide="solution"}
+stars %>%
+  select(-id, -software) %>%
+  pairs()
+```
+
+:::
+
+### Run the multiple regression
+
+:::{.try}
+
+Estimate the parameters for the multiple regression, with grade as the response variable and the subscale means as the predictors. Don't forget to display your results using `summary()`, and take a moment to think about what all the numbers mean.
+
+`r hide("hint")`
+
+`lm(dv ~ iv1 + iv2 + ..., data = ???)`
+
+`r unhide()`
+
+```{r fit-model, webex.hide="solution"}
+model <- lm(grade ~ Ask_For_Help + Interpretation + Self_Concept +
+              Teacher + Test + Worth,
+            data = stars)
+
+summary(model)
+```
+:::
+
+### Which subscale is the 'best' predictor?
+
+:::{.try}
+
+Is there one subscale that is more strongly linked to the final grade? The different subscales have different variances, so you need to re-run the regression after standardizing the variables.
+
+`r hide("hint")`
+
+calculate z-scores for each predictor; in tidyverse you can do this using
+
+```
+stars %>%
+  mutate(zx = (x - mean(x)) / sd(x),
+         zy = (y - mean(y)) / sd(y), ... etc)
+```
+
+`r unhide()`
+
+```{r zscores, webex.hide="solution"}
+## two ways to do this:
+## 1. just type it all out
+zscores1 <- stars %>%
+  mutate(Ask_For_Help = (Ask_For_Help - mean(Ask_For_Help)) / sd(Ask_For_Help),
+         Interpretation = (Interpretation - mean(Interpretation)) / sd(Interpretation),
+         Self_Concept = (Self_Concept - mean(Self_Concept)) / sd(Self_Concept),
+         Teacher = (Teacher - mean(Teacher)) / sd(Teacher),
+         Test = (Test - mean(Test)) / sd(Test),
+         Worth = (Worth - mean(Worth)) / sd(Worth))
+
+## 2 (advanced). use 'scoping' variant of mutate; see ?mutate_at
+zscores1 <- stars %>%
+  mutate_at(vars(-id, -grade, -software), ~ (.x - mean(.x)) / sd(.x))
+
+model_z <- lm(grade ~ Ask_For_Help + Interpretation + Self_Concept +
+                Teacher + Test + Worth,
+              data = zscores1)
+
+summary(model_z)
+```
+:::
+
+### Compare models
+
+:::{.try}
+
+Could we do just as well predicting grades from the 'best' predictor as we could by including all six subscale predictors? Do an analysis to test this.
+
+`r hide("hint")`
+
+Fit two models and compare using `anova()`
+
+`r unhide()`
+
+```{r self-concept, webex.hide="solution"}
+## we are doing it with the standardized scores;
+## could also do it using the unstandardized scores and would get the same result
+sc_only <- lm(grade ~ Self_Concept, zscores1)
+
+anova(sc_only, model_z)
+## no evidence for improvement by adding other 5 predictors!
+
+summary(sc_only)
+```
+
+:::
+
+### Choice of software and grade
+
+:::{.try}
+
+Run a simple regression that predicts grades by choice of software (SPSS versus R).
+
+```{r grade-by-software, webex.hide="solution"}
+model_gxs <- lm(grade ~ software, stars)
+
+summary(model_gxs)
+```
+:::

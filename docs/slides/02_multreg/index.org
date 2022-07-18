@@ -1,0 +1,186 @@
+#+SETUPFILE: ../reveal.org
+#+PROPERTY: header-args:R :session *R* :exports both :results output
+#+TITLE: Multiple regression
+
+* Setup                                                            :noexport:
+
+#+begin_src R
+  set.seed(62)
+  options(crayon.enabled = FALSE, tidyverse.quiet=TRUE)
+  library("readxl")
+  library("tidyverse")
+
+  dat <- read_excel("final_dataset.xlsx")
+
+  .cnames <- c("grade", "GPA", "lecture", "nclicks")
+  .cmx <- matrix(.3, nrow = 4, ncol = 4,
+		dimnames = list(.cnames, .cnames))
+  diag(.cmx) <- 1
+  .sds <- c(1, 1, 2, 15)
+  for (i in 1:nrow(.cmx)) {
+    for (j in 1:ncol(.cmx)) {
+      .cmx[i, j] <- .cmx[i, j] * .sds[i] * .sds[j]
+    }
+  }
+
+  .grades <- MASS::mvrnorm(100,
+		c(grade = 2.5, GPA = 2.5, lecture = 7, nclicks = 100),
+		.cmx) %>%
+    as_tibble() %>%
+    mutate(grade = case_when(grade < 0 ~ 0,
+			 grade > 4 ~ 4,
+			 TRUE ~ grade),
+	   GPA = case_when(GPA < 0 ~ 0,
+			   GPA > 4 ~ 4,
+			   TRUE ~ GPA),
+	   lecture = case_when(lecture < 0 ~ 0L,
+			       lecture > 10 ~ 10L,
+			       TRUE ~ as.integer(round(lecture))),
+	   nclicks = as.integer(round(nclicks)))
+
+  dir.create("data", FALSE)
+  write_csv(.grades, "data/grades.csv")
+#+end_src
+
+* TODO Tweaks                                                      :noexport:
+- added variable plots
+- to select or not to select variables?
+- find a *real* dataset to work with for first part?
+
+* Moving beyond simple regression
+
+- dealing with multiple predictors
+- model comparison
+- coding categorical predictors
+
+* Multiple regression
+
+General model for single-level data with \(m\) predictors:
+
+\(Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i \)
+
+individual \(X\)s can be any combination of continuous and categorical predictors (and their interactions)
+
+Each \(\beta_j\) is the *partial effect of \(X_{j}\) holding all other \(X\)s constant*
+
+**(NB: single-level data is rare in psychology)**
+
+* Example
+
+Are lecture attendance and engagement with online materials associated with higher grades in statistics?
+
+Does this relationship hold after controlling for overall GPA?
+
+** Import and correlation
+
+#+ATTR_HTML: :target _download
+[[file:data/grades.csv][grades.csv]]
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 45%">
+
+#+begin_src R :exports code
+  grades <-
+    read_csv("data/grades.csv", 
+	     col_types = "ddii")
+#+end_src
+
+#+begin_src R :exports results
+grades
+#+end_src
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 55%">
+
+#+begin_src R
+  library("corrr")
+
+  grades %>%
+    correlate() %>%
+    shave() %>%
+    fashion()
+#+end_src
+
+#+REVEAL_HTML: </div>
+
+** visualization
+
+#+HEADER: :file pairs.png :width 400 :height 400 :dpi 150
+#+begin_src R :results output graphics file
+grades %>%
+  pairs()
+#+end_src
+
+#+RESULTS:
+[[file:pairs.png]]
+
+** Estimation
+
+\(Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i\)
+
+=lm(Y ~ X1 + X2 + ... + Xm, data)=
+
+#+begin_src R :exports code
+my_model <- lm(grade ~ lecture + nclicks, grades)   
+#+end_src
+
+** Output
+
+#+begin_src R :exports both
+summary(my_model)
+#+end_src
+
+** Standardized coefficients
+
+#+begin_src R :exports code :results silent
+  grades2 <- grades %>%
+    mutate(lecture_c = (lecture - mean(lecture)) / sd(lecture),
+	   nclicks_c = (nclicks - mean(nclicks)) / sd(nclicks))
+  summary(lm(grade ~ lecture_c + nclicks_c, grades2))
+#+end_src
+
+#+begin_src R :exports results
+  out <- capture.output(summary(lm(grade ~ lecture_c + nclicks_c, grades2)))
+  cat(out[-(1:4)], sep = "\n")  
+#+end_src
+
+** Model comparison
+
+Is engagement (as measured by lecture attendance and downloads) positively associated with final course grade *above and beyond* student ability (as measured by GPA)?
+
+** Strategy
+
+Compare "base" model with control vars to a "bigger" model with control plus focal vars
+
+#+begin_src R
+  base_model <- lm(grade ~ GPA, grades)
+  big_model <- lm(grade ~ GPA + lecture + nclicks, grades)
+
+  anova(base_model, big_model)
+#+end_src
+
+\(F(2, 96) = 1.31, p = .275\)
+
+If \(p < \alpha\), bigger model is better.
+
+** =update()=
+
+#+begin_src R
+  base_model <- lm(grade ~ GPA, grades)
+  big_model <- update(base_model, . ~ . +lecture +nclicks)
+  
+  anova(base_model, big_model)
+#+end_src
+
+** Dummy coding binary vars
+
+Arbitrarily assign one of the two levels to 0; assign the other to 1.
+
+*NB: sign of the variable depends on the coding!*
+
+#+begin_src R :eval never :exports code
+newvar = if_else(oldvar == "targetlevel", 1, 0)
+#+end_src
+
+See =?dplyr::if_else()=
+

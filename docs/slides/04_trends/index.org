@@ -1,0 +1,227 @@
+#+SETUPFILE: ../reveal.org
+#+TITLE: Modeling trends
+#+PROPERTY: header-args:R :session *R* :exports both :results value
+
+* Setup                                                            :noexport:
+
+#+BEGIN_SRC R
+  options(crayon.enabled = FALSE, tidyverse.quiet = TRUE)
+  library("tidyverse")
+  library("lme4")
+  source("../theme_jetblack.R")
+  theme_set(theme_jetblack(14L))
+#+END_SRC
+
+* modeling latent change
+
+a.k.a., "growth curve analysis", "latent trend models"
+
+approach: assume the pattern of growth/change develops following the parameters of some unobserved (latent) function
+
+#+begin_notes
+- could be basically anything, ideally, "functional form" driven by theory, but can also be data driven
+
+- focus on single-level data, but often multilevel
+#+end_notes
+
+** simplest model
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+begin_src R :exports results :results output graphics file :file belenky.png
+  s308 <- sleepstudy[sleepstudy$Subject == "308", ]
+  
+  ggplot(s308,
+	 aes(Days, Reaction)) +
+    geom_point(color = "yellow", size = 2) +
+    geom_smooth(method = "lm",
+		se = FALSE) +
+    scale_x_continuous(breaks = 0:9) +
+    labs(x = "Nights deprived",
+	 y = "Mean Response Time (ms)") +
+    ggtitle("Belenky et al. (2003)",
+	    subtitle = "sleep deprivation study")
+#+end_src
+
+#+RESULTS:
+[[file:belenky.png]]
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+$$Y_i = \beta_0 + \beta_1 t_i + e_i$$
+
+linear trend is *assumed* as an approximation
+
+#+begin_src R :exports none :results silent
+  mod <- lm(Reaction ~ Days, s308)
+  b0 <- coef(mod)["(Intercept)"]
+  b1 <- coef(mod)["Days"]
+#+end_src
+
+\(\beta_0\) = src_R[:exports results :results value]{sprintf("%0.0f", b0)} 
+
+\(\beta_1\) = src_R[:exports results :results value]{sprintf("%0.0f", b1)} 
+
+#+REVEAL_HTML: </div>
+
+#+begin_notes
+one possible consequence of model misspecification: residuals will be non-normal
+#+end_notes
+
+** Other possible models
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%">
+
+quadratic
+
+#+begin_src R :exports results :results output graphics file :file belenky2.png
+  ggplot(s308,
+	 aes(Days, Reaction)) +
+    geom_point(color = "yellow", size = 2) +
+    geom_smooth(method = "lm",
+		formula = y ~ x + I(x^2),
+		se = FALSE) +
+    scale_x_continuous(breaks = 0:9) +
+    labs(x = "Nights deprived",
+	 y = "Mean Response Time (ms)") +
+    ggtitle("Belenky et al. (2003)",
+	    subtitle = "sleep deprivation study")
+#+end_src
+
+#+REVEAL_HTML: </div>
+
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%">
+
+cubic
+
+#+begin_src R :exports results :results output graphics file :file belenky3.png
+  ggplot(s308,
+	 aes(Days, Reaction)) +
+    geom_point(color = "yellow", size = 2) +
+    geom_smooth(method = "lm",
+		formula = y ~ x + I(x^2) + I(x^3),
+		se = FALSE) +
+    scale_x_continuous(breaks = 0:9) +
+    labs(x = "Nights deprived",
+	 y = "Mean Response Time (ms)") +
+    ggtitle("Belenky et al. (2003)",
+	    subtitle = "sleep deprivation study")
+#+end_src
+
+
+#+REVEAL_HTML: </div>
+
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%">
+
+"wiggly"
+
+#+begin_src R :exports results :results output graphics file :file belenky4.png
+  ggplot(s308,
+	 aes(Days, Reaction)) +
+    geom_point(color = "yellow", size = 2) +
+    geom_smooth(method = "loess",
+		se = FALSE) +
+    scale_x_continuous(breaks = 0:9) +
+    labs(x = "Nights deprived",
+	 y = "Mean Response Time (ms)") +
+    ggtitle("Belenky et al. (2003)",
+	    subtitle = "sleep deprivation study")
+#+end_src
+
+#+REVEAL_HTML: </div>
+
+** polynomial models
+
+Order:
+| first (linear)     | $Y_i = \beta_0 + \beta_1 t_i + e_i$                                    |
+| second (quadratic) | $Y_i = \beta_0 + \beta_1 t_i + \beta_2 {t_i}^2 +e_i$                   |
+| third (cubic)      | $Y_i = \beta_0 + \beta_1 t_i + \beta_2 {t_i}^2 + \beta_3 {t_i}^3 +e_i$ |
+
+#+begin_notes
+order: the highest order of exponent
+
+can go arbitrarily high
+#+end_notes
+
+** data-driven functional form
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 60%">
+
+#+begin_src R :exports code :results silent
+  lin <- lm(Reaction ~ Days, s308)
+  quad <-
+    lm(Reaction ~ Days + 
+	 I(Days^2), s308)
+  
+  cub <-
+    lm(Reaction ~ Days +
+	 I(Days^2) + I(Days^3), s308)
+  
+  quar <-
+    lm(Reaction ~ Days +
+	 I(Days^2) + I(Days^3) +
+	 I(Days^4), s308)
+  
+  quin <-
+    lm(Reaction ~ Days +
+	 I(Days^2) + I(Days^3) +
+	 I(Days^4) + I(Days^5), s308)
+#+end_src
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%">
+
+#+begin_src R :exports both :results output
+  AIC(lin, quad, cub,
+      quar, quin)
+#+end_src
+
+#+REVEAL_HTML: </div>
+
+** natural vs orthogonal polynomials
+
+** comparing trends across groups
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 30%">
+
+#+begin_src R :exports results :results output graphics file :file stwo.png
+  stwo <- sleepstudy[sleepstudy$Subject == "308" |
+		     sleepstudy$Subject == "331", ]
+  
+  names(stwo) <- c("Reaction", "Days", "Group")
+  stwo$Days2 <- stwo$Days^2
+  stwo$group <- if_else(stwo$Group == "331", .5, -.5)
+  
+  ggplot(stwo, aes(Days, Reaction, color = Group)) +
+    geom_point() +
+    geom_smooth(method = "lm",
+		formula = y ~ x + I(x^2),
+		se=FALSE) +
+    scale_color_manual(values = c("yellow", "green"))  
+#+end_src
+
+#+RESULTS:
+[[file:stwo.png]]
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 70%">
+
+#+begin_src R :exports code :results silent
+  mod2 <- lm(Reaction ~ (Days + Days2) * group,
+       data = stwo)
+  
+  summary(mod2)
+#+end_src
+
+#+begin_src R :exports results :results output
+  .out <- capture.output(summary(mod2))
+  cat(.out[-c(1:8)], sep = "\n")
+#+end_src
+
+#+REVEAL_HTML: </div>

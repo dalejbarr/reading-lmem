@@ -1,0 +1,241 @@
+#+SETUPFILE: ../reveal.org
+#+TITLE: Linear Mixed-Effects Models
+#+PROPERTY: header-args:R :session *R* :exports both :results value
+
+* TODO Tweaks							   :noexport:
+
+* Setup                                                            :noexport:
+
+#+BEGIN_SRC R
+  options(crayon.enabled = FALSE, tidyverse.quiet = TRUE)
+  library("tidyverse")
+  ## source("../theme_jetblack.R")
+  ## theme_set(theme_jetblack(14L))
+#+END_SRC
+
+* Overview
+
+- distinguish complete pooling, no pooling and partial pooling
+  approaches to analysis for multi-level data
+- understand the DGP behind multi-level data
+- estimate multilevel models with =lme4::lmer()=
+
+
+** Multilevel data
+
+- All parametric models assume model residuals are IID ("independently and identically distributed")
+- Data often has 'clusters' of correlated observations due to
+  - natural clustering
+  - multistage sampling
+
+** pros and cons of LMEMs
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+*Pros*
+
+- powerful & expressive
+- model continuous & categorical predictors
+- handle unbalanced and missing data
+- multiple random factors
+- generalized LMMs
+
+#+REVEAL_HTML: </div><div class="column" style="float:right; width: 45%">
+
+*Cons*
+
+- complex
+- estimated iteratively and may not converge!
+
+#+REVEAL_HTML: </div>
+
+* Belenky et al. (2003)
+
+[[file:sleepstudy_article.png]]
+
+** Belenky et al. (2003)
+
+[[file:belenky_summary.png]]
+
+** Belenky et al. (2003)
+
+[[file:sleepstudy_design.png]]
+
+#+begin_smaller
+*TIB*: time in bed
+#+end_smaller
+
+** Psychomotor vigilance test
+
+[[file:psychomotor_vigilance_test.png]]
+
+** =lme4::sleepstudy=
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+#+NAME: ssplot
+#+begin_src R :exports both :results output graphics file :file ssdata.png
+  library("lme4")
+
+  ggplot(sleepstudy, aes(Days, Reaction)) + 
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE) +
+    scale_x_discrete(limits = 0:9) +
+    facet_wrap(~Subject)
+#+end_src
+
+# \(Y_{ij} = \beta_0 + \beta_1 X_{ij} + e_{ij}\)
+
+- but: observations within subject *not* independent
+
+#+REVEAL_HTML: </div><div class="column" style="float:right; width: 50%">
+
+#+RESULTS: ssplot
+[[file:ssdata.png]]
+
+#+REVEAL_HTML: </div>
+
+** Approaches to ML data
+
+1. complete pooling
+  - ignore dependencies in the data
+2. no pooling
+  - account for dependencies by fitting each subject independently
+3. partial pooling
+  - account for dependencies by explicitly modeling them
+  - fit for each subject informed by the fits for other subjects
+
+** multilevel app
+
+- [[http://shiny.psy.gla.ac.uk/Dale/multilevel][shiny.psy.gla.ac.uk/Dale/multilevel]]
+
+** GLM for sleepstudy
+
+#+begin_center
+*Level 1:*
+#+end_center
+
+\(Y_{ij} = \beta_0 + \beta_1 X_{ij} + e_{ij} \)
+
+#+begin_center
+*Level 2:*
+#+end_center
+
+\(\beta_0 = \gamma_{00} + S_{0i}\)
+
+\(\beta_1 = \gamma_{10} + S_{1i}\)
+
+** Variance Components
+
+\( \left< S_{0i}, S_{1i} \right> \sim N(\left< 0, 0 \right>, \mathbf{\Sigma})\)
+
+\(\mathbf \Sigma = \left( 
+\begin{array}{cc}
+{\tau_{00}}^2 & \rho\tau_{00}\tau_{11} \\
+\rho\tau_{00}\tau_{11} & {\tau_{11}}^2 \\ 
+\end{array} \right)\)
+
+\(e_{ij} \sim N(0, \sigma^2)\) 
+
+
+* Estimating
+
+#+name: ssest
+#+begin_src R :exports code
+  library("lme4")
+  
+  mod <- lmer(Reaction ~ Days + (Days | Subject), 
+	      data = sleepstudy)
+
+  summary(mod)
+#+end_src
+
+** Output
+
+#+begin_src R :exports results :results output
+  print(summary(mod), corr=FALSE)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: Reaction ~ Days + (Days | Subject)
+   Data: sleepstudy
+
+     AIC      BIC   logLik deviance df.resid 
+  1763.9   1783.1   -876.0   1751.9      174 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9416 -0.4656  0.0289  0.4636  5.1793 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr
+ Subject  (Intercept) 565.48   23.780       
+          Days         32.68    5.717   0.08
+ Residual             654.95   25.592       
+Number of obs: 180, groups:  Subject, 18
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  251.405      6.632  37.907
+Days          10.467      1.502   6.968
+#+end_example
+
+** model syntax
+
+=dv ~ iv1 + iv2 + (iv1 | z)=
+
+#+begin_src R :exports code :eval never
+## (1) random intercept
+Reaction ~ Days + (1 | Subject)
+
+## (2),(3) random slope model.
+Reaction ~ Days + (1 + Days | Subject)
+Reaction ~ Days + (Days | Subject)
+
+## (4),(5) zero-covariances
+Reaction ~ Days + (Days || Subject)
+Reaction ~ Days + (1 | Subject) + (0 + Days | Subject) 
+#+end_src
+
+** p-values: model comparison
+
+- NB: use REML=FALSE!
+
+#+begin_src R :exports both :results output
+  mod1 <- lmer(Reaction ~ Days + (Days | Subject), 
+	       sleepstudy, REML = FALSE)
+  mod2 <- lmer(Reaction ~ (Days | Subject),
+	       sleepstudy, REML = FALSE)
+  
+  anova(mod1, mod2)
+#+end_src
+
+#+RESULTS:
+: Data: sleepstudy
+: Models:
+: mod2: Reaction ~ (Days | Subject)
+: mod1: Reaction ~ Days + (Days | Subject)
+:      Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)    
+: mod2  5 1785.5 1801.4 -887.74   1775.5                             
+: mod1  6 1763.9 1783.1 -875.97   1751.9 23.537      1  1.226e-06 ***
+: ---
+: Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+** p-values: t-as-z
+
+#+begin_src R :exports both :results output
+  mod <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+  
+  stderr <- sqrt(diag(vcov(mod)))
+  tvals <- fixef(mod) / stderr
+  
+  2 * (1 - pnorm(abs(tvals)))
+#+end_src
+
+#+RESULTS:
+:  
+: (Intercept)         Days 
+: 0.000000e+00 3.219425e-12
+
