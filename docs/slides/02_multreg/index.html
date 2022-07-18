@@ -11,17 +11,29 @@
 
 <link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
 
+<link rel="stylesheet" href="../css/mods.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '../reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Multiple regression</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Multiple regression</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-org5ad55b1">
-<h2 id="org5ad55b1">Moving beyond simple regression</h2>
+<section id="slide-org4ef0849">
+<h2 id="org4ef0849">Moving beyond simple regression</h2>
 <ul>
 <li>dealing with multiple predictors</li>
 <li>model comparison</li>
@@ -32,8 +44,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org4e471ac">
-<h2 id="org4e471ac">Multiple regression</h2>
+<section id="slide-org204d408">
+<h2 id="org204d408">Multiple regression</h2>
 <p>
 General model for single-level data with \(m\) predictors:
 </p>
@@ -57,8 +69,8 @@ Each \(\beta_j\) is the <b>partial effect of \(X_{j}\) holding all other \(X\)s 
 </section>
 </section>
 <section>
-<section id="slide-org764d04f">
-<h2 id="org764d04f">Example</h2>
+<section id="slide-orgf0632b2">
+<h2 id="orgf0632b2">Example</h2>
 <p>
 Are lecture attendance and engagement with online materials associated with higher grades in statistics?
 </p>
@@ -68,8 +80,8 @@ Does this relationship hold after controlling for overall GPA?
 </p>
 
 </section>
-<section id="slide-org3299b6a">
-<h3 id="org3299b6a">Import and correlation</h3>
+<section id="slide-org743c144">
+<h3 id="org743c144">Import and correlation</h3>
 <p target="_download">
 <a href="data/grades.csv" target="_download">grades.csv</a>
 </p>
@@ -84,8 +96,8 @@ Does this relationship hold after controlling for overall GPA?
 </code></pre>
 </div>
 
-<pre class="example" id="org8c124ad">
-# A tibble: 100 × 4
+<pre class="example" id="org783038d">
+# A tibble: 100 x 4
    grade   GPA lecture nclicks
    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;
  1  2.40 1.13        6      88
@@ -116,7 +128,8 @@ grades <span style="color: #008b8b;">%&gt;%</span>
 </code></pre>
 </div>
 
-<pre class="example">
+<pre class="example" id="orgeeb3897">
+
 
 Correlation method: 'pearson'
 Missing treated using: 'pairwise.complete.obs'
@@ -128,12 +141,11 @@ Missing treated using: 'pairwise.complete.obs'
 4 nclicks   .16  .30     .36
 </pre>
 
-
 </div>
 
 </section>
-<section id="slide-org1773707">
-<h3 id="org1773707">visualization</h3>
+<section id="slide-org7526b06">
+<h3 id="org7526b06">visualization</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>grades <span style="color: #008b8b;">%&gt;%</span>
@@ -142,14 +154,14 @@ Missing treated using: 'pairwise.complete.obs'
 </div>
 
 
-<div id="org15e5d98" class="figure">
+<div id="org4a54d4d" class="figure">
 <p><img src="pairs.png" alt="pairs.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org0e0b7a6">
-<h3 id="org0e0b7a6">Estimation</h3>
+<section id="slide-org23cebd5">
+<h3 id="org23cebd5">Estimation</h3>
 <p>
 \(Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i\)
 </p>
@@ -165,15 +177,15 @@ Missing treated using: 'pairwise.complete.obs'
 </div>
 
 </section>
-<section id="slide-org2f14392">
-<h3 id="org2f14392">Output</h3>
+<section id="slide-org13d2a59">
+<h3 id="org13d2a59">Output</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>summary(my_model)
 </code></pre>
 </div>
 
-<pre class="example" id="org7906f0b">
+<pre class="example" id="orgb8966f4">
 
 Call:
 lm(formula = grade ~ lecture + nclicks, data = grades)
@@ -188,8 +200,7 @@ Coefficients:
 lecture     0.091501   0.045766   1.999   0.0484 *
 nclicks     0.005052   0.006051   0.835   0.4058  
 ---
-codes:  
-0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.8692 on 97 degrees of freedom
 Multiple R-squared:  0.06543,	Adjusted R-squared:  0.04616 
@@ -197,8 +208,8 @@ F-statistic: 3.395 on 2 and 97 DF,  p-value: 0.03756
 </pre>
 
 </section>
-<section id="slide-orgef836e5">
-<h3 id="orgef836e5">Standardized coefficients</h3>
+<section id="slide-orgb8afd21">
+<h3 id="orgb8afd21">Standardized coefficients</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>grades2 <span style="color: #008b8b;">&lt;-</span> grades <span style="color: #008b8b;">%&gt;%</span>
@@ -208,7 +219,8 @@ summary(lm(grade ~ lecture_c + nclicks_c, grades2))
 </code></pre>
 </div>
 
-<pre class="example" id="orgabf0bbf">
+<pre class="example" id="orgfeb0480">
+
 Residuals:
      Min       1Q   Median       3Q      Max 
 -2.21653 -0.40603  0.02267  0.60720  1.38558 
@@ -219,8 +231,7 @@ Coefficients:
 lecture_c    0.18734    0.09370   1.999   0.0484 *  
 nclicks_c    0.07823    0.09370   0.835   0.4058    
 ---
-codes:  
-0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.8692 on 97 degrees of freedom
 Multiple R-squared:  0.06543,	Adjusted R-squared:  0.04616 
@@ -228,15 +239,15 @@ F-statistic: 3.395 on 2 and 97 DF,  p-value: 0.03756
 </pre>
 
 </section>
-<section id="slide-org316eee8">
-<h3 id="org316eee8">Model comparison</h3>
+<section id="slide-org2bffb7e">
+<h3 id="org2bffb7e">Model comparison</h3>
 <p>
 Is engagement (as measured by lecture attendance and downloads) positively associated with final course grade <b>above and beyond</b> student ability (as measured by GPA)?
 </p>
 
 </section>
-<section id="slide-org8d31820">
-<h3 id="org8d31820">Strategy</h3>
+<section id="slide-org36e8f9c">
+<h3 id="org36e8f9c">Strategy</h3>
 <p>
 Compare &ldquo;base&rdquo; model with control vars to a &ldquo;bigger&rdquo; model with control plus focal vars
 </p>
@@ -251,6 +262,7 @@ anova(base_model, big_model)
 </div>
 
 <pre class="example">
+
 Analysis of Variance Table
 
 Model 1: grade ~ GPA
@@ -270,8 +282,8 @@ If \(p < \alpha\), bigger model is better.
 </p>
 
 </section>
-<section id="slide-org0163fc1">
-<h3 id="org0163fc1"><code>update()</code></h3>
+<section id="slide-org37c7082">
+<h3 id="org37c7082"><code>update()</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>base_model <span style="color: #008b8b;">&lt;-</span> lm(grade ~ GPA, grades)
@@ -282,6 +294,7 @@ anova(base_model, big_model)
 </div>
 
 <pre class="example">
+
 Analysis of Variance Table
 
 Model 1: grade ~ GPA
@@ -292,8 +305,8 @@ Model 2: grade ~ GPA + lecture + nclicks
 </pre>
 
 </section>
-<section id="slide-orge6a9a97">
-<h3 id="orge6a9a97">Dummy coding binary vars</h3>
+<section id="slide-org7879f0b">
+<h3 id="org7879f0b">Dummy coding binary vars</h3>
 <p>
 Arbitrarily assign one of the two levels to 0; assign the other to 1.
 </p>

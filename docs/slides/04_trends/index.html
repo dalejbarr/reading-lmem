@@ -12,17 +12,28 @@
 <link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
 
 <link rel="stylesheet" href="../css/mods.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '../reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Modeling trends</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Modeling trends</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-orgb0d1a43">
-<h2 id="orgb0d1a43">modeling latent change</h2>
+<section id="slide-org43dacd7">
+<h2 id="org43dacd7">modeling latent change</h2>
 <p>
 a.k.a., &ldquo;growth curve analysis&rdquo;, &ldquo;latent trend models&rdquo;
 </p>
@@ -42,12 +53,12 @@ approach: assume the pattern of growth/change develops following the parameters 
 </aside>
 
 </section>
-<section id="slide-org9ceb3ff">
-<h3 id="org9ceb3ff">simplest model</h3>
+<section id="slide-org6f6b45e">
+<h3 id="org6f6b45e">simplest model</h3>
 <div class="column" style="float:left; width: 50%">
 
 
-<div id="org2188d4b" class="figure">
+<div id="org4af2d40" class="figure">
 <p><img src="belenky.png" alt="belenky.png" />
 </p>
 </div>
@@ -82,8 +93,8 @@ one possible consequence of model misspecification: residuals will be non-normal
 </aside>
 
 </section>
-<section id="slide-org760b3fb">
-<h3 id="org760b3fb">Other possible models</h3>
+<section id="slide-org7297c47">
+<h3 id="org7297c47">Other possible models</h3>
 <div class="column" style="float:left; width: 30%">
 
 <p>
@@ -91,7 +102,7 @@ quadratic
 </p>
 
 
-<div id="orgf380489" class="figure">
+<div id="orga1caed6" class="figure">
 <p><img src="belenky2.png" alt="belenky2.png" />
 </p>
 </div>
@@ -106,7 +117,7 @@ cubic
 </p>
 
 
-<div id="orgda4541b" class="figure">
+<div id="org996d30b" class="figure">
 <p><img src="belenky3.png" alt="belenky3.png" />
 </p>
 </div>
@@ -122,7 +133,7 @@ cubic
 </p>
 
 
-<div id="org97f89bc" class="figure">
+<div id="org3780bc2" class="figure">
 <p><img src="belenky4.png" alt="belenky4.png" />
 </p>
 </div>
@@ -130,8 +141,8 @@ cubic
 </div>
 
 </section>
-<section id="slide-orgb59bed6">
-<h3 id="orgb59bed6">polynomial models</h3>
+<section id="slide-orgaa19916">
+<h3 id="orgaa19916">polynomial models</h3>
 <p>
 Order:
 </p>
@@ -173,8 +184,8 @@ can go arbitrarily high
 </aside>
 
 </section>
-<section id="slide-org7b87da3">
-<h3 id="org7b87da3">data-driven functional form</h3>
+<section id="slide-org3cf7fee">
+<h3 id="org3cf7fee">data-driven functional form</h3>
 <div class="column" style="float:left; width: 60%">
 
 <div class="org-src-container">
@@ -225,16 +236,16 @@ quin  7 111.6476
 </div>
 
 </section>
-<section id="slide-org0ecae21">
-<h3 id="org0ecae21">natural vs orthogonal polynomials</h3>
+<section id="slide-org02d9731">
+<h3 id="org02d9731">natural vs orthogonal polynomials</h3>
 
 </section>
-<section id="slide-orga1da844">
-<h3 id="orga1da844">comparing trends across groups</h3>
+<section id="slide-org117c270">
+<h3 id="org117c270">comparing trends across groups</h3>
 <div class="column" style="float:left; width: 30%">
 
 
-<div id="org17ea818" class="figure">
+<div id="org594a833" class="figure">
 <p><img src="stwo.png" alt="stwo.png" />
 </p>
 </div>
@@ -252,7 +263,7 @@ summary(mod2)
 </code></pre>
 </div>
 
-<pre class="example" id="org4e1e665">
+<pre class="example" id="org45dba5d">
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    

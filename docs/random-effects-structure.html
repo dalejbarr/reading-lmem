@@ -4,20 +4,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 7 Random effects structure | Mixed-effects models for longitudinal data</title>
+<title>Chapter 7 Random effects structure | Workshop on linear mixed-effects models</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
-<meta property="og:title" content="Chapter 7 Random effects structure | Mixed-effects models for longitudinal data">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 7 Random effects structure | Workshop on linear mixed-effects models">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal/random-effects-structure.html">
+<meta property="og:url" content="https://dalejbarr.github.io/reading-lmem/random-effects-structure.html">
 <meta property="og:description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 7 Random effects structure | Mixed-effects models for longitudinal data">
+<meta name="twitter:title" content="Chapter 7 Random effects structure | Workshop on linear mixed-effects models">
 <meta name="twitter:description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -36,7 +36,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+        <a href="index.html" title="">Workshop on linear mixed-effects models</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -222,7 +222,7 @@ solution
 <span class="co">## double check</span>
 <span class="va">kbbb2</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">cond</span>, <span class="va">psource</span>, <span class="va">C</span>, <span class="va">PS</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 4 × 5
+<pre><code>## # A tibble: 4 x 5
 ##   cond  psource     C    PS     n
 ##   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
 ## 1 C     EX       -0.5   0.5   100
@@ -239,7 +239,7 @@ solution
             .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span>
 
 <span class="va">ff_means</span></code></pre></div>
-<pre><code>## # A tibble: 4 × 4
+<pre><code>## # A tibble: 4 x 4
 ##   psource cond      m    sd
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 EX      C     1764. 1386.
@@ -256,7 +256,7 @@ solution
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kbbb2</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">subj</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 80 × 4
+<pre><code>## # A tibble: 80 x 4
 ##    subj  psource cond      n
 ##    &lt;fct&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
 ##  1 S01   EX      C         5
@@ -275,7 +275,7 @@ solution
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kbbb2</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">object</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 40 × 4
+<pre><code>## # A tibble: 40 x 4
 ##    object psource cond      n
 ##    &lt;fct&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
 ##  1 blkpen EX      C        10
@@ -308,25 +308,25 @@ solution
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -2.7730 -0.4516 -0.1774  0.3196  7.3645 
+## -2.7731 -0.4516 -0.1774  0.3196  7.3644 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev. Corr          
-##  subj     (Intercept)  530742   728.5                 
-##           C           1240695  1113.9   1.00          
-##  object   (Intercept) 1155440  1074.9                 
-##           PS           241786   491.7   1.00          
-##           C           1509593  1228.7   1.00 1.00     
-##           PS:C         135976   368.7   1.00 1.00 1.00
-##  Residual             4408338  2099.6                 
+##  subj     (Intercept)  530748   728.5                 
+##           C           1240744  1113.9   1.00          
+##  object   (Intercept) 1155349  1074.9                 
+##           PS           241804   491.7   1.00          
+##           C           1509480  1228.6   1.00 1.00     
+##           PS:C         135969   368.7   1.00 1.00 1.00
+##  Residual             4408340  2099.6                 
 ## Number of obs: 397, groups:  subj, 40; object, 10
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error t value
-## (Intercept)   2300.9      374.1   6.151
-## PS              65.2      348.8   0.187
-## C             1049.0      475.8   2.205
-## PS:C           197.3      561.6   0.351
+## (Intercept)  2300.91     374.04   6.151
+## PS             65.19     348.82   0.187
+## C            1049.01     475.80   2.205
+## PS:C          197.28     561.57   0.351
 ## optimizer (nloptwrap) convergence code: 0 (OK)
 ## boundary (singular) fit: see ?isSingular</code></pre>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
@@ -584,7 +584,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+    <p>"<strong>Workshop on linear mixed-effects models</strong>" was written by Dale J. Barr. It was last built on 2022-07-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

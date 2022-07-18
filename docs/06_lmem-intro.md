@@ -100,7 +100,7 @@ This should be a tibble with 180 observations (18 subjects, observed over 10 day
 
 
 ```
-## # A tibble: 180 × 5
+## # A tibble: 180 x 5
 ##    Subject  Days gamma_00 gamma_10    e_ij
 ##    <fct>   <int>    <dbl>    <dbl>   <dbl>
 ##  1 1           0      310        4  28.6  
@@ -145,7 +145,7 @@ obs <- tibble(Subject = factor(rep(seq_len(18), each = 10)),
 #### Step 3: Combine
 
 :::{.try}
-Now find a way to combine the information in the `obs` table with the info in `rmx` so that you create a table that looks like the `sleepstudy` table. (*Hint: this is where the information at the end of the [last chapter](https://dalejbarr.github.io/basel-longitudinal/variance-covariance-matrices.html#converting-matrices-to-tibbles-and-combining-with-joins) will come in handy.*)
+Now find a way to combine the information in the `obs` table with the info in `rmx` so that you create a table that looks like the `sleepstudy` table. (*Hint: this is where the information at the end of the [last chapter](https://dalejbarr.github.io/reading-lmem/variance-covariance-matrices.html#converting-matrices-to-tibbles-and-combining-with-joins) will come in handy.*)
 
 The resulting `simdata` table should *only* have the columns `Reaction`, `Days`, and `Subject`. Hint: check the simulated tables of data in the [multilevel web app](https://shiny.psy.gla.ac.uk/Dale/multilevel).
 
@@ -183,7 +183,7 @@ simdata
 ```
 
 ```
-## # A tibble: 180 × 3
+## # A tibble: 180 x 3
 ##    Subject  Days Reaction
 ##    <fct>   <int>    <dbl>
 ##  1 1           0     353.

@@ -17,12 +17,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Linear Mixed-Effects Models</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Linear Mixed-Effects Models</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-org2e85d64">
-<h2 id="org2e85d64">Overview</h2>
+<section id="slide-org04b379f">
+<h2 id="org04b379f">Overview</h2>
 <ul>
 <li>distinguish complete pooling, no pooling and partial pooling
 approaches to analysis for multi-level data</li>
@@ -33,8 +33,8 @@ approaches to analysis for multi-level data</li>
 
 
 </section>
-<section id="slide-org6a5e0ee">
-<h3 id="org6a5e0ee">Multilevel data</h3>
+<section id="slide-orgfba4a66">
+<h3 id="orgfba4a66">Multilevel data</h3>
 <ul>
 <li>All parametric models assume model residuals are IID (&ldquo;independently and identically distributed&rdquo;)</li>
 <li>Data often has &rsquo;clusters&rsquo; of correlated observations due to
@@ -47,8 +47,8 @@ approaches to analysis for multi-level data</li>
 </ul>
 
 </section>
-<section id="slide-org26dfb26">
-<h3 id="org26dfb26">pros and cons of LMEMs</h3>
+<section id="slide-org14c2670">
+<h3 id="org14c2670">pros and cons of LMEMs</h3>
 <div class="column" style="float:left; width: 50%">
 
 <p>
@@ -81,33 +81,33 @@ approaches to analysis for multi-level data</li>
 </section>
 </section>
 <section>
-<section id="slide-org7e20499">
-<h2 id="org7e20499">Belenky et al. (2003)</h2>
+<section id="slide-org4d15b0a">
+<h2 id="org4d15b0a">Belenky et al. (2003)</h2>
 
-<div id="org08f4f81" class="figure">
+<div id="orgb497ecb" class="figure">
 <p><img src="sleepstudy_article.png" alt="sleepstudy_article.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org155fd5d">
-<h3 id="org155fd5d">Belenky et al. (2003)</h3>
+<section id="slide-org21390cc">
+<h3 id="org21390cc">Belenky et al. (2003)</h3>
 
-<div id="org05e5a4a" class="figure">
+<div id="orgbbe341c" class="figure">
 <p><img src="belenky_summary.png" alt="belenky_summary.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org087714b">
-<h3 id="org087714b">Belenky et al. (2003)</h3>
+<section id="slide-org0b70c55">
+<h3 id="org0b70c55">Belenky et al. (2003)</h3>
 
-<div id="org962587d" class="figure">
+<div id="orge9636ff" class="figure">
 <p><img src="sleepstudy_design.png" alt="sleepstudy_design.png" />
 </p>
 </div>
 
-<div class="smaller" id="org75f8e62">
+<div class="smaller" id="org968ca14">
 <p>
 <b>TIB</b>: time in bed
 </p>
@@ -115,17 +115,17 @@ approaches to analysis for multi-level data</li>
 </div>
 
 </section>
-<section id="slide-orgc80846f">
-<h3 id="orgc80846f">Psychomotor vigilance test</h3>
+<section id="slide-orgec40005">
+<h3 id="orgec40005">Psychomotor vigilance test</h3>
 
-<div id="orgb67d15e" class="figure">
+<div id="orgb2e9866" class="figure">
 <p><img src="psychomotor_vigilance_test.png" alt="psychomotor_vigilance_test.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-orge965f48">
-<h3 id="orge965f48"><code>lme4::sleepstudy</code></h3>
+<section id="slide-orge3ba6d1">
+<h3 id="orge3ba6d1"><code>lme4::sleepstudy</code></h3>
 <div class="column" style="float:left; width: 50%">
 
 <div class="org-src-container">
@@ -148,7 +148,7 @@ ggplot(sleepstudy, aes(Days, Reaction)) +
 </div><div class="column" style="float:right; width: 50%">
 
 
-<div id="orgfb486ac" class="figure">
+<div id="org88756de" class="figure">
 <p><img src="ssdata.png" alt="ssdata.png" />
 </p>
 </div>
@@ -156,8 +156,8 @@ ggplot(sleepstudy, aes(Days, Reaction)) +
 </div>
 
 </section>
-<section id="slide-org606ab33">
-<h3 id="org606ab33">Approaches to ML data</h3>
+<section id="slide-orgcd7d325">
+<h3 id="orgcd7d325">Approaches to ML data</h3>
 <ol>
 <li>complete pooling
 <ul>
@@ -179,16 +179,16 @@ ggplot(sleepstudy, aes(Days, Reaction)) +
 </ol>
 
 </section>
-<section id="slide-org51e0c4c">
-<h3 id="org51e0c4c">multilevel app</h3>
+<section id="slide-org1b2bbcd">
+<h3 id="org1b2bbcd">multilevel app</h3>
 <ul>
 <li><a href="http://shiny.psy.gla.ac.uk/Dale/multilevel">shiny.psy.gla.ac.uk/Dale/multilevel</a></li>
 
 </ul>
 
 </section>
-<section id="slide-org93ff084">
-<h3 id="org93ff084">GLM for sleepstudy</h3>
+<section id="slide-org95a8a80">
+<h3 id="org95a8a80">GLM for sleepstudy</h3>
 <div class="org-center">
 <p>
 <b>Level 1:</b>
@@ -214,8 +214,8 @@ ggplot(sleepstudy, aes(Days, Reaction)) +
 </p>
 
 </section>
-<section id="slide-orgef600b8">
-<h3 id="orgef600b8">Variance Components</h3>
+<section id="slide-org249b38d">
+<h3 id="org249b38d">Variance Components</h3>
 <p>
 \( \left< S_{0i}, S_{1i} \right> \sim N(\left< 0, 0 \right>, \mathbf{\Sigma})\)
 </p>
@@ -236,8 +236,8 @@ ggplot(sleepstudy, aes(Days, Reaction)) +
 </section>
 </section>
 <section>
-<section id="slide-orgd8dec7d">
-<h2 id="orgd8dec7d">Estimating</h2>
+<section id="slide-orgfcb1b32">
+<h2 id="orgfcb1b32">Estimating</h2>
 <div class="org-src-container">
 
 <pre  class="src src-R" id="ssest" ><code trim><span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"lme4"</span>)
@@ -250,9 +250,9 @@ summary(mod)
 </div>
 
 </section>
-<section id="slide-org3f6d0c0">
-<h3 id="org3f6d0c0">Output</h3>
-<pre class="example" id="org2a6f201">
+<section id="slide-org021a3b7">
+<h3 id="org021a3b7">Output</h3>
+<pre class="example" id="orgb5cf11c">
 Linear mixed model fit by REML ['lmerMod']
 Formula: Reaction ~ Days + (Days | Subject)
    Data: sleepstudy
@@ -277,8 +277,8 @@ Days          10.467      1.546   6.771
 </pre>
 
 </section>
-<section id="slide-orgc6492d6">
-<h3 id="orgc6492d6">model syntax</h3>
+<section id="slide-orgc7df2ed">
+<h3 id="orgc7df2ed">model syntax</h3>
 <p>
 <code>dv ~ iv1 + iv2 + (iv1 | z)</code>
 </p>
@@ -299,8 +299,8 @@ Reaction ~ Days + (1 | Subject) + (0 + Days | Subject)
 </div>
 
 </section>
-<section id="slide-org1c24329">
-<h3 id="org1c24329">p-values: model comparison</h3>
+<section id="slide-orgadcde20">
+<h3 id="orgadcde20">p-values: model comparison</h3>
 <ul>
 <li>NB: use REML=FALSE!</li>
 
@@ -317,22 +317,26 @@ anova(mod1, mod2)
 </code></pre>
 </div>
 
-<pre class="example" id="org8e96ec7">
+<pre class="example" id="orgc0032cf">
 
 Data: sleepstudy
 Models:
 mod2: Reaction ~ (Days | Subject)
 mod1: Reaction ~ Days + (Days | Subject)
-     npar    AIC    BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)    
-mod2    5 1785.5 1801.4 -887.74   1775.5                         
-mod1    6 1763.9 1783.1 -875.97   1751.9 23.537  1  1.226e-06 ***
+     npar    AIC    BIC  logLik deviance  Chisq Df
+mod2    5 1785.5 1801.4 -887.74   1775.5          
+mod1    6 1763.9 1783.1 -875.97   1751.9 23.537  1
+     Pr(&gt;Chisq)    
+mod2               
+mod1  1.226e-06 ***
 ---
-codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+codes:  
+0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre>
 
 </section>
-<section id="slide-orgf7e7ce7">
-<h3 id="orgf7e7ce7">p-values: t-as-z</h3>
+<section id="slide-org4eb1de6">
+<h3 id="org4eb1de6">p-values: t-as-z</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>mod <span style="color: #008b8b;">&lt;-</span> lmer(Reaction ~ Days + (Days | Subject), sleepstudy)

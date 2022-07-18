@@ -17,17 +17,17 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Specifying random effects structure</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Specifying random effects structure</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-org29fa068">
-<h2 id="org29fa068">Generalizing over subjects and stimuli</h2>
-<div class="outline-text-2" id="text-org29fa068">
+<section id="slide-org30c9346">
+<h2 id="org30c9346">Generalizing over subjects and stimuli</h2>
+<div class="outline-text-2" id="text-org30c9346">
 </div>
 </section>
-<section id="slide-org612cd79">
-<h3 id="org612cd79">Clark&rsquo;s Fallacy</h3>
+<section id="slide-orgaaf5420">
+<h3 id="orgaaf5420">Clark&rsquo;s Fallacy</h3>
 <ul>
 <li>Psycholinguistic experiments sample language materials as well as subjects</li>
 <li>Language stimuli should be treated as a random, not fixed factor</li>
@@ -36,7 +36,7 @@
 
 </ul>
 
-<div class="citation" id="orgd94b378">
+<div class="citation" id="org225542f">
 <p>
 Baayen, R. H., Davidson, D. J., &amp; Bates, D. M. (2008). <a href="https://doi.org/10.1016/j.jml.2007.12.005">Mixed-effects modeling with crossed random effects for subjects and items.</a> <i>Journal of Memory and Language</i>, <i>59</i>, 390-412.
 </p>
@@ -48,15 +48,15 @@ Clark, H. H. (1973). <a href="https://doi.org/10.1016/S0022-5371(73)80014-3">The
 </div>
 
 </section>
-<section id="slide-org13ad649">
-<h3 id="org13ad649">generalizing over encounters</h3>
+<section id="slide-org8fe6341">
+<h3 id="org8fe6341">generalizing over encounters</h3>
 <p>
 The target of inference in much of psychology and related fields has
 been misidentified as a population of <i>subjects</i> or <i>stimuli</i>, when the
 actual target of inference is a population of events: <b>encounters</b>
 </p>
 
-<div class="smaller" id="orgebc242e">
+<div class="smaller" id="orgdfa288b">
 <ul>
 <li>readers encountering particular types of words</li>
 <li>male participants judging attractiveness of female faces, or vice versa</li>
@@ -69,7 +69,7 @@ actual target of inference is a population of events: <b>encounters</b>
 
 </div>
 
-<div class="citation" id="org0a89314">
+<div class="citation" id="org6463a37">
 <p>
 Barr, D. J. (2018). Generalizing Over Encounters. In the <i>Oxford Handbook of Psycholinguistics.</i>
 </p>
@@ -77,8 +77,8 @@ Barr, D. J. (2018). Generalizing Over Encounters. In the <i>Oxford Handbook of P
 </div>
 
 </section>
-<section id="slide-org9ec7aab">
-<h3 id="org9ec7aab">maximal random effects</h3>
+<section id="slide-org69e877e">
+<h3 id="org69e877e">maximal random effects</h3>
 <ul>
 <li>all sampling units get random intercepts</li>
 <li>any factor gets by-unit random slope if:
@@ -92,7 +92,7 @@ of within-unit terms in the interaction</li>
 
 </ul>
 
-<div class="citation" id="orga132ee3">
+<div class="citation" id="orgb9b61ad">
 <p>
 Barr, D. J. (2013). <a href="https://doi.org/10.3389/fpsyg.2013.00328">Random effects structure for testing interactions in linear mixed-effects models</a>. <i>Frontiers in Psychology</i>, <i>4</i>, 328.
 </p>
@@ -104,8 +104,8 @@ Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). <a href="https:/
 </div>
 
 </section>
-<section id="slide-org748db54">
-<h3 id="org748db54"></h3>
+<section id="slide-org5fd81fe">
+<h3 id="org5fd81fe"></h3>
 <p>
 <a href="https://shiny.psy.gla.ac.uk/Dale/crossed/">crossed web app</a>
 </p>
@@ -113,8 +113,8 @@ Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). <a href="https:/
 </section>
 </section>
 <section>
-<section id="slide-org0b89b60">
-<h2 id="org0b89b60">design from data</h2>
+<section id="slide-org531b8f8">
+<h2 id="org531b8f8">design from data</h2>
 <ul>
 <li>three way design <code>DV ~ A * B * C + ...</code></li>
 
@@ -126,8 +126,8 @@ Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). <a href="https:/
 </code></pre>
 </div>
 
-<pre class="example" id="orgdd75f06">
-# A tibble: 32 × 5
+<pre class="example" id="org7c9b55e">
+# A tibble: 32 x 5
    subj_id A     B     C         n
      &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
  1       1 A2    B1    C1        4
@@ -144,8 +144,8 @@ Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). <a href="https:/
 </pre>
 
 </section>
-<section id="slide-org7992186">
-<h3 id="org7992186">specifying the model</h3>
+<section id="slide-org13dcd7b">
+<h3 id="org13dcd7b">specifying the model</h3>
 <div class="column" style="float:left; width: 35%">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -214,8 +214,8 @@ DV ~ A * B * C + (B * C | subj_id)
 </div>
 
 </section>
-<section id="slide-org3b91b5f">
-<h3 id="org3b91b5f"></h3>
+<section id="slide-orgbbad740">
+<h3 id="orgbbad740"></h3>
 <p>
 example with crossed subjects and stimuli
 </p>
@@ -233,16 +233,16 @@ example with crossed subjects and stimuli
 </p>
 
 </section>
-<section id="slide-orgc39b243">
-<h3 id="orgc39b243">by subject</h3>
+<section id="slide-org24f0434">
+<h3 id="org24f0434">by subject</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>count(dat2, subj_id, A, B, C)
 </code></pre>
 </div>
 
-<pre class="example" id="orgdf18d7e">
-# A tibble: 64 × 5
+<pre class="example" id="org314cf7a">
+# A tibble: 64 x 5
    subj_id A     B     C         n
      &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
  1       1 A1    B1    C1        2
@@ -259,16 +259,16 @@ example with crossed subjects and stimuli
 </pre>
 
 </section>
-<section id="slide-org8204865">
-<h3 id="org8204865">by stimuli</h3>
+<section id="slide-org1f6f362">
+<h3 id="org1f6f362">by stimuli</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>count(dat2, item_id, A, B, C)
 </code></pre>
 </div>
 
-<pre class="example" id="org6a990a2">
-# A tibble: 128 × 5
+<pre class="example" id="org42481bf">
+# A tibble: 128 x 5
    item_id A     B     C         n
      &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
  1       1 A1    B1    C1        1
@@ -285,8 +285,8 @@ example with crossed subjects and stimuli
 </pre>
 
 </section>
-<section id="slide-orgca8408a">
-<h3 id="orgca8408a">model</h3>
+<section id="slide-org42e1fc3">
+<h3 id="org42e1fc3">model</h3>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>DV ~ A * B * C + (A * B * C | subj_id) + (1 | item_id)
@@ -296,8 +296,8 @@ example with crossed subjects and stimuli
 </section>
 </section>
 <section>
-<section id="slide-org70e5493">
-<h2 id="org70e5493">troubleshooting</h2>
+<section id="slide-orgb437ea0">
+<h2 id="orgb437ea0">troubleshooting</h2>
 <p>
 <b>non-convergence warning</b>
 </p>
@@ -315,8 +315,8 @@ example with crossed subjects and stimuli
 </p>
 
 </section>
-<section id="slide-org885f3a3">
-<h3 id="org885f3a3">strategy</h3>
+<section id="slide-orgf899514">
+<h3 id="orgf899514">strategy</h3>
 <ol>
 <li>make sure the random effects structure is appropriately specified</li>
 <li>scale your predictor variables, use deviation coding for categorical predictors</li>

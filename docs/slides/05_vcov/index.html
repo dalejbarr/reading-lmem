@@ -12,17 +12,28 @@
 <link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
 
 <link rel="stylesheet" href="../css/mods.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '../reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Variance-covariance matrices</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Variance-covariance matrices</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-org4bab67e">
-<h2 id="org4bab67e">what?</h2>
+<section id="slide-org8ad160a">
+<h2 id="org8ad160a">what?</h2>
 <ul>
 <li>covariance(X,Y): \(\rho_{xy}\sigma_x\sigma_y\)</li>
 <li>covariance(X,X): \(\rho_{xx}\sigma_x\sigma_x = \sigma^2\)</li>
@@ -65,13 +76,13 @@ Think about variance-covariance matrices as a <i>generalization of the notion of
 </aside>
 
 </section>
-<section id="slide-orgb83ca5e">
-<h3 id="orgb83ca5e">bivariate distribution</h3>
+<section id="slide-org2175993">
+<h3 id="org2175993">bivariate distribution</h3>
 <iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="610" style="border: none; background: white;"></iframe>
 
 </section>
-<section id="slide-org33ca574">
-<h3 id="org33ca574">4x4</h3>
+<section id="slide-orgf263fc6">
+<h3 id="orgf263fc6">4x4</h3>
 <p>
 A 4x4 covariance matrix with variables W, X, Y, Z.
 </p>
@@ -87,8 +98,8 @@ A 4x4 covariance matrix with variables W, X, Y, Z.
 </div>
 
 </section>
-<section id="slide-org98bb237">
-<h3 id="org98bb237">4x4</h3>
+<section id="slide-orga22dfef">
+<h3 id="orga22dfef">4x4</h3>
 <p>
 A 4x4 covariance matrix with variables W, X, Y, Z.
 </p>
@@ -104,8 +115,8 @@ A 4x4 covariance matrix with variables W, X, Y, Z.
 </div>
 
 </section>
-<section id="slide-orgd718086">
-<h3 id="orgd718086">diagonal matrix</h3>
+<section id="slide-org3b75a70">
+<h3 id="org3b75a70">diagonal matrix</h3>
 <div>
 \begin{pmatrix}
 {\sigma_w}^2 &            0 &            0 &            0 \\
@@ -119,8 +130,8 @@ A 4x4 covariance matrix with variables W, X, Y, Z.
 </section>
 </section>
 <section>
-<section id="slide-org8545bb8">
-<h2 id="org8545bb8">simulating bivariate data</h2>
+<section id="slide-org5c8e2a8">
+<h2 id="org5c8e2a8">simulating bivariate data</h2>
 <iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="610" style="border: none; background: white;"></iframe>
 </section>
 </section>

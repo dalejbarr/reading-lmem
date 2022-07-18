@@ -6,4 +6,4 @@
 #+REVEAL_EXTRA_CSS: ../css/mods.css
 #+options: num:nil toc:nil
 #+AUTHOR: Dale Barr (University of Glasgow)
-#+DATE: Mixed-effects workshop, March 3-4, 2022 (Basel)
+#+DATE: Mixed-effects workshop, July 20-21, 2022 (Reading)

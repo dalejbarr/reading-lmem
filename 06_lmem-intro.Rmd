@@ -111,7 +111,7 @@ Something like: `tibble(... e_ij = rnorm(...))`
 #### Step 3: Combine
 
 :::{.try}
-Now find a way to combine the information in the `obs` table with the info in `rmx` so that you create a table that looks like the `sleepstudy` table. (*Hint: this is where the information at the end of the [last chapter](https://dalejbarr.github.io/basel-longitudinal/variance-covariance-matrices.html#converting-matrices-to-tibbles-and-combining-with-joins) will come in handy.*)
+Now find a way to combine the information in the `obs` table with the info in `rmx` so that you create a table that looks like the `sleepstudy` table. (*Hint: this is where the information at the end of the [last chapter](https://dalejbarr.github.io/reading-lmem/variance-covariance-matrices.html#converting-matrices-to-tibbles-and-combining-with-joins) will come in handy.*)
 
 The resulting `simdata` table should *only* have the columns `Reaction`, `Days`, and `Subject`. Hint: check the simulated tables of data in the [multilevel web app](https://shiny.psy.gla.ac.uk/Dale/multilevel).
 

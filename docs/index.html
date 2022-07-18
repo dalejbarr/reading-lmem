@@ -4,20 +4,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Workshop Overview | Mixed-effects models for longitudinal data</title>
+<title>Workshop Overview | Workshop on linear mixed-effects models</title>
 <meta name="author" content="Dale J. Barr">
-<meta name="description" content="Workshop at University of Basel, March 3-4, 2022.">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
-<meta property="og:title" content="Workshop Overview | Mixed-effects models for longitudinal data">
+<meta name="description" content="Workshop at University of Reading, July 20-21, 2022.">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Workshop Overview | Workshop on linear mixed-effects models">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://dalejbarr.github.io/basel-longitudinal">
-<meta property="og:description" content="Workshop at University of Basel, March 3-4, 2022.">
+<meta property="og:url" content="https://dalejbarr.github.io/reading-lmem">
+<meta property="og:description" content="Workshop at University of Reading, July 20-21, 2022.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Workshop Overview | Mixed-effects models for longitudinal data">
-<meta name="twitter:description" content="Workshop at University of Basel, March 3-4, 2022.">
+<meta name="twitter:title" content="Workshop Overview | Workshop on linear mixed-effects models">
+<meta name="twitter:description" content="Workshop at University of Reading, July 20-21, 2022.">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -36,7 +36,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Mixed-effects models for longitudinal data</a>
+        <a href="index.html" title="">Workshop on linear mixed-effects models</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -72,12 +72,12 @@
 <h1>Workshop Overview<a class="anchor" aria-label="anchor" href="#workshop-overview"><i class="fas fa-link"></i></a>
 </h1>
 <p><em>Dale J. Barr</em></p>
-<p><strong>University of Basel, March 3-4, 2022</strong></p>
+<p><strong>University of Reading, July 20-21, 2022</strong></p>
 <div id="workshop-goals" class="section level2 unnumbered">
 <h2>Workshop goals<a class="anchor" aria-label="anchor" href="#workshop-goals"><i class="fas fa-link"></i></a>
 </h2>
-<p>The goal of this workshop is to provide a foundational understanding of the use of mixed-effects models in the analysis of panel (longitudinal) data, with a focus on repeated-measures data. Mixed-effects models are regression models that estimate a 'mix' of fixed and random effects.</p>
-<p>Two pre-requisites for the workshop are: (1) basic understanding of linear regression and (2) some familiarity with the R statistical programming environment (<a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a>) is an important pre-requisite for the workshop.</p>
+<p>The goal of this workshop is to provide a foundational understanding of the use of mixed-effects models in the analysis of data from typical psychology experiments. Mixed-effects models are a type of linear regression model that estimate a 'mix' of fixed and random effects—thus, the course focuses on providing an understanding of how to represent different types of experimental designs using regression.</p>
+<p>Two pre-requisites for the workshop are: (1) basic understanding of linear regression and (2) some familiarity with the R statistical programming environment (<a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a>).</p>
 <p>Please have R and RStudio installed on your laptop prior to the start of the workshop, including the packages <strong><a href="http://tidyverse.tidyverse.org">tidyverse</a></strong> and <strong><code>lme4</code></strong>. You can find help on installation <a href="installing-and-configuring-rrstudio.html">in the Appendix</a>.</p>
 <p>While it will be possible to understand the conceptual content of the workshop without knowing R, there will be interactive exercises that require understanding of the fundamentals of R programming. For beginners, it is recommended that you work through <a href="coding-in-r-with-the-rstudio-ide.html">the introductory materials in the Appendix</a>.</p>
 </div>
@@ -86,7 +86,7 @@
 </h2>
 <ul>
 <li>
-<em>Day 1</em> (Thursday, March 3, 2pm-6pm): <strong>Linear regression</strong>
+<em>Day 1</em> (Wednesday, July 20): <strong>Linear regression</strong>
 <ul>
 <li>general linear model</li>
 <li>multiple regression</li>
@@ -95,7 +95,7 @@
 </ul>
 </li>
 <li>
-<em>Day 2</em> (Friday, March 4, 9am-1pm): <strong>Mixed-effects modeling</strong>
+<em>Day 2</em> (Thursday, July 21): <strong>Mixed-effects modeling</strong>
 <ul>
 <li>variance-covariance matrices</li>
 <li>walkthrough of the <code>sleepstudy</code> data</li>
@@ -115,7 +115,7 @@
 <h2>Notes on these materials<a class="anchor" aria-label="anchor" href="#notes-on-these-materials"><i class="fas fa-link"></i></a>
 </h2>
 <p>These materials comprise an <strong>interactive textbook</strong>. Each "chapter" contains embedded exercises as well as web applications to help participants better understand the content. The interactive content will only work if you access this material through a web browser. Printing out the material is not recommended.</p>
-<p>It would be good to keep a local copy of these materials in case the website eventually disappears. You can <a href="basel-longitudinal.zip" target="_download">download an offline version</a> of these materials. It contains the current snapshot. Because things are likely to change while the workshop is ongoing, it would be best to wait until the end of the workshop before downloading a permanent version.</p>
+<p>It would be good to keep a local copy of these materials in case the website eventually disappears. You can <a href="reading-lmem.zip" target="_download">download an offline version</a> of these materials. It contains the current snapshot. Because things may change while the workshop is ongoing, it would be best to wait until the end of the workshop before downloading a permanent version.</p>
 <p>Once you've downloaded the archive, just extract the files, locate the file <code>index.html</code> in the <code>docs</code> directory, and open this file using a web browser.</p>
 <p>You are free to re-use and modify the material in this textbook for your own purposes, with the stipulation that you cite the original work. Please note additional terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons CC-BY-SA 4.0 license</a> governing re-use of this material.</p>
 <p>The book was built using the R <a href="https://bookdown.org"><strong><code>bookdown</code></strong></a> package. The source files are available at <a href="https://github.com/dalejbarr/basel-longitudinal">github</a>.</p>
@@ -271,7 +271,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Mixed-effects models for longitudinal data</strong>" was written by Dale J. Barr. It was last built on 2022-03-03.</p>
+    <p>"<strong>Workshop on linear mixed-effects models</strong>" was written by Dale J. Barr. It was last built on 2022-07-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

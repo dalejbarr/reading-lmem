@@ -33,7 +33,7 @@ sample(1:6, 20, TRUE)
 ```
 
 ```
-##  [1] 6 1 5 4 6 6 5 4 3 5 3 5 6 6 3 1 5 3 3 4
+##  [1] 3 6 1 1 5 4 2 2 4 3 3 5 6 6 3 2 2 1 6 5
 ```
 
 
@@ -228,7 +228,7 @@ iris2 <- as_tibble(iris)
 
 
 ```
-## # A tibble: 8 × 4
+## # A tibble: 8 x 4
 ##      ID A     B     C    
 ##   <int> <chr> <chr> <chr>
 ## 1     1 A1    B1    C1   
@@ -310,7 +310,7 @@ simdata
 ```
 
 ```
-## # A tibble: 50 × 3
+## # A tibble: 50 x 3
 ##        x       e     y
 ##    <int>   <dbl> <dbl>
 ##  1     9   8.71  -366.

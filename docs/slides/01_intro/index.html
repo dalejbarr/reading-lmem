@@ -11,19 +11,20 @@
 
 <link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
 
+<link rel="stylesheet" href="../css/mods.css"/>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Introduction</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Introduction</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-org7345001">
-<h2 id="org7345001"></h2>
+<section id="slide-orge2c83ca">
+<h2 id="orge2c83ca"></h2>
 <p>
-<b>How do I translate a longitudinal study design into a statistical model for analysis?</b>
+<b>How do I translate an experiment study design into a statistical model for analysis?</b>
 </p>
 
 <aside class="notes">
@@ -35,10 +36,8 @@
 </aside>
 
 </section>
-</section>
-<section>
-<section id="slide-orge399778">
-<h2 id="orge399778"></h2>
+<section id="slide-orgad2daf6">
+<h4 id="orgad2daf6"></h4>
 <aside class="notes">
 <ul>
 <li>cooking analogy</li>
@@ -50,16 +49,14 @@
 </aside>
 
 
-<div id="org485c2af" class="figure">
+<div id="org52358dc" class="figure">
 <p><img src="studyres-com.png" alt="studyres-com.png" />
 </p>
 </div>
 
 </section>
-</section>
-<section>
-<section id="slide-orgd0aa26f">
-<h2 id="orgd0aa26f">Recipes encourage poor practice</h2>
+<section id="slide-org9ba4421">
+<h4 id="org9ba4421">Recipes encourage poor practice</h4>
 <ul>
 <li>violation of assumptions
 <ul>
@@ -85,10 +82,8 @@
 </aside>
 
 </section>
-</section>
-<section>
-<section id="slide-org49dd1ab">
-<h2 id="org49dd1ab"></h2>
+<section id="slide-orgb8e0d91">
+<h4 id="orgb8e0d91"></h4>
 <div class="column" style="float:left; width: 60%">
 <ul>
 <li>t-test</li>
@@ -108,10 +103,8 @@
 </div>
 
 </section>
-</section>
-<section>
-<section id="slide-orgb44bdcf">
-<h2 id="orgb44bdcf">GLM approach</h2>
+<section id="slide-org61a19f9">
+<h4 id="org61a19f9">GLM approach</h4>
 <ol>
 <li>Define a mathematical model of the data-generating process (DGP)</li>
 <li>Estimate the parameters of the model</li>
@@ -129,10 +122,8 @@ representing the processes that are
 </aside>
 
 </section>
-</section>
-<section>
-<section id="slide-org9d2bd14">
-<h2 id="org9d2bd14">Models are just&#x2026; models</h2>
+<section id="slide-org4ccfc9b">
+<h4 id="org4ccfc9b">Models are just&#x2026; models</h4>
 <p>
 A statistical model is a <i>simplification</i> and <i>idealization</i> of reality that captures our key assumptions about the processes underlying data (the <b>data generating process</b> or DGP).
 </p>
@@ -140,8 +131,8 @@ A statistical model is a <i>simplification</i> and <i>idealization</i> of realit
 </section>
 </section>
 <section>
-<section id="slide-org3521a60">
-<h2 id="org3521a60">Why simulation?</h2>
+<section id="slide-org54f8845">
+<h2 id="org54f8845">Why simulation?</h2>
 <ul>
 <li>Data simulation is a <i>litmus test</i> of understanding a statistical approach.
 <ul>
@@ -158,10 +149,8 @@ A statistical model is a <i>simplification</i> and <i>idealization</i> of realit
 </ul>
 
 </section>
-</section>
-<section>
-<section id="slide-org750897c">
-<h2 id="org750897c">Example: Parent reflexes</h2>
+<section id="slide-org8a1e8c1">
+<h4 id="org8a1e8c1">Example: Parent reflexes</h4>
 <div class="org-center">
 <p>
 Does being the parent of a toddler sharpen your reflexes?
@@ -175,10 +164,8 @@ Does being the parent of a toddler sharpen your reflexes?
 </ul>
 
 </section>
-</section>
-<section>
-<section id="slide-org5058c59">
-<h2 id="org5058c59">Simulating data</h2>
+<section id="slide-org2621639">
+<h4 id="org2621639">Simulating data</h4>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>set.seed(2022) <span style="color: #b22222;"># </span><span style="color: #b22222;">RNG seed: arbitrary integer value</span>
@@ -206,17 +193,15 @@ parents <span style="color: #008b8b;">&lt;-</span> rnorm(n = 50, mean = 490, sd 
 </div>
 
 </section>
-</section>
-<section>
-<section id="slide-orgd3ed74b">
-<h2 id="orgd3ed74b">\(t\)-test</h2>
+<section id="slide-org6b2ae0f">
+<h4 id="org6b2ae0f">\(t\)-test</h4>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>t.test(parents, control, var.equal = <span style="color: #228b22;">TRUE</span>)
 </code></pre>
 </div>
 
-<pre class="example" id="org1731766">
+<pre class="example" id="orgc87d765">
 
 	Two Sample t-test
 
@@ -231,10 +216,8 @@ mean of x mean of y
 </pre>
 
 </section>
-</section>
-<section>
-<section id="slide-orgaed4de1">
-<h2 id="orgaed4de1">ANOVA</h2>
+<section id="slide-org67d1182">
+<h4 id="org67d1182">ANOVA</h4>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>summary(aov(rt ~ group, dat))    
@@ -251,10 +234,8 @@ codes:
 </pre>
 
 </section>
-</section>
-<section>
-<section id="slide-org08729db">
-<h2 id="org08729db">Regression</h2>
+<section id="slide-org759e743">
+<h4 id="org759e743">Regression</h4>
 <p>
 \(Y_i = \beta_0 + \beta_1 X_i + e_i\)
 </p>
@@ -264,17 +245,15 @@ codes:
 </p>
 
 </section>
-</section>
-<section>
-<section id="slide-org744d94b">
-<h2 id="org744d94b">Regression</h2>
+<section id="slide-orgd3372b5">
+<h4 id="orgd3372b5">Regression</h4>
 <div class="org-src-container">
 
 <pre  class="src src-R" ><code trim>summary(lm(rt ~ group, dat))
 </code></pre>
 </div>
 
-<pre class="example" id="org67314a7">
+<pre class="example" id="org00f2bc0">
 
 Call:
 lm(formula = rt ~ group, data = dat)
@@ -297,17 +276,15 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </pre>
 
 </section>
-</section>
-<section>
-<section id="slide-org521bb4d">
-<h2 id="org521bb4d"></h2>
+<section id="slide-org50da4e8">
+<h4 id="org50da4e8"></h4>
 <a href="https://shiny.psy.gla.ac.uk/Dale/GLM">GLM shiny app</a>
 
 </section>
 </section>
 <section>
-<section id="slide-orgf05d518">
-<h2 id="orgf05d518">Single- vs Multi-level</h2>
+<section id="slide-org4c6e1c4">
+<h2 id="org4c6e1c4">Single- vs Multi-level</h2>
 <div class="column" style="float:left; width: 50%">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -436,10 +413,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </div>
 
 </section>
-</section>
-<section>
-<section id="slide-orgcbe9c46">
-<h2 id="orgcbe9c46">Issues with multi-level data</h2>
+<section id="slide-orgae64e65">
+<h4 id="orgae64e65">Issues with multi-level data</h4>
 <ul>
 <li>GLMs assume independence of residuals</li>
 <li>Observations within a cluster (unit) are not independent</li>
@@ -449,10 +424,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </ul>
 
 </section>
-</section>
-<section>
-<section id="slide-org4ad6331">
-<h2 id="org4ad6331">Regression: Killer App</h2>
+<section id="slide-org1972da7">
+<h4 id="org1972da7">Regression: Killer App</h4>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -526,10 +499,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </table>
 
 </section>
-</section>
-<section>
-<section id="slide-orgd9c5595">
-<h2 id="orgd9c5595">4 functions to rule them all</h2>
+<section id="slide-org8646250">
+<h4 id="org8646250">4 functions to rule them all</h4>
 <ol>
 <li>Is the data single- or multi-level?</li>
 <li>Is the response continuous or discrete?</li>
@@ -591,12 +562,10 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </table>
 
 </section>
-</section>
-<section>
-<section id="slide-org992c369">
-<h2 id="org992c369">workshop overview</h2>
+<section id="slide-org0306ca5">
+<h4 id="org0306ca5">workshop overview</h4>
 <p>
-<a href="https://dalejbarr.github.io/basel-longitudinal">https://dalejbarr.github.io/basel-longitudinal</a>
+<a href="https://dalejbarr.github.io/reading-lmem">https://dalejbarr.github.io/reading-lmem</a>
 </p>
 
 <div class="column" style="float:left; width: 50%">
