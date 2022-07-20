@@ -798,11 +798,20 @@ fortune()
 
 ```
 ## 
-## I thought RStudio was amazing, but RStudio with knitr is approximately
-## `formatC(round(runif(1, 1e8, 1e9)), digits=10, big.mark=',')` times better than
-## RStudio alone!
-##    -- @Geneorama (comment on RStudio's new web publishing service)
-##       RStudio blog (June 2012)
+## So, with the item in the original query:
+## 
+##   if (x<-3) do_something;
+## 
+## if they wrote it as
+## 
+##   if (x<(-3)) do_something;
+## 
+## there would be no problem (and no doubt about what went with what). Of course
+## in complicated expressions this could induce an episode of ocular lispopia, but
+## apart from that it's safe!
+##    -- Ted Harding (about potential confusion between assignment and comparisons
+##       with negative numbers)
+##       R-devel (August 2010)
 ```
 
 Note that we will use the convention `package::function()` and `package::object` to indicate in which add-on package a function or object resides.  For instance, if you see `readr::read_csv()`, that refers to the function `read_csv()` in the `readr` add-on package.  If you see a function introduced without a package name, that means it is part of the base R system and not an add-on package (depending on the context).  Sometimes I will make this explicit by using `base` in the place of the package name; for instance, I might refer to `rnorm()` in base as `base::rnorm()`.
@@ -893,8 +902,8 @@ rnorm(10)
 ```
 
 ```
-##  [1] -0.24846602  1.80104871 -0.44491324  0.14111425  0.25334055 -0.10588782
-##  [7] -0.01656987  0.21458221  0.86765920  0.69124229
+##  [1] -0.71987946  0.49180634 -0.36614237 -2.74422949 -1.94970531 -0.38030935
+##  [7] -0.78805703  0.12770185  1.18505020  0.01409131
 ```
 
 If you want 10 numbers from a distribution with a mean of 100:
@@ -905,8 +914,8 @@ rnorm(10, 100)
 ```
 
 ```
-##  [1]  99.98351 101.42485 101.24325 100.24761  98.90576 100.22068 100.12538
-##  [8]  99.44703 101.27009 101.46490
+##  [1] 101.45098 101.82494  99.95905 101.61724  99.76732  98.17015  99.91505
+##  [8] 100.12388  98.86311  99.75465
 ```
 
 This would be an equivalent but less efficient way of calling the function:
@@ -917,8 +926,8 @@ rnorm(n = 10, mean = 100)
 ```
 
 ```
-##  [1] 100.55675  97.52670  98.12127 100.60769 100.25184 100.62842  99.06324
-##  [8] 100.82147  99.65173 100.49588
+##  [1] 101.16988  98.23934 101.75735 100.17380 100.50837 102.53044  98.85412
+##  [8]  99.53862 100.20072  99.91687
 ```
 
 We don't need to name the arguments because R will recognize that we intended to fill in the first and second arguments by their position in the function call.  However, if we want to change the default for an argument coming later in the list, then we need to name it.  For instance, if we wanted to keep the default `mean = 0` but change the standard deviation to 100 we would do it this way:
@@ -929,8 +938,8 @@ rnorm(10, sd = 100)
 ```
 
 ```
-##  [1] -31.2902718 -16.3216749  -0.7940778  46.8640169  83.7289346  -6.8063179
-##  [7]  57.7565084 -92.3262965 -46.5643117 -57.7218342
+##  [1]   23.468125   74.428712   36.168174    9.534553  -19.067703 -113.492962
+##  [7]   60.038937  -11.364278   -8.886975  161.688883
 ```
 
 #### Exercises {#cowsay}
@@ -1091,11 +1100,11 @@ Important! Try to perform each task making the shortest function call you can by
     ```
     ## 
     ##  -------------- 
-    ## I don't like to see the use of c() for its side effects. In this case Marc's as.vector seems to me to be self-explanatory, and that is a virtue in programming that is too often undervalued.
-    ##  Brian D. Ripley
-    ##  on how to convert a matrix into a vector
-    ##  R-help
-    ##  March 2007 
+    ## Unfortunately, this is one of those situations where as far as I can tell all of the real statisticians are out there playing with large data sets where the small-sample corrections are not so important and leaving the rest of us to figure it out for ourselves...
+    ##  Ben Bolker
+    ##  about the 'correct' degrees-of-freedom correction in Wald statistics for GLMMs
+    ##  R-SIG-Mixed-Models
+    ##  December 2011 
     ##  --------------
     ##     \
     ##       \
@@ -1127,7 +1136,7 @@ Important! Try to perform each task making the shortest function call you can by
     ```
     ## 
     ##  ----- 
-    ## Wed Jul 20 08:35:24 2022 
+    ## Wed Jul 20 08:47:49 2022 
     ##  ------ 
     ##     \   
     ##      \
@@ -1156,7 +1165,7 @@ Important! Try to perform each task making the shortest function call you can by
     ```
     ## 
     ##  -------------- 
-    ## Wed Jul 20 08:35:24 2022 
+    ## Wed Jul 20 08:47:49 2022 
     ##  --------------
     ##     \
     ##       \
@@ -1202,7 +1211,7 @@ sort(y, TRUE) # set second argument to 'TRUE' so that sort order is descending
 ```
 
 ```
-## [1] 8 7 5 1
+## [1] 10  7  5  3
 ```
 
 
@@ -1214,7 +1223,7 @@ sort(unique(sample(1:10, 5, replace = TRUE)), TRUE)
 ```
 
 ```
-## [1] 9 8 7 2
+## [1] 9 4 3 2 1
 ```
 
 (If the above call looks confusing, it should!) The call to `sample()` is embedded within a call to `unique()` which in turn is embedded within a call to `sort()`. The functions are executed from most embedded (the "bottom") to least embedded (the "top"), starting with the function `sample()`, whose result is then passed in as the first argument to `unique(`), whose result in turn is passed in as the first argument to `sort()`; notice the second argument of sort (`TRUE`) is all the way at the end of the statement, making it hard to figure out which of the three functions it belongs to. We read from left to right; however, understanding this code requires us to work our way from right to left, and therefore unnatural. Moreover it is simply an ugly line of code.
@@ -1228,7 +1237,7 @@ sample(1:10, 5, replace = TRUE) %>%
 ```
 
 ```
-## [1] 7 5 4 3 1
+## [1] 10  4  2  1
 ```
 
 R will calculate the result of `sample(1:10, 5, replace = TRUE)` and then pass this result as the first argument of `unique()`; then, the result of `unique()` will in turn be passed along as the first argument of `sort()` with the second argument set to `TRUE`. The thing to note here is that for any function call on the right hand side of a pipe, you should omit the first argument and start with the second, because the pipe automatically places the result of the call on the left in that spot.

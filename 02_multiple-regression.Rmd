@@ -87,7 +87,7 @@ Open up a new RMarkdown file and create separate code chunks for each of the fol
 
 :::{.try}
 
-You will need to use the **`tidyverse`** package as well as the **`corrr`** package. Load in those packages and then import `stars-wide.csv`. You might want to look at the [Data Import Cheat Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf){target="_blank"}.
+You will need to use the **`tidyverse`** package as well as the **`corrr`** package. Load in those packages and then import `stars-wide.csv`. You might want to look at the [Data Import Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-import.pdf){target="_blank"}.
 
 ```{r data-import, webex.hide="solution", message = FALSE}
 library("tidyverse")
