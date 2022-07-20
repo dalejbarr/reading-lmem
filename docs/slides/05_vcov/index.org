@@ -20,7 +20,7 @@
 
 \(\mathbf{\Sigma}\)
 
-*A matrix that characterizes the spread of multivariate values.* 
+*A matrix describing the variance of a multivariate distribution.* 
 
 \begin{pmatrix}
 {\sigma_x}^2                & \rho_{xy} \sigma_x \sigma_y \\

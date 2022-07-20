@@ -798,11 +798,10 @@ fortune()
 
 ```
 ## 
-## As for the question of the bug in `is', ... it depends what your definition of
-## `is' is.
-##    -- Douglas Bates (referring to Bill Clinton after a tortuous discussion of
-##       the behavior of is(7, "integer"))
-##       R-help (September 2008)
+## Seldom are prizes, credit, and gratitude given, else Brian would be drowning in
+## them.
+##    -- Anthony Rossini (about the merits of implementing software)
+##       R-help (May 2004)
 ```
 
 Note that we will use the convention `package::function()` and `package::object` to indicate in which add-on package a function or object resides.  For instance, if you see `readr::read_csv()`, that refers to the function `read_csv()` in the `readr` add-on package.  If you see a function introduced without a package name, that means it is part of the base R system and not an add-on package (depending on the context).  Sometimes I will make this explicit by using `base` in the place of the package name; for instance, I might refer to `rnorm()` in base as `base::rnorm()`.
@@ -893,8 +892,8 @@ rnorm(10)
 ```
 
 ```
-##  [1]  1.23063210 -0.87722298 -1.03165555  0.19023028 -0.81112402 -1.35449243
-##  [7]  0.14266710 -0.06174587 -0.92367287 -0.76357568
+##  [1] -0.9449527  0.5329253 -0.4386152 -0.1983025 -1.8401091 -0.0540786
+##  [7] -0.6222982  0.2012770  1.5369642 -0.1646371
 ```
 
 If you want 10 numbers from a distribution with a mean of 100:
@@ -905,8 +904,8 @@ rnorm(10, 100)
 ```
 
 ```
-##  [1]  99.51526 102.69330 100.36972 101.06266 100.40000 101.29458 100.97077
-##  [8] 100.87806 100.20733  99.71568
+##  [1] 101.28340  99.56194  99.64668  99.40678  98.75526 100.65238 101.86495
+##  [8] 101.50736 100.90007 100.33281
 ```
 
 This would be an equivalent but less efficient way of calling the function:
@@ -917,8 +916,8 @@ rnorm(n = 10, mean = 100)
 ```
 
 ```
-##  [1] 100.49689  99.55761  99.91958 100.56011  98.94490 100.39284 101.19039
-##  [8] 100.76234  97.90424 102.40389
+##  [1] 100.25307  98.42633 100.86527  99.36811 100.74387  98.55279  98.82738
+##  [8] 101.18355  99.35875 100.03542
 ```
 
 We don't need to name the arguments because R will recognize that we intended to fill in the first and second arguments by their position in the function call.  However, if we want to change the default for an argument coming later in the list, then we need to name it.  For instance, if we wanted to keep the default `mean = 0` but change the standard deviation to 100 we would do it this way:
@@ -929,8 +928,8 @@ rnorm(10, sd = 100)
 ```
 
 ```
-##  [1]  -69.29505 -103.38446 -167.66642  137.58274  156.96858  -44.74431
-##  [7]  -52.12894   72.53365   76.28195  -30.60602
+##  [1]   26.16298  -10.65860  -40.88784   70.16116   86.91697   59.25355
+##  [7] -145.94957  -49.70058 -152.32173  -90.25143
 ```
 
 #### Exercises {#cowsay}
@@ -1091,11 +1090,12 @@ Important! Try to perform each task making the shortest function call you can by
     ```
     ## 
     ##  -------------- 
-    ## Some people familiar with R describe it as a supercharged version of Microsoft's Excel spreadsheet software.
-    ##  Ashlee Vance
-    ##  in his article "Data Analysts Captivated by R's Power"
-    ##  The New York Times
-    ##  January 2009 
+    ## Gustaf Rydevik: The author also has some thought-provoking opinions on R being no-good and that you should write everything in C.
+    ## Paul Gilbert: People used to say assembler, that's progress.
+    ##  Gustaf Rydevik and Paul Gilbert
+    ##  in a discussion about an 'R is slow' blog post
+    ##  R-help
+    ##  January 2008 
     ##  --------------
     ##     \
     ##       \
@@ -1127,7 +1127,7 @@ Important! Try to perform each task making the shortest function call you can by
     ```
     ## 
     ##  ----- 
-    ## Wed Jul 20 09:25:36 2022 
+    ## Wed Jul 20 22:24:40 2022 
     ##  ------ 
     ##     \   
     ##      \
@@ -1156,7 +1156,7 @@ Important! Try to perform each task making the shortest function call you can by
     ```
     ## 
     ##  -------------- 
-    ## Wed Jul 20 09:25:36 2022 
+    ## Wed Jul 20 22:24:40 2022 
     ##  --------------
     ##     \
     ##       \
@@ -1202,7 +1202,7 @@ sort(y, TRUE) # set second argument to 'TRUE' so that sort order is descending
 ```
 
 ```
-## [1] 10  7  4  2
+## [1] 5 3 2 1
 ```
 
 
@@ -1214,7 +1214,7 @@ sort(unique(sample(1:10, 5, replace = TRUE)), TRUE)
 ```
 
 ```
-## [1] 10  5  4  2
+## [1] 6 5 4 3 2
 ```
 
 (If the above call looks confusing, it should!) The call to `sample()` is embedded within a call to `unique()` which in turn is embedded within a call to `sort()`. The functions are executed from most embedded (the "bottom") to least embedded (the "top"), starting with the function `sample()`, whose result is then passed in as the first argument to `unique(`), whose result in turn is passed in as the first argument to `sort()`; notice the second argument of sort (`TRUE`) is all the way at the end of the statement, making it hard to figure out which of the three functions it belongs to. We read from left to right; however, understanding this code requires us to work our way from right to left, and therefore unnatural. Moreover it is simply an ugly line of code.
@@ -1228,7 +1228,7 @@ sample(1:10, 5, replace = TRUE) %>%
 ```
 
 ```
-## [1] 9 8 5 4
+## [1] 10  8  6  4  1
 ```
 
 R will calculate the result of `sample(1:10, 5, replace = TRUE)` and then pass this result as the first argument of `unique()`; then, the result of `unique()` will in turn be passed along as the first argument of `sort()` with the second argument set to `TRUE`. The thing to note here is that for any function call on the right hand side of a pipe, you should omit the first argument and start with the second, because the pipe automatically places the result of the call on the left in that spot.
@@ -1384,19 +1384,19 @@ starwars
 ```
 
 ```
-## # A tibble: 87 × 14
-##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
-##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-##  1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
-##  2 C-3PO       167    75 <NA>       gold       yellow         112   none  mascu…
-##  3 R2-D2        96    32 <NA>       white, bl… red             33   none  mascu…
-##  4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
-##  5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
-##  6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
-##  7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
-##  8 R5-D4        97    32 <NA>       white, red red             NA   none  mascu…
-##  9 Biggs D…    183    84 black      light      brown           24   male  mascu…
-## 10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+## # A tibble: 87 x 14
+##    name    height  mass hair_color  skin_color eye_color birth_year sex   gender
+##    <chr>    <int> <dbl> <chr>       <chr>      <chr>          <dbl> <chr> <chr> 
+##  1 Luke S…    172    77 blond       fair       blue            19   male  mascu…
+##  2 C-3PO      167    75 <NA>        gold       yellow         112   none  mascu…
+##  3 R2-D2       96    32 <NA>        white, bl… red             33   none  mascu…
+##  4 Darth …    202   136 none        white      yellow          41.9 male  mascu…
+##  5 Leia O…    150    49 brown       light      brown           19   fema… femin…
+##  6 Owen L…    178   120 brown, grey light      blue            52   male  mascu…
+##  7 Beru W…    165    75 brown       light      blue            47   fema… femin…
+##  8 R5-D4       97    32 <NA>        white, red red             NA   none  mascu…
+##  9 Biggs …    183    84 black       light      brown           24   male  mascu…
+## 10 Obi-Wa…    182    77 auburn, wh… fair       blue-gray       57   male  mascu…
 ## # … with 77 more rows, and 5 more variables: homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
@@ -1511,7 +1511,7 @@ iris2 <- as_tibble(iris)
 
 
 ```
-## # A tibble: 8 × 4
+## # A tibble: 8 x 4
 ##      ID A     B     C    
 ##   <int> <chr> <chr> <chr>
 ## 1     1 A1    B1    C1   

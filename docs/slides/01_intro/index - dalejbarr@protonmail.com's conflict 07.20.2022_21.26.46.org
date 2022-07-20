@@ -1,0 +1,303 @@
+#+SETUPFILE: ../reveal.org
+#+TITLE: Introduction
+#+PROPERTY: header-args:R :session *R* :exports both :results value
+
+* Setup                                                            :noexport:
+
+#+begin_src R :exports none :results silent
+  options(tidyverse.quiet=TRUE, crayon.enabled = FALSE)
+  library("tidyverse")
+  library("lme4")
+
+  options(width = 60)
+
+  source("../theme_jetblack.R")
+#+end_src
+
+* 
+
+*How do I translate an experiment study design into a statistical model for analysis?*
+
+#+begin_notes
+- many of the problems people have with longitudinal designs reflect a lack of understanding of regression or of mixed-effects modeling
+#+end_notes
+
+*** 
+
+#+begin_notes
+- cooking analogy
+- punching buttons on a microwave (pre-packaged food)
+- versus taking fresh ingredients and improvising something
+#+end_notes
+
+[[file:studyres-com.png]]
+
+*** Recipes encourage poor practice
+
+- violation of assumptions
+  - especially: independence
+- discretization of predictors
+- treating continuous data as categorical
+- over-aggregation
+
+#+begin_notes
+ /"If all you have is a hammer, everything looks like a nail"/
+
+- mindless statistics
+#+end_notes
+
+*** 
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 60%">
+- t-test
+- correlation & regression
+- multiple regression
+- analysis of variance
+- mixed-effects modeling
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 40%">
+- /All are special cases of the General Linear Model (GLM)./
+#+REVEAL_HTML: </div>
+
+*** GLM approach
+
+1. Define a mathematical model of the data-generating process (DGP)
+2. Estimate the parameters of the model
+3. Validate the model
+4. Report and interpret results
+
+#+begin_notes
+ representing the processes that are
+   assumed to give rise to the data
+#+end_notes
+
+*** Models are just... models
+
+A statistical model is a /simplification/ and /idealization/ of reality that captures our key assumptions about the processes underlying data (the *data generating process* or DGP).
+
+* Why simulation?
+
+- Data simulation is a /litmus test/ of understanding a statistical approach.
+  - Can you generate simulated data that would meet the assumptions of the approach?
+    - If not, *you don't understand it (yet!)*
+
+- Being able to specify the DGP is key to study planning (power)
+
+*** Example: Parent reflexes
+
+#+begin_center
+Does being the parent of a toddler sharpen your reflexes?
+#+end_center
+
+- simple response time to a flashing light
+- dependent (response) variable: mean RT for each parent
+
+*** Simulating data
+
+#+begin_src R :exports code :results silent
+  set.seed(2022) # RNG seed: arbitrary integer value
+  parents <- rnorm(n = 50, mean = 490, sd = 40)
+#+end_src
+
+#+begin_src R :exports results :results output
+  parents
+#+end_src
+
+#+RESULTS:
+:  [1] 516.0057 433.0662 444.1006 422.2199 466.7595 363.9748
+:  [7] 437.6298 491.1182 509.9794 489.6633 520.2474 472.5942
+: [13] 440.7269 483.7163 477.8886 476.7869 453.8359 441.9727
+: [19] 520.7825 514.3619 494.5784 495.3460 524.5362 528.4604
+: [25] 466.0670 445.6179 506.0011 493.1224 459.2821 470.4407
+: [31] 484.7112 513.2607 417.6432 471.1792 447.3122 523.0671
+: [37] 523.1866 485.6851 486.2792 473.2512 469.2385 512.3107
+: [43] 435.0113 422.7685 482.4143 448.2807 493.6110 469.6213
+: [49] 427.8061 494.7269
+
+#+begin_src R :exports code
+  control <- rnorm(n = 50, mean = 500, sd = 40)
+#+end_src
+
+*** \(t\)-test
+
+#+begin_src R :exports both :results output
+  t.test(parents, control, var.equal = TRUE)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+	Two Sample t-test
+
+data:  parents and control
+t = -2.0738, df = 98, p-value = 0.04072
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -36.5195723  -0.8035714
+sample estimates:
+mean of x mean of y 
+ 485.0249  503.6865
+#+end_example
+
+*** ANOVA
+
+#+begin_src R :exports none :results silent
+  dat <- tibble(
+    group = rep(c("parent", "control"), 
+		c(length(parents), length(control))),
+    rt = c(parents, control))
+#+end_src
+
+#+begin_src R :exports both :results output
+  summary(aov(rt ~ group, dat))    
+#+end_src
+
+#+RESULTS:
+:             Df Sum Sq Mean Sq F value Pr(>F)  
+: group        1   8706    8706     4.3 0.0407 *
+: Residuals   98 198401    2024                 
+: ---
+: codes:  
+: 0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+*** Regression
+
+\(Y_i = \beta_0 + \beta_1 X_i + e_i\)
+
+\(e_i \sim N(0, \sigma^2)\)
+
+*** Regression
+
+#+begin_src R :exports both :results output
+  summary(lm(rt ~ group, dat))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+Call:
+lm(formula = rt ~ group, data = dat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-126.575  -26.632    1.113   24.885  124.379 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  503.686      6.363  79.156   <2e-16 ***
+groupparent  -18.662      8.999  -2.074   0.0407 *  
+---
+codes:  
+0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 44.99 on 98 degrees of freedom
+Multiple R-squared:  0.04204,	Adjusted R-squared:  0.03226 
+F-statistic:   4.3 on 1 and 98 DF,  p-value: 0.04072
+#+end_example
+
+*** 
+
+#+REVEAL_HTML: <a href="https://shiny.psy.gla.ac.uk/Dale/GLM">GLM shiny app</a>
+
+* Single- vs Multi-level
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+#+begin_src R :exports results :results value :colnames yes
+  tibble(sub = 1:6,
+	 A = rep(c("A1", "A2"), each = 3),
+	 Y = round(rnorm(6, 800, 100)))
+#+end_src
+
+#+RESULTS:
+| subj_id | A  |   Y |
+|---------+----+-----|
+|       1 | A1 | 794 |
+|       2 | A1 | 718 |
+|       3 | A1 | 711 |
+|       4 | A2 | 607 |
+|       5 | A2 | 822 |
+|       6 | A2 | 855 |
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+#+begin_src R :exports results :results value :colnames yes
+  tibble(sub = rep(1:2, each = 3),
+         stim = rep(LETTERS[1:3], 2),
+	 A = rep(c("A1", "A2"), each = 3),
+	 Y = round(rnorm(6, 800, 100)))
+#+end_src
+
+#+RESULTS:
+| sub | stim | A  |   Y |
+|-----+------+----+-----|
+|   1 | A    | A1 | 975 |
+|   1 | B    | A1 | 765 |
+|   1 | C    | A1 | 702 |
+|   2 | A    | A2 | 972 |
+|   2 | B    | A2 | 610 |
+|   2 | C    | A2 | 954 |
+
+#+REVEAL_HTML: </div>
+
+*** Issues with multi-level data
+
+- GLMs assume independence of residuals
+- Observations within a cluster (unit) are not independent
+- Any sources of non-independence must be modeled or aggregated away
+- Typical consequence of failing to do so: High false positives
+
+*** Regression: Killer App
+
+|------------------+--------+-------+------------|
+| technique        | t-test | ANOVA | regression |
+|------------------+--------+-------+------------|
+| Categorical IVs  | ✓      | ✓     | ✓          |
+| Continuous DVs   | ✓      | ✓     | ✓          |
+| Continuous IVs   |        | -     | ✓          |
+| Multi-level data | -      | -     | ✓          |
+| Categorical DVs  |        |       | ✓          |
+| Unbalanced data  | -      | -     | ✓          |
+| >1 sampling unit |        |       | ✓          |
+
+*** 4 functions to rule them all
+
+1. Is the data single- or multi-level?
+2. Is the response continuous or discrete?
+3. How are the observations distributed?
+
+#+REVEAL_HTML: <br/><br/>
+
+| structure | response  | distrib | R fnc           |
+|-----------+-----------+---------+-----------------|
+| single    | cont      | normal  | =base::lm()=    |
+| single    | cont/disc | various | =base::glm()=   |
+| multi     | cont      | normal  | =lme4::lmer()=  |
+| multi     | cont/disc | various | =lme4::glmer()= |
+
+*** workshop overview
+
+https://dalejbarr.github.io/reading-lmem
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+*Day 1* (single-level data)
+
+- Simple regression
+- Multiple regression
+- Interactions
+- Modeling trends
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+
+*Day 2* (multi-level data)
+
+- Covariance matrices
+- Intro to LMMs
+- Specifying LMMs
+- Going further
+
+#+REVEAL_HTML: </div>

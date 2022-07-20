@@ -6,7 +6,7 @@
 
 [Bivariate distributions app](https://dalejbarr.github.io/bivariate/index.html)
 
-Note that the "code" pane of the app shows the code you would need to simulated data with the desired properties. This will be useful for the data simulation activity below.
+Note that the "code" pane of the app shows the code you would need to simulate data with the desired properties. This will be useful for the data simulation activity below.
 
 [My book chapter on correlation](https://psyteachr.github.io/stat-models-v1/correlation-and-regression.html) goes over the topic in more depth, including a discussion of the relationship between correlation and regression.
 
@@ -14,16 +14,17 @@ Note that the "code" pane of the app shows the code you would need to simulated 
 
 Play around with the app below until you are confident in interpreting variance-covariance matrices.
 
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px"></iframe>
 
 ### Simulating data from covariance matrices
 
-Below are some simulation exercises that call upon the function `mvrnorm()` from the `MASS` package. See the "code" pane of the first web app on this page for example code. You might want to step through it if you haven't encountered the `matrix()` function before. The `matrix()` function has a `byrow` option that allows you to enter the data row-by-row instead of column-by-column (the default), which makes life easier.
+Below are some simulation exercises that call upon the function `mvrnorm()` from the `MASS` package. See the "code" pane of the [bivariate distributions app](https://dalejbarr.github.io/bivariate/index.html) for example code, including how to use `rbind()` to bind vectors together to form the rows of a matrix.
 
 :::{.warning}
 **WATCH OUT! Always use `MASS::mvrnorm()` without loading `library("MASS")`.**
 
-The **`MASS`** package comes pre-installed with R. But the only function you'll probably ever want to use from **`MASS`** is `mvrnorm()`, so rather than load in the package using `library("MASS")`, it is preferable to use `MASS::mvrnorm()`, especially as **`MASS`** and the **`dplyr`** package from **`tidyverse`** don't play well together, due to both packages having the function `select()`. So if you load in **`MASS`** after you load in **`tidyverse`**, you'll end up getting the **`MASS`** version of `select()` instead of the **`dplyr`** version. It will do your head in trying to debug your code.
+The **`MASS`** package comes pre-installed with R. The only function from **`MASS`** you'll need for these exercises is `mvrnorm()`. Rrather than load in the package using `library("MASS")`, it is preferable to call the function using the "package::function" syntax, i.e., `MASS::mvrnorm()`. There is an important reason for this: the **`MASS`** and **`tidyverse`** packages don't play well together, due to both packages having the function `select()`. So if you load in **`MASS`** after you load in **`tidyverse`**, you'll end up overwriting **`tidyverse`** version of `select()` with the **`MASS`** version. (This kind of situation where two packages contain identically named functions is called a "namespace clash". Errors arising from such clashes can be a nightmare to debug.)
+
 :::
 
 #### A 2x2 matrix
@@ -41,9 +42,9 @@ Simulate 12 observations for a 2x2 matrix for variables X and Y with the followi
 
 ```r
 cov_xy <- -.24 * 9 * 11
-mx1 <- matrix(c(9^2,    cov_xy,
-                cov_xy, 11^2),
-              nrow = 2, byrow=TRUE)
+
+mx1 <- rbind(c(9^2,    cov_xy),
+             c(cov_xy, 11^2))
 
 set.seed(62)
 MASS::mvrnorm(12, mu = c(X = -3.5, Y = 57), mx1)
@@ -129,11 +130,10 @@ cxy <- cyx <- -.40 * sx * sy
 cxz <- czx <- -.07 * sx * sz
 cyz <- czy <- -.23 * sy * sz
 
-mx2 <- matrix(c(sw^2, cwx,  cwy,  cwz,
-                cxw,  sx^2, cxy,  cxz,
-                cyw,  cyx,  sy^2, cyz,
-                czw,  czx,  czy,  sz^2),
-              nrow = 4, byrow = TRUE)
+mx2 <- rbind(c(sw^2, cwx,  cwy,  cwz),
+             c(cxw,  sx^2, cxy,  cxz),
+             c(cyw,  cyx,  sy^2, cyz),
+             c(czw,  czx,  czy,  sz^2))
 
 set.seed(62)
 simdata <- MASS::mvrnorm(10, mu = c(W = 5, X = -7, Y = 40, Z = -99), mx2)
@@ -173,7 +173,7 @@ combined
 ```
 
 ```
-## # A tibble: 100 × 6
+## # A tibble: 100 x 6
 ##       id condition     W     X     Y     Z
 ##    <int> <chr>     <dbl> <dbl> <dbl> <dbl>
 ##  1     1 test       6.24 -3.06  39.6 -101.

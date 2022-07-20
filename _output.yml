@@ -3,7 +3,7 @@ bookdown::bs4_book:
   md_extensions: -smart
   df_print: default
   repo:
-    base: https://github.com/dalejbarr/basel-longitudinal
+    base: https://github.com/dalejbarr/reading-lmem
     branch: main
   includes:
     in_header: include/header.html

@@ -66,7 +66,7 @@ You will need to generate data for a matrix called `rmx`, where the first column
 <div class='webex-solution'><button>hint</button>
 
 
-Look back at [the last chapter](variance-covariance.html). You'll need to use `matrix()` and `MASS::mvrnorm()`.
+Look back at [the last chapter](variance-covariance.html). You'll need to use `rbind()` and `MASS::mvrnorm()`.
 
 
 </div>
@@ -76,8 +76,8 @@ Look back at [the last chapter](variance-covariance.html). You'll need to use `m
 <div class='webex-solution'><button>solution</button>
 
 ```r
-covmx <- matrix(c(30^2, .9 * 30 * 33,
-                  .9 * 30 * 33, 33^2), ncol = 2)
+covmx <- rbind(c(30^2, .9 * 30 * 33),
+               c(.9 * 30 * 33, 33^2))
 
 ## 'rmx' should be an 18x2 matrix
 rmx <- MASS::mvrnorm(18, mu = c(S0i = 0, S1i = 0),
@@ -100,7 +100,7 @@ This should be a tibble with 180 observations (18 subjects, observed over 10 day
 
 
 ```
-## # A tibble: 180 × 5
+## # A tibble: 180 x 5
 ##    Subject  Days gamma_00 gamma_10    e_ij
 ##    <fct>   <int>    <dbl>    <dbl>   <dbl>
 ##  1 1           0      310        4  28.6  
@@ -183,7 +183,7 @@ simdata
 ```
 
 ```
-## # A tibble: 180 × 3
+## # A tibble: 180 x 3
 ##    Subject  Days Reaction
 ##    <fct>   <int>    <dbl>
 ##  1 1           0     353.

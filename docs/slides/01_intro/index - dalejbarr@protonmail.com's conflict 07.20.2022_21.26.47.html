@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Introduction</title>
+<meta name="author" content="(Dale Barr (University of Glasgow))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
+
+<link rel="stylesheet" href="../css/mods.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Introduction</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
+</section>
+
+<section>
+<section id="slide-orge2c83ca">
+<h2 id="orge2c83ca"></h2>
+<p>
+<b>How do I translate an experiment study design into a statistical model for analysis?</b>
+</p>
+
+<aside class="notes">
+<ul>
+<li>many of the problems people have with longitudinal designs reflect a lack of understanding of regression or of mixed-effects modeling</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgad2daf6">
+<h4 id="orgad2daf6"></h4>
+<aside class="notes">
+<ul>
+<li>cooking analogy</li>
+<li>punching buttons on a microwave (pre-packaged food)</li>
+<li>versus taking fresh ingredients and improvising something</li>
+
+</ul>
+
+</aside>
+
+
+<div id="org52358dc" class="figure">
+<p><img src="studyres-com.png" alt="studyres-com.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org9ba4421">
+<h4 id="org9ba4421">Recipes encourage poor practice</h4>
+<ul>
+<li>violation of assumptions
+<ul>
+<li>especially: independence</li>
+
+</ul></li>
+<li>discretization of predictors</li>
+<li>treating continuous data as categorical</li>
+<li>over-aggregation</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+<i>&ldquo;If all you have is a hammer, everything looks like a nail&rdquo;</i>
+</p>
+
+<ul>
+<li>mindless statistics</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgb8e0d91">
+<h4 id="orgb8e0d91"></h4>
+<div class="column" style="float:left; width: 60%">
+<ul>
+<li>t-test</li>
+<li>correlation &amp; regression</li>
+<li>multiple regression</li>
+<li>analysis of variance</li>
+<li>mixed-effects modeling</li>
+
+</ul>
+</div>
+
+<div class="column" style="float:right; width: 40%">
+<ul>
+<li><i>All are special cases of the General Linear Model (GLM).</i></li>
+
+</ul>
+</div>
+
+</section>
+<section id="slide-org61a19f9">
+<h4 id="org61a19f9">GLM approach</h4>
+<ol>
+<li>Define a mathematical model of the data-generating process (DGP)</li>
+<li>Estimate the parameters of the model</li>
+<li>Validate the model</li>
+<li>Report and interpret results</li>
+
+</ol>
+
+<aside class="notes">
+<p>
+representing the processes that are
+  assumed to give rise to the data
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org4ccfc9b">
+<h4 id="org4ccfc9b">Models are just&#x2026; models</h4>
+<p>
+A statistical model is a <i>simplification</i> and <i>idealization</i> of reality that captures our key assumptions about the processes underlying data (the <b>data generating process</b> or DGP).
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org54f8845">
+<h2 id="org54f8845">Why simulation?</h2>
+<ul>
+<li>Data simulation is a <i>litmus test</i> of understanding a statistical approach.
+<ul>
+<li>Can you generate simulated data that would meet the assumptions of the approach?
+<ul>
+<li>If not, <b>you don&rsquo;t understand it (yet!)</b></li>
+
+</ul></li>
+
+</ul></li>
+
+<li>Being able to specify the DGP is key to study planning (power)</li>
+
+</ul>
+
+</section>
+<section id="slide-org8a1e8c1">
+<h4 id="org8a1e8c1">Example: Parent reflexes</h4>
+<div class="org-center">
+<p>
+Does being the parent of a toddler sharpen your reflexes?
+</p>
+</div>
+
+<ul>
+<li>simple response time to a flashing light</li>
+<li>dependent (response) variable: mean RT for each parent</li>
+
+</ul>
+
+</section>
+<section id="slide-org2621639">
+<h4 id="org2621639">Simulating data</h4>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>set.seed(2022) <span style="color: #b22222;"># </span><span style="color: #b22222;">RNG seed: arbitrary integer value</span>
+parents <span style="color: #008b8b;">&lt;-</span> rnorm(n = 50, mean = 490, sd = 40)
+</code></pre>
+</div>
+
+<pre class="example">
+ [1] 526.0057 443.0662 454.1006 432.2199 476.7595 373.9748
+ [7] 447.6298 501.1182 519.9794 499.6633 530.2474 482.5942
+[13] 450.7269 493.7163 487.8886 486.7869 463.8359 451.9727
+[19] 530.7825 524.3619 504.5784 505.3460 534.5362 538.4604
+[25] 476.0670 455.6179 516.0011 503.1224 469.2821 480.4407
+[31] 494.7112 523.2607 427.6432 481.1792 457.3122 533.0671
+[37] 533.1866 495.6851 496.2792 483.2512 479.2385 522.3107
+[43] 445.0113 432.7685 492.4143 458.2807 503.6110 479.6213
+[49] 437.8061 504.7269
+</pre>
+
+
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>control <span style="color: #008b8b;">&lt;-</span> rnorm(n = 50, mean = 500, sd = 40)
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org6b2ae0f">
+<h4 id="org6b2ae0f">\(t\)-test</h4>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>t.test(parents, control, var.equal = <span style="color: #228b22;">TRUE</span>)
+</code></pre>
+</div>
+
+<pre class="example" id="orgc87d765">
+
+	Two Sample t-test
+
+data:  parents and control
+t = -3.9699, df = 98, p-value = 0.0001372
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -47.11091 -15.70863
+sample estimates:
+mean of x mean of y 
+ 484.8450  516.2547
+</pre>
+
+</section>
+<section id="slide-org67d1182">
+<h4 id="org67d1182">ANOVA</h4>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>summary(aov(rt ~ group, dat))    
+</code></pre>
+</div>
+
+<pre class="example">
+            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+group        1  24664   24664   15.76 0.000137 ***
+Residuals   98 153370    1565                     
+---
+codes:  
+0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre>
+
+</section>
+<section id="slide-org759e743">
+<h4 id="org759e743">Regression</h4>
+<p>
+\(Y_i = \beta_0 + \beta_1 X_i + e_i\)
+</p>
+
+<p>
+\(e_i \sim N(0, \sigma^2)\)
+</p>
+
+</section>
+<section id="slide-orgd3372b5">
+<h4 id="orgd3372b5">Regression</h4>
+<div class="org-src-container">
+
+<pre  class="src src-R" ><code trim>summary(lm(rt ~ group, dat))
+</code></pre>
+</div>
+
+<pre class="example" id="org00f2bc0">
+
+Call:
+lm(formula = rt ~ group, data = dat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-110.870  -26.806    1.042   27.810   99.242 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  516.255      5.595   92.28  &lt; 2e-16 ***
+groupparent  -31.410      7.912   -3.97 0.000137 ***
+---
+codes:  
+0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 39.56 on 98 degrees of freedom
+Multiple R-squared:  0.1385,	Adjusted R-squared:  0.1297 
+F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
+</pre>
+
+</section>
+<section id="slide-org50da4e8">
+<h4 id="org50da4e8"></h4>
+<a href="https://shiny.psy.gla.ac.uk/Dale/GLM">GLM shiny app</a>
+
+</section>
+</section>
+<section>
+<section id="slide-org4c6e1c4">
+<h2 id="org4c6e1c4">Single- vs Multi-level</h2>
+<div class="column" style="float:left; width: 50%">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">sub</th>
+<th scope="col" class="org-left">A</th>
+<th scope="col" class="org-right">Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">A1</td>
+<td class="org-right">778</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">A1</td>
+<td class="org-right">678</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">A1</td>
+<td class="org-right">725</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">A2</td>
+<td class="org-right">819</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">A2</td>
+<td class="org-right">905</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">A2</td>
+<td class="org-right">909</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<div class="column" style="float:right; width: 50%">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">sub</th>
+<th scope="col" class="org-left">stim</th>
+<th scope="col" class="org-left">A</th>
+<th scope="col" class="org-right">Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">A</td>
+<td class="org-left">A1</td>
+<td class="org-right">870</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">B</td>
+<td class="org-left">A1</td>
+<td class="org-right">748</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">C</td>
+<td class="org-left">A1</td>
+<td class="org-right">826</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">A</td>
+<td class="org-left">A2</td>
+<td class="org-right">924</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">B</td>
+<td class="org-left">A2</td>
+<td class="org-right">864</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">C</td>
+<td class="org-left">A2</td>
+<td class="org-right">700</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</section>
+<section id="slide-orgae64e65">
+<h4 id="orgae64e65">Issues with multi-level data</h4>
+<ul>
+<li>GLMs assume independence of residuals</li>
+<li>Observations within a cluster (unit) are not independent</li>
+<li>Any sources of non-independence must be modeled or aggregated away</li>
+<li>Typical consequence of failing to do so: High false positives</li>
+
+</ul>
+
+</section>
+<section id="slide-org1972da7">
+<h4 id="org1972da7">Regression: Killer App</h4>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">technique</th>
+<th scope="col" class="org-left">t-test</th>
+<th scope="col" class="org-left">ANOVA</th>
+<th scope="col" class="org-left">regression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Categorical IVs</td>
+<td class="org-left">✓</td>
+<td class="org-left">✓</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">Continuous DVs</td>
+<td class="org-left">✓</td>
+<td class="org-left">✓</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">Continuous IVs</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">-</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">Multi-level data</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">Categorical DVs</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">Unbalanced data</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">✓</td>
+</tr>
+
+<tr>
+<td class="org-left">&gt;1 sampling unit</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">✓</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org8646250">
+<h4 id="org8646250">4 functions to rule them all</h4>
+<ol>
+<li>Is the data single- or multi-level?</li>
+<li>Is the response continuous or discrete?</li>
+<li>How are the observations distributed?</li>
+
+</ol>
+
+<br/><br/>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">structure</th>
+<th scope="col" class="org-left">response</th>
+<th scope="col" class="org-left">distrib</th>
+<th scope="col" class="org-left">R fnc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">single</td>
+<td class="org-left">cont</td>
+<td class="org-left">normal</td>
+<td class="org-left"><code>base::lm()</code></td>
+</tr>
+
+<tr>
+<td class="org-left">single</td>
+<td class="org-left">cont/disc</td>
+<td class="org-left">various</td>
+<td class="org-left"><code>base::glm()</code></td>
+</tr>
+
+<tr>
+<td class="org-left">multi</td>
+<td class="org-left">cont</td>
+<td class="org-left">normal</td>
+<td class="org-left"><code>lme4::lmer()</code></td>
+</tr>
+
+<tr>
+<td class="org-left">multi</td>
+<td class="org-left">cont/disc</td>
+<td class="org-left">various</td>
+<td class="org-left"><code>lme4::glmer()</code></td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org0306ca5">
+<h4 id="org0306ca5">workshop overview</h4>
+<p>
+<a href="https://dalejbarr.github.io/reading-lmem">https://dalejbarr.github.io/reading-lmem</a>
+</p>
+
+<div class="column" style="float:left; width: 50%">
+
+<p>
+<b>Day 1</b> (single-level data)
+</p>
+
+<ul>
+<li>Simple regression</li>
+<li>Multiple regression</li>
+<li>Interactions</li>
+<li>Modeling trends</li>
+
+</ul>
+
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<p>
+<b>Day 2</b> (multi-level data)
+</p>
+
+<ul>
+<li>Covariance matrices</li>
+<li>Intro to LMMs</li>
+<li>Specifying LMMs</li>
+<li>Going further</li>
+
+</ul>
+
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown,RevealZoom,RevealNotes],
+transition:"fade",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+]
+});
+
+
+</script>
+</body>
+</html>

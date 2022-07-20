@@ -100,7 +100,13 @@ Keysar, B., Barr, D. J., Balin, J. A. & Brauner, J. S. (2000). [Taking Perspecti
 
 ![view of basic experimental task](images/KBBB2000Setup.png)
 
-This experiment examined perspective taking during conversation. In the experiment, participants ("addressees") sat across from a confederate director who instructed them to move objects around in a grid placed between them while their eyes were tracked. For example, the director might say, "move the truck one space down." The grid contained some objects hidden from the director's view. The experiment was structured such that the director would occasionally refer to a mutually visible object ("move the small candle...") in a way that would also happen to match a "competitor" object visible only to themselves (and presumably unknown to the director). This was the main "experimental" condition of the study (`cond` = `E`). In a control condition (`cond` = `C`), the competitor object was replaced with something that would not match the description (e.g., an apple). The experiment previous to this established that these hidden competitor produced "egocentric interference" that delayed interpretation.
+This experiment examined perspective taking during conversation. In the experiment, participants ("addressees") sat across from a confederate director who instructed them to move objects around in a grid placed between them while their eyes were tracked. For example, the director might say, "move the truck one space down." The grid contained some objects hidden from the director's view. The experiment was structured such that the director would occasionally refer to a mutually visible object ("move the small candle...") in a way that would also happen to describe a "competitor" object that was visible only to the addressee. Because this object was hidden the addressee had little reason to think the director would know of its identity.
+
+For instance, consider that in the above figure the director sees two candles, a large and a small one, while the participant (addressee) sees three candles—the two that the director sees, plus a third one that is hidden, and even smaller than the director's "small" candle. To the extent that addressee's have difficulty taking the speaker's perspective, they should be confused by this additional candle that is privileged to them.
+
+In addition to this main condition (indicated in the data by the `cond` variable having the value `E`), there was also a control condition where the hidden competitor (the addressee's smallest candle) was replaced with an object that would not match the description (indicated by `cond` being `C`).
+
+The experiment previous to the one that you will re-analyse established that these hidden competitor produced "egocentric interference" that delayed interpretation.
 
 In the current experiment (Experiment 2), the question was whether the "source" of these hidden objects mattered. In one condition (`psource = EX`) the experimenter gave the participants the objects to hide. In another condition (`psource = RN`), participants drew numbers from a bag, believing that this random lottery determined which objects went in the hidden spaces.
 
@@ -155,7 +161,7 @@ kbbb2 %>%
 ```
 
 ```
-## # A tibble: 4 × 5
+## # A tibble: 4 x 5
 ##   cond  psource     C    PS     n
 ##   <chr> <chr>   <dbl> <dbl> <int>
 ## 1 C     EX       -0.5   0.5   100
@@ -179,7 +185,7 @@ ff_means
 ```
 
 ```
-## # A tibble: 4 × 4
+## # A tibble: 4 x 4
 ##   psource cond      m    sd
 ##   <chr>   <chr> <dbl> <dbl>
 ## 1 EX      C     1764. 1386.
@@ -208,7 +214,7 @@ kbbb2 %>%
 ```
 
 ```
-## # A tibble: 80 × 4
+## # A tibble: 80 x 4
 ##    subj  psource cond      n
 ##    <fct> <chr>   <chr> <int>
 ##  1 S01   EX      C         5
@@ -235,7 +241,7 @@ kbbb2 %>%
 ```
 
 ```
-## # A tibble: 40 × 4
+## # A tibble: 40 x 4
 ##    object psource cond      n
 ##    <fct>  <chr>   <chr> <int>
 ##  1 blkpen EX      C        10
@@ -262,7 +268,7 @@ ff_mod <- lmer(firstfix ~ PS * C + (C | subj) + (PS * C | object), kbbb2,
 ```
 
 ```
-## boundary (singular) fit: see help('isSingular')
+## boundary (singular) fit: see ?isSingular
 ```
 
 ```r
@@ -281,27 +287,27 @@ summary(ff_mod) %>% print(corr = FALSE)
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -2.7730 -0.4516 -0.1774  0.3196  7.3645 
+## -2.7731 -0.4516 -0.1774  0.3196  7.3644 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev. Corr          
-##  subj     (Intercept)  530742   728.5                 
-##           C           1240695  1113.9   1.00          
-##  object   (Intercept) 1155440  1074.9                 
-##           PS           241786   491.7   1.00          
-##           C           1509593  1228.7   1.00 1.00     
-##           PS:C         135976   368.7   1.00 1.00 1.00
-##  Residual             4408338  2099.6                 
+##  subj     (Intercept)  530748   728.5                 
+##           C           1240744  1113.9   1.00          
+##  object   (Intercept) 1155349  1074.9                 
+##           PS           241804   491.7   1.00          
+##           C           1509480  1228.6   1.00 1.00     
+##           PS:C         135969   368.7   1.00 1.00 1.00
+##  Residual             4408340  2099.6                 
 ## Number of obs: 397, groups:  subj, 40; object, 10
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error t value
-## (Intercept)   2300.9      374.1   6.151
-## PS              65.2      348.8   0.187
-## C             1049.0      475.8   2.205
-## PS:C           197.3      561.6   0.351
+## (Intercept)  2300.91     374.04   6.151
+## PS             65.19     348.82   0.187
+## C            1049.01     475.80   2.205
+## PS:C          197.28     561.57   0.351
 ## optimizer (nloptwrap) convergence code: 0 (OK)
-## boundary (singular) fit: see help('isSingular')
+## boundary (singular) fit: see ?isSingular
 ```
 
 
@@ -311,7 +317,7 @@ ff_mod2 <- lmer(firstfix ~ PS * C + (C || subj) + (PS * C || object), kbbb2,
 ```
 
 ```
-## boundary (singular) fit: see help('isSingular')
+## boundary (singular) fit: see ?isSingular
 ```
 
 ```r
@@ -351,7 +357,7 @@ summary(ff_mod2) %>% print(corr = FALSE)
 ## C            1047.79     415.68   2.521
 ## PS:C          195.19     495.80   0.394
 ## optimizer (nloptwrap) convergence code: 0 (OK)
-## boundary (singular) fit: see help('isSingular')
+## boundary (singular) fit: see ?isSingular
 ```
 
 

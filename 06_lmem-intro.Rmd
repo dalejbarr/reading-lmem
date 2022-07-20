@@ -63,13 +63,13 @@ You will need to generate data for a matrix called `rmx`, where the first column
 
 `r hide("hint")`
 
-Look back at [the last chapter](variance-covariance.html). You'll need to use `matrix()` and `MASS::mvrnorm()`.
+Look back at [the last chapter](variance-covariance.html). You'll need to use `rbind()` and `MASS::mvrnorm()`.
 
 `r unhide()`
 
 ```{r make_vcov, webex.hide="solution"}
-covmx <- matrix(c(30^2, .9 * 30 * 33,
-                  .9 * 30 * 33, 33^2), ncol = 2)
+covmx <- rbind(c(30^2, .9 * 30 * 33),
+               c(.9 * 30 * 33, 33^2))
 
 ## 'rmx' should be an 18x2 matrix
 rmx <- MASS::mvrnorm(18, mu = c(S0i = 0, S1i = 0),
