@@ -278,7 +278,7 @@ F-statistic:   4.3 on 1 and 98 DF,  p-value: 0.04072
 
 * workshop overview
 
-https://dalejbarr.github.io/basel-longitudinal
+[[https://dalejbarr.github.io/reading-lmem]]
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 

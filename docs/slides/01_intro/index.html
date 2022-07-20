@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <title>Introduction</title>
-<meta name="author" content="(Dale Barr (University of Glasgow))"/>
+<meta name="author" content="Dale Barr (University of Glasgow)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -11,17 +13,18 @@
 
 <link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
 
+<link rel="stylesheet" href="../css/mods.css"/>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Introduction</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, March 3-4, 2022 (Basel)</p>
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Introduction</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
 </section>
 
 <section>
-<section id="slide-org7345001">
-<h2 id="org7345001"></h2>
+<section id="slide-org00a53da">
+<h2 id="org00a53da"></h2>
 <p>
 <b>How do I translate a longitudinal study design into a statistical model for analysis?</b>
 </p>
@@ -37,8 +40,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orge399778">
-<h2 id="orge399778"></h2>
+<section id="slide-org8ca7730">
+<h2 id="org8ca7730"></h2>
 <aside class="notes">
 <ul>
 <li>cooking analogy</li>
@@ -50,7 +53,7 @@
 </aside>
 
 
-<div id="org485c2af" class="figure">
+<div id="orgeb38813" class="figure">
 <p><img src="studyres-com.png" alt="studyres-com.png" />
 </p>
 </div>
@@ -58,8 +61,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgd0aa26f">
-<h2 id="orgd0aa26f">Recipes encourage poor practice</h2>
+<section id="slide-orgb70090d">
+<h2 id="orgb70090d">Recipes encourage poor practice</h2>
 <ul>
 <li>violation of assumptions
 <ul>
@@ -74,7 +77,7 @@
 
 <aside class="notes">
 <p>
-<i>&ldquo;If all you have is a hammer, everything looks like a nail&rdquo;</i>
+<i>"If all you have is a hammer, everything looks like a nail"</i>
 </p>
 
 <ul>
@@ -87,8 +90,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org49dd1ab">
-<h2 id="org49dd1ab"></h2>
+<section id="slide-org5dc88a1">
+<h2 id="org5dc88a1"></h2>
 <div class="column" style="float:left; width: 60%">
 <ul>
 <li>t-test</li>
@@ -110,8 +113,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgb44bdcf">
-<h2 id="orgb44bdcf">GLM approach</h2>
+<section id="slide-org7e112de">
+<h2 id="org7e112de">GLM approach</h2>
 <ol>
 <li>Define a mathematical model of the data-generating process (DGP)</li>
 <li>Estimate the parameters of the model</li>
@@ -131,8 +134,8 @@ representing the processes that are
 </section>
 </section>
 <section>
-<section id="slide-org9d2bd14">
-<h2 id="org9d2bd14">Models are just&#x2026; models</h2>
+<section id="slide-org0de1d29">
+<h2 id="org0de1d29">Models are just&#x2026; models</h2>
 <p>
 A statistical model is a <i>simplification</i> and <i>idealization</i> of reality that captures our key assumptions about the processes underlying data (the <b>data generating process</b> or DGP).
 </p>
@@ -140,14 +143,14 @@ A statistical model is a <i>simplification</i> and <i>idealization</i> of realit
 </section>
 </section>
 <section>
-<section id="slide-org3521a60">
-<h2 id="org3521a60">Why simulation?</h2>
+<section id="slide-org4924b35">
+<h2 id="org4924b35">Why simulation?</h2>
 <ul>
 <li>Data simulation is a <i>litmus test</i> of understanding a statistical approach.
 <ul>
 <li>Can you generate simulated data that would meet the assumptions of the approach?
 <ul>
-<li>If not, <b>you don&rsquo;t understand it (yet!)</b></li>
+<li>If not, <b>you don't understand it (yet!)</b></li>
 
 </ul></li>
 
@@ -160,8 +163,8 @@ A statistical model is a <i>simplification</i> and <i>idealization</i> of realit
 </section>
 </section>
 <section>
-<section id="slide-org750897c">
-<h2 id="org750897c">Example: Parent reflexes</h2>
+<section id="slide-org8f1ae35">
+<h2 id="org8f1ae35">Example: Parent reflexes</h2>
 <div class="org-center">
 <p>
 Does being the parent of a toddler sharpen your reflexes?
@@ -177,12 +180,12 @@ Does being the parent of a toddler sharpen your reflexes?
 </section>
 </section>
 <section>
-<section id="slide-org5058c59">
-<h2 id="org5058c59">Simulating data</h2>
+<section id="slide-orga8ce8a9">
+<h2 id="orga8ce8a9">Simulating data</h2>
 <div class="org-src-container">
 
-<pre  class="src src-R" ><code trim>set.seed(2022) <span style="color: #b22222;"># </span><span style="color: #b22222;">RNG seed: arbitrary integer value</span>
-parents <span style="color: #008b8b;">&lt;-</span> rnorm(n = 50, mean = 490, sd = 40)
+<pre  class="src src-R"   ><code trim>set.seed(2022) # RNG seed: arbitrary integer value
+parents &lt;- rnorm(n = 50, mean = 490, sd = 40)
 </code></pre>
 </div>
 
@@ -201,22 +204,22 @@ parents <span style="color: #008b8b;">&lt;-</span> rnorm(n = 50, mean = 490, sd 
 
 <div class="org-src-container">
 
-<pre  class="src src-R" ><code trim>control <span style="color: #008b8b;">&lt;-</span> rnorm(n = 50, mean = 500, sd = 40)
+<pre  class="src src-R"   ><code trim>control &lt;- rnorm(n = 50, mean = 500, sd = 40)
 </code></pre>
 </div>
 
 </section>
 </section>
 <section>
-<section id="slide-orgd3ed74b">
-<h2 id="orgd3ed74b">\(t\)-test</h2>
+<section id="slide-org22b5f5b">
+<h2 id="org22b5f5b">\(t\)-test</h2>
 <div class="org-src-container">
 
-<pre  class="src src-R" ><code trim>t.test(parents, control, var.equal = <span style="color: #228b22;">TRUE</span>)
+<pre  class="src src-R"   ><code trim>t.test(parents, control, var.equal = TRUE)
 </code></pre>
 </div>
 
-<pre class="example" id="org1731766">
+<pre class="example" id="orgbd621b0">
 
 	Two Sample t-test
 
@@ -233,11 +236,11 @@ mean of x mean of y
 </section>
 </section>
 <section>
-<section id="slide-orgaed4de1">
-<h2 id="orgaed4de1">ANOVA</h2>
+<section id="slide-org491deb4">
+<h2 id="org491deb4">ANOVA</h2>
 <div class="org-src-container">
 
-<pre  class="src src-R" ><code trim>summary(aov(rt ~ group, dat))    
+<pre  class="src src-R"   ><code trim>summary(aov(rt ~ group, dat))    
 </code></pre>
 </div>
 
@@ -246,15 +249,15 @@ mean of x mean of y
 group        1  24664   24664   15.76 0.000137 ***
 Residuals   98 153370    1565                     
 ---
-codes:  
+Signif. codes:  
 0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre>
 
 </section>
 </section>
 <section>
-<section id="slide-org08729db">
-<h2 id="org08729db">Regression</h2>
+<section id="slide-org991d39f">
+<h2 id="org991d39f">Regression</h2>
 <p>
 \(Y_i = \beta_0 + \beta_1 X_i + e_i\)
 </p>
@@ -266,15 +269,15 @@ codes:
 </section>
 </section>
 <section>
-<section id="slide-org744d94b">
-<h2 id="org744d94b">Regression</h2>
+<section id="slide-org3e85801">
+<h2 id="org3e85801">Regression</h2>
 <div class="org-src-container">
 
-<pre  class="src src-R" ><code trim>summary(lm(rt ~ group, dat))
+<pre  class="src src-R"   ><code trim>summary(lm(rt ~ group, dat))
 </code></pre>
 </div>
 
-<pre class="example" id="org67314a7">
+<pre class="example" id="orgc0ab29c">
 
 Call:
 lm(formula = rt ~ group, data = dat)
@@ -288,7 +291,7 @@ Coefficients:
 (Intercept)  516.255      5.595   92.28  &lt; 2e-16 ***
 groupparent  -31.410      7.912   -3.97 0.000137 ***
 ---
-codes:  
+Signif. codes:  
 0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 39.56 on 98 degrees of freedom
@@ -299,15 +302,15 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org521bb4d">
-<h2 id="org521bb4d"></h2>
+<section id="slide-org48982c6">
+<h2 id="org48982c6"></h2>
 <a href="https://shiny.psy.gla.ac.uk/Dale/GLM">GLM shiny app</a>
 
 </section>
 </section>
 <section>
-<section id="slide-orgf05d518">
-<h2 id="orgf05d518">Single- vs Multi-level</h2>
+<section id="slide-orge72c229">
+<h2 id="orge72c229">Single- vs Multi-level</h2>
 <div class="column" style="float:left; width: 50%">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -438,8 +441,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-orgcbe9c46">
-<h2 id="orgcbe9c46">Issues with multi-level data</h2>
+<section id="slide-org21d4c79">
+<h2 id="org21d4c79">Issues with multi-level data</h2>
 <ul>
 <li>GLMs assume independence of residuals</li>
 <li>Observations within a cluster (unit) are not independent</li>
@@ -451,8 +454,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org4ad6331">
-<h2 id="org4ad6331">Regression: Killer App</h2>
+<section id="slide-org1c15bbb">
+<h2 id="org1c15bbb">Regression: Killer App</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -528,8 +531,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-orgd9c5595">
-<h2 id="orgd9c5595">4 functions to rule them all</h2>
+<section id="slide-org3c649de">
+<h2 id="org3c649de">4 functions to rule them all</h2>
 <ol>
 <li>Is the data single- or multi-level?</li>
 <li>Is the response continuous or discrete?</li>
@@ -593,10 +596,10 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org992c369">
-<h2 id="org992c369">workshop overview</h2>
+<section id="slide-org523b16e">
+<h2 id="org523b16e">workshop overview</h2>
 <p>
-<a href="https://dalejbarr.github.io/basel-longitudinal">https://dalejbarr.github.io/basel-longitudinal</a>
+<a href="https://dalejbarr.github.io/reading-lmem">https://dalejbarr.github.io/reading-lmem</a>
 </p>
 
 <div class="column" style="float:left; width: 50%">
@@ -644,19 +647,9 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-plugins: [RevealMarkdown,RevealZoom,RevealNotes],
-transition:"fade",
-multiplex: {
-    secret: '', // null if client
-    id: '', // id, obtained from socket.io server
-    url: '' // Location of socket.io server
-},
-
-// Optional libraries used to extend on reveal.js
-dependencies: [
-]
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition:"fade"
 });
-
 
 </script>
 </body>
