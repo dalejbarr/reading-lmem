@@ -155,7 +155,7 @@ kbbb2 %>%
 ```
 
 ```
-## # A tibble: 4 x 5
+## # A tibble: 4 × 5
 ##   cond  psource     C    PS     n
 ##   <chr> <chr>   <dbl> <dbl> <int>
 ## 1 C     EX       -0.5   0.5   100
@@ -179,7 +179,7 @@ ff_means
 ```
 
 ```
-## # A tibble: 4 x 4
+## # A tibble: 4 × 4
 ##   psource cond      m    sd
 ##   <chr>   <chr> <dbl> <dbl>
 ## 1 EX      C     1764. 1386.
@@ -208,7 +208,7 @@ kbbb2 %>%
 ```
 
 ```
-## # A tibble: 80 x 4
+## # A tibble: 80 × 4
 ##    subj  psource cond      n
 ##    <fct> <chr>   <chr> <int>
 ##  1 S01   EX      C         5
@@ -235,7 +235,7 @@ kbbb2 %>%
 ```
 
 ```
-## # A tibble: 40 x 4
+## # A tibble: 40 × 4
 ##    object psource cond      n
 ##    <fct>  <chr>   <chr> <int>
 ##  1 blkpen EX      C        10
@@ -262,7 +262,7 @@ ff_mod <- lmer(firstfix ~ PS * C + (C | subj) + (PS * C | object), kbbb2,
 ```
 
 ```
-## boundary (singular) fit: see ?isSingular
+## boundary (singular) fit: see help('isSingular')
 ```
 
 ```r
@@ -301,7 +301,7 @@ summary(ff_mod) %>% print(corr = FALSE)
 ## C            1049.01     475.80   2.205
 ## PS:C          197.28     561.57   0.351
 ## optimizer (nloptwrap) convergence code: 0 (OK)
-## boundary (singular) fit: see ?isSingular
+## boundary (singular) fit: see help('isSingular')
 ```
 
 
@@ -311,7 +311,7 @@ ff_mod2 <- lmer(firstfix ~ PS * C + (C || subj) + (PS * C || object), kbbb2,
 ```
 
 ```
-## boundary (singular) fit: see ?isSingular
+## boundary (singular) fit: see help('isSingular')
 ```
 
 ```r
@@ -351,7 +351,7 @@ summary(ff_mod2) %>% print(corr = FALSE)
 ## C            1047.79     415.68   2.521
 ## PS:C          195.19     495.80   0.394
 ## optimizer (nloptwrap) convergence code: 0 (OK)
-## boundary (singular) fit: see ?isSingular
+## boundary (singular) fit: see help('isSingular')
 ```
 
 

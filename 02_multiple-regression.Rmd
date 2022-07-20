@@ -101,6 +101,7 @@ stars
 ```
 :::
 
+
 ### Create a correlation matrix
 
 :::{.try}
@@ -123,6 +124,7 @@ stars %>%
 ```
 
 :::
+
 
 ### Visualize all pairwise correlations
 

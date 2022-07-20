@@ -6,7 +6,7 @@
 
 ## Activities
 
-The following activities is intended to help you ease into regression in R. We'll start out by learning how to simulate univariate data and build simple tables (or "tibbles", in R tidyverse speak). Then we'll simulate some data from a simple regression with a single response and single predictor. Next, we'll see how to generate predicted values, extract residuals, and check diagnostics. 
+The following activities are intended to help you ease into regression in R. We'll start out by learning how to simulate univariate data and build simple tables (or "tibbles", in R tidyverse speak). Then we'll simulate some data from a simple regression with a single response and single predictor. Next, we'll see how to generate predicted values, extract residuals, and check diagnostics. 
 
 Make sure you've loaded the tidyverse package before you begin. You'll need it for the `tibble()` function.
 
@@ -33,7 +33,7 @@ sample(1:6, 20, TRUE)
 ```
 
 ```
-##  [1] 3 6 1 1 5 4 2 2 4 3 3 5 6 6 3 2 2 1 6 5
+##  [1] 2 2 2 1 6 4 4 5 4 3 4 3 4 3 3 2 6 2 2 3
 ```
 
 
@@ -228,7 +228,7 @@ iris2 <- as_tibble(iris)
 
 
 ```
-## # A tibble: 8 x 4
+## # A tibble: 8 × 4
 ##      ID A     B     C    
 ##   <int> <chr> <chr> <chr>
 ## 1     1 A1    B1    C1   
@@ -310,7 +310,7 @@ simdata
 ```
 
 ```
-## # A tibble: 50 x 3
+## # A tibble: 50 × 3
 ##        x       e     y
 ##    <int>   <dbl> <dbl>
 ##  1     9   8.71  -366.

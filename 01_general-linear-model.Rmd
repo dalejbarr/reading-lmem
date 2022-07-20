@@ -6,7 +6,7 @@
 
 ## Activities
 
-The following activities is intended to help you ease into regression in R. We'll start out by learning how to simulate univariate data and build simple tables (or "tibbles", in R tidyverse speak). Then we'll simulate some data from a simple regression with a single response and single predictor. Next, we'll see how to generate predicted values, extract residuals, and check diagnostics. 
+The following activities are intended to help you ease into regression in R. We'll start out by learning how to simulate univariate data and build simple tables (or "tibbles", in R tidyverse speak). Then we'll simulate some data from a simple regression with a single response and single predictor. Next, we'll see how to generate predicted values, extract residuals, and check diagnostics. 
 
 Make sure you've loaded the tidyverse package before you begin. You'll need it for the `tibble()` function.
 

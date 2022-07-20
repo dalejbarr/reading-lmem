@@ -7,7 +7,7 @@
 <title>Chapter 3 Interactions | Workshop on linear mixed-effects models</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="3.1 Resources Slides My book chapter on interactions provides an in-depth treatment Factorial web app allows you to play around with main effects and interactions in a 2x2 factorial design  3.2...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Interactions | Workshop on linear mixed-effects models">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://dalejbarr.github.io/reading-lmem/interactions.html">
@@ -24,7 +24,11 @@
     gtag('js', new Date());
   
     gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
 <link rel="stylesheet" href="include/style.css">
 </head>
@@ -107,7 +111,7 @@ HAS_DOG:AGE    -14.1 -10.07143    1.40 0.161513318</code></pre>
 solution
 </button>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">1043.3</span> <span class="co"># the value of `(Intercept)`</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fl">1043.3</span> <span class="co"># the value of `(Intercept)`</span></span></code></pre></div>
 <pre><code>## [1] 1043.3</code></pre>
 </div>
 <p>What is the slope of the regression line relating age to savings for cat owners?</p>
@@ -117,7 +121,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">165.9</span> <span class="co"># the value of the `AGE` coefficient</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fl">165.9</span> <span class="co"># the value of the `AGE` coefficient</span></span></code></pre></div>
 <pre><code>## [1] 165.9</code></pre>
 </div>
 <p>How much savings does the model predict for a 46-year-old cat owner?</p>
@@ -127,7 +131,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">1043.3</span> <span class="op">+</span> <span class="fl">165.9</span> <span class="op">*</span> <span class="fl">46</span> <span class="co"># = 8674.7</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fl">1043.3</span> <span class="op">+</span> <span class="fl">165.9</span> <span class="op">*</span> <span class="fl">46</span> <span class="co"># = 8674.7</span></span></code></pre></div>
 </div>
 <p>What is the intercept of the regression line relating age to savings for dog owners?</p>
 <p><input class="webex-solveme nospaces" size="5" data-answer='["945.5"]'></p>
@@ -136,7 +140,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">1043.3</span> <span class="op">+</span> <span class="op">(</span><span class="op">-</span><span class="fl">97.8</span><span class="op">)</span> <span class="co"># = 945.5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fl">1043.3</span> <span class="op">+</span> <span class="op">(</span><span class="op">-</span><span class="fl">97.8</span><span class="op">)</span> <span class="co"># = 945.5</span></span></code></pre></div>
 </div>
 <p>What is the slope of the regression line relating age to savings for dog owners? (type the value)</p>
 <p><input class="webex-solveme nospaces" size="5" data-answer='["151.8"]'></p>
@@ -145,7 +149,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">165.9</span> <span class="op">+</span> <span class="op">(</span><span class="op">-</span><span class="fl">14.1</span><span class="op">)</span> <span class="co"># = 151.8</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fl">165.9</span> <span class="op">+</span> <span class="op">(</span><span class="op">-</span><span class="fl">14.1</span><span class="op">)</span> <span class="co"># = 151.8</span></span></code></pre></div>
 </div>
 <p>How much savings would you predict for a 18-year-old dog owner? (type the value)</p>
 <p><input class="webex-solveme nospaces" size="6" data-answer='["3677.9"]'></p>
@@ -154,7 +158,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="fl">1043.3</span> <span class="op">-</span> <span class="fl">97.8</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">165.9</span> <span class="op">-</span> <span class="fl">14.1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">18</span> <span class="co"># = 3677.9</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="fl">1043.3</span> <span class="op">-</span> <span class="fl">97.8</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">165.9</span> <span class="op">-</span> <span class="fl">14.1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">18</span> <span class="co"># = 3677.9</span></span></code></pre></div>
 </div>
 <p>True or false: The relationship between age and savings is statistically different for cat and dog owners (<span class="math inline">\(\alpha = .05\)</span>).</p>
 <p><select class="webex-select"><option value="blank"></option>
@@ -352,12 +356,12 @@ explanation
 <div class="try">
 <p>Imagine you have run a study with a 2x3 design (two factors, one with two levels and one with three levels). Copy the code below into your R session and run it to create the variable <code>facdata</code> in your session which contains the data for this hypothetical experiment.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-
-<span class="va">facdata</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,
-                  B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"B3"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,
-                  Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">9</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>,
-                        <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">facdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"A2"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span>
+<span>                  B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"B3"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                  Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">9</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>,</span>
+<span>                        <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">9</span>, <span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Now use simple linear regression to test the main effect of A, main effect of B, and AxB interaction, and answer the following questions.</p>
 <p>Is the main effect of A signficant? <select class="webex-select"><option value="blank"></option>
 <option value="">TRUE</option>
@@ -383,15 +387,15 @@ solution
 <p>Here's how to perform the analysis.</p>
 <p>First, need to deviation code (or sum code) numeric predictor variables.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">facdev</span> <span class="op">&lt;-</span> <span class="va">facdata</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>Ad <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="st">"A2"</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,
-         B2vB1 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">B</span> <span class="op">==</span> <span class="st">"B2"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,
-         B3vB1 <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">B</span> <span class="op">==</span> <span class="st">"B3"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">## double check (important!)</span>
-<span class="va">facdev</span> <span class="op">%&gt;%</span>
-  <span class="fu">distinct</span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">Ad</span>, <span class="va">B2vB1</span>, <span class="va">B3vB1</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 5
+<code class="sourceCode R"><span><span class="va">facdev</span> <span class="op">&lt;-</span> <span class="va">facdata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Ad <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="st">"A2"</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>         B2vB1 <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">B</span> <span class="op">==</span> <span class="st">"B2"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>         B3vB1 <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">B</span> <span class="op">==</span> <span class="st">"B3"</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## double check (important!)</span></span>
+<span><span class="va">facdev</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">Ad</span>, <span class="va">B2vB1</span>, <span class="va">B3vB1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
 ##   A     B        Ad  B2vB1  B3vB1
 ##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 A1    B1     -0.5 -0.333 -0.333
@@ -402,10 +406,10 @@ solution
 ## 6 A2    B3      0.5 -0.333  0.667</code></pre>
 <p>Now let's fit the base model with all the predictors.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## fit a model</span>
-<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="op">(</span><span class="va">B2vB1</span> <span class="op">+</span> <span class="va">B3vB1</span><span class="op">)</span> <span class="op">*</span> <span class="va">Ad</span>, <span class="va">facdev</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## fit a model</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="op">(</span><span class="va">B2vB1</span> <span class="op">+</span> <span class="va">B3vB1</span><span class="op">)</span> <span class="op">*</span> <span class="va">Ad</span>, <span class="va">facdev</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ (B2vB1 + B3vB1) * Ad, data = facdev)
@@ -430,9 +434,9 @@ solution
 ## F-statistic:  37.4 on 5 and 18 DF,  p-value: 6.764e-09</code></pre>
 <p>Use model comparison to test effects. First, main effect of A.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_noA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">Ad</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noA</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod_noA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">Ad</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noA</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: Y ~ (B2vB1 + B3vB1) * Ad
@@ -442,9 +446,9 @@ solution
 ## 2     19 8.2917 -1 -0.041667 0.0909 0.7665</code></pre>
 <p>Now main effect of B.</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_noB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">B2vB1</span> <span class="op">-</span><span class="va">B3vB1</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noB</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod_noB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">B2vB1</span> <span class="op">-</span><span class="va">B3vB1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noB</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: Y ~ (B2vB1 + B3vB1) * Ad
@@ -454,9 +458,9 @@ solution
 ## 2     20 8.3333 -2 -0.083333 0.0909 0.9135</code></pre>
 <p>Finally, AxB interaction.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_noAB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">B2vB1</span><span class="op">:</span><span class="va">Ad</span> <span class="op">-</span><span class="va">B3vB1</span><span class="op">:</span><span class="va">Ad</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noAB</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod_noAB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">B2vB1</span><span class="op">:</span><span class="va">Ad</span> <span class="op">-</span><span class="va">B3vB1</span><span class="op">:</span><span class="va">Ad</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_noAB</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: Y ~ (B2vB1 + B3vB1) * Ad
@@ -620,7 +624,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Workshop on linear mixed-effects models</strong>" was written by Dale J. Barr. It was last built on 2022-07-18.</p>
+    <p>"<strong>Workshop on linear mixed-effects models</strong>" was written by Dale J. Barr. It was last built on 2022-07-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

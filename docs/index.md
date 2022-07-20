@@ -1,7 +1,7 @@
 --- 
 title: "Workshop on linear mixed-effects models"
 author: "Dale J. Barr"
-date: "2022-07-18"
+date: "2022-07-20"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
