@@ -689,20 +689,11 @@ R session. The next time you start R, you will need to run the
 <div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/fortunes/man/fortunes.html">fortune</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
-## So, with the item in the original query:
-## 
-##   if (x&lt;-3) do_something;
-## 
-## if they wrote it as
-## 
-##   if (x&lt;(-3)) do_something;
-## 
-## there would be no problem (and no doubt about what went with what). Of course
-## in complicated expressions this could induce an episode of ocular lispopia, but
-## apart from that it's safe!
-##    -- Ted Harding (about potential confusion between assignment and comparisons
-##       with negative numbers)
-##       R-devel (August 2010)</code></pre>
+## Andrew Thomas: ...and if something goes wrong here it is probably not WinBUGS
+## since that has been running for more than 10 years...
+## Peter Green (from the back): ... and it still hasn't converged!
+##    -- Andrew Thomas and Peter Green (during the talk about 'BRugs')
+##       gR 2003, Aalborg (September 2003)</code></pre>
 <p>Note that we will use the convention <code>package::function()</code> and <code>package::object</code> to indicate in which add-on package a function or object resides. For instance, if you see <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv()</a></code>, that refers to the function <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> in the <code>readr</code> add-on package. If you see a function introduced without a package name, that means it is part of the base R system and not an add-on package (depending on the context). Sometimes I will make this explicit by using <code>base</code> in the place of the package name; for instance, I might refer to <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code> in base as <code>base::rnorm()</code>.</p>
 </div>
 <div id="help" class="section level3">
@@ -764,23 +755,23 @@ like printing to the console.</p>
 <p>If you want 10 random numbers from a distribution with mean of 0 and standard deviation, you can just use the defaults.</p>
 <div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] -0.71987946  0.49180634 -0.36614237 -2.74422949 -1.94970531 -0.38030935
-##  [7] -0.78805703  0.12770185  1.18505020  0.01409131</code></pre>
+<pre><code>##  [1]  1.0333501 -0.5720917  2.6738121  1.2923131  2.1599027 -1.0674414
+##  [7] -1.5147020  0.5166672 -1.1223215  1.0195192</code></pre>
 <p>If you want 10 numbers from a distribution with a mean of 100:</p>
 <div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] 101.45098 101.82494  99.95905 101.61724  99.76732  98.17015  99.91505
-##  [8] 100.12388  98.86311  99.75465</code></pre>
+<pre><code>##  [1]  98.72161  99.35341  99.33755 100.06120 100.11981  98.62611 101.11131
+##  [8] 100.48887  97.59737 100.04420</code></pre>
 <p>This would be an equivalent but less efficient way of calling the function:</p>
 <div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] 101.16988  98.23934 101.75735 100.17380 100.50837 102.53044  98.85412
-##  [8]  99.53862 100.20072  99.91687</code></pre>
+<pre><code>##  [1]  97.38270  99.63002 100.54038  99.90163 101.50373 100.51049 101.31963
+##  [8]  99.88463  99.59492 101.82248</code></pre>
 <p>We don't need to name the arguments because R will recognize that we intended to fill in the first and second arguments by their position in the function call. However, if we want to change the default for an argument coming later in the list, then we need to name it. For instance, if we wanted to keep the default <code>mean = 0</code> but change the standard deviation to 100 we would do it this way:</p>
 <div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, sd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1]   23.468125   74.428712   36.168174    9.534553  -19.067703 -113.492962
-##  [7]   60.038937  -11.364278   -8.886975  161.688883</code></pre>
+<pre><code>##  [1]   28.4922465   -2.0518982    0.1899653  -67.7552895   34.2932970
+##  [6]  -52.6202661   76.6900265  -67.5706098   37.7275366 -276.4237103</code></pre>
 </div>
 <div id="cowsay" class="section level4">
 <h4>
@@ -921,11 +912,10 @@ Solution
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/cowsay/man/say.html">say</a></span><span class="op">(</span><span class="st">"fortune"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  -------------- 
-## Unfortunately, this is one of those situations where as far as I can tell all of the real statisticians are out there playing with large data sets where the small-sample corrections are not so important and leaving the rest of us to figure it out for ourselves...
-##  Ben Bolker
-##  about the 'correct' degrees-of-freedom correction in Wald statistics for GLMMs
-##  R-SIG-Mixed-Models
-##  December 2011 
+## And the fear of getting Ripleyed on the mailing list also makes me think, read, and improve before submitting half baked questions to the list.
+##  Eric Kort
+##  R-help
+##  January 2006 
 ##  --------------
 ##     \
 ##       \
@@ -955,7 +945,7 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/pkg/cowsay/man/say.html">say</a></span><span class="op">(</span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/date.html">date</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">creature</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  ----- 
-## Wed Jul 20 08:47:49 2022 
+## Wed Jul 20 09:05:29 2022 
 ##  ------ 
 ##     \   
 ##      \
@@ -982,7 +972,7 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/pkg/cowsay/man/say.html">say</a></span><span class="op">(</span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/date.html">date</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">creature</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  -------------- 
-## Wed Jul 20 08:47:49 2022 
+## Wed Jul 20 09:05:29 2022 
 ##  --------------
 ##     \
 ##       \
@@ -1020,18 +1010,18 @@ or<br><code>Error: could not find function "%&gt;%"</code></p>
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">5</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">y</span>, <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># set second argument to 'TRUE' so that sort order is descending</span></span></code></pre></div>
-<pre><code>## [1] 10  7  5  3</code></pre>
+<pre><code>## [1] 10  4  2  1</code></pre>
 <p>While there is nothing wrong with this code, it required us to define variables x and y which we won't ever need again, and which clutter up our environment. To avoid this you could rewrite this code using nested function calls like so:</p>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">5</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>, <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 9 4 3 2 1</code></pre>
+<pre><code>## [1] 8 7 5 3</code></pre>
 <p>(If the above call looks confusing, it should!) The call to <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> is embedded within a call to <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> which in turn is embedded within a call to <code><a href="https://rdrr.io/r/base/sort.html">sort()</a></code>. The functions are executed from most embedded (the "bottom") to least embedded (the "top"), starting with the function <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code>, whose result is then passed in as the first argument to <code>unique(</code>), whose result in turn is passed in as the first argument to <code><a href="https://rdrr.io/r/base/sort.html">sort()</a></code>; notice the second argument of sort (<code>TRUE</code>) is all the way at the end of the statement, making it hard to figure out which of the three functions it belongs to. We read from left to right; however, understanding this code requires us to work our way from right to left, and therefore unnatural. Moreover it is simply an ugly line of code.</p>
 <p>This is where pipes come in. You can re-write the original code using pipes like so:</p>
 <div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">5</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 10  4  2  1</code></pre>
+<pre><code>## [1] 9 8 6 2</code></pre>
 <p>R will calculate the result of <code>sample(1:10, 5, replace = TRUE)</code> and then pass this result as the first argument of <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code>; then, the result of <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> will in turn be passed along as the first argument of <code><a href="https://rdrr.io/r/base/sort.html">sort()</a></code> with the second argument set to <code>TRUE</code>. The thing to note here is that for any function call on the right hand side of a pipe, you should omit the first argument and start with the second, because the pipe automatically places the result of the call on the left in that spot.</p>
 <div id="exercises-2" class="section level4">
 <h4>
