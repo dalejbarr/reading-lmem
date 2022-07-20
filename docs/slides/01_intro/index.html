@@ -14,6 +14,17 @@
 <link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
 
 <link rel="stylesheet" href="../css/mods.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '../reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
@@ -23,10 +34,10 @@
 </section>
 
 <section>
-<section id="slide-org00a53da">
-<h2 id="org00a53da"></h2>
+<section id="slide-orgbd3bed0">
+<h2 id="orgbd3bed0"></h2>
 <p>
-<b>How do I translate a longitudinal study design into a statistical model for analysis?</b>
+<b>How do I translate a study design into a statistical model for analysis?</b>
 </p>
 
 <aside class="notes">
@@ -40,8 +51,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org8ca7730">
-<h2 id="org8ca7730"></h2>
+<section id="slide-org476da27">
+<h2 id="org476da27"></h2>
 <aside class="notes">
 <ul>
 <li>cooking analogy</li>
@@ -53,7 +64,7 @@
 </aside>
 
 
-<div id="orgeb38813" class="figure">
+<div id="org1b0dc07" class="figure">
 <p><img src="studyres-com.png" alt="studyres-com.png" />
 </p>
 </div>
@@ -61,8 +72,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgb70090d">
-<h2 id="orgb70090d">Recipes encourage poor practice</h2>
+<section id="slide-org73c542d">
+<h2 id="org73c542d">Recipes encourage poor practice</h2>
 <ul>
 <li>violation of assumptions
 <ul>
@@ -90,8 +101,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org5dc88a1">
-<h2 id="org5dc88a1"></h2>
+<section id="slide-org516c3ee">
+<h2 id="org516c3ee"></h2>
 <div class="column" style="float:left; width: 60%">
 <ul>
 <li>t-test</li>
@@ -113,8 +124,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org7e112de">
-<h2 id="org7e112de">GLM approach</h2>
+<section id="slide-orgd1d38b7">
+<h2 id="orgd1d38b7">GLM approach</h2>
 <ol>
 <li>Define a mathematical model of the data-generating process (DGP)</li>
 <li>Estimate the parameters of the model</li>
@@ -134,8 +145,8 @@ representing the processes that are
 </section>
 </section>
 <section>
-<section id="slide-org0de1d29">
-<h2 id="org0de1d29">Models are just&#x2026; models</h2>
+<section id="slide-org9d55e27">
+<h2 id="org9d55e27">Models are just&#x2026; models</h2>
 <p>
 A statistical model is a <i>simplification</i> and <i>idealization</i> of reality that captures our key assumptions about the processes underlying data (the <b>data generating process</b> or DGP).
 </p>
@@ -143,8 +154,8 @@ A statistical model is a <i>simplification</i> and <i>idealization</i> of realit
 </section>
 </section>
 <section>
-<section id="slide-org4924b35">
-<h2 id="org4924b35">Why simulation?</h2>
+<section id="slide-orge807d01">
+<h2 id="orge807d01">Why simulation?</h2>
 <ul>
 <li>Data simulation is a <i>litmus test</i> of understanding a statistical approach.
 <ul>
@@ -163,8 +174,8 @@ A statistical model is a <i>simplification</i> and <i>idealization</i> of realit
 </section>
 </section>
 <section>
-<section id="slide-org8f1ae35">
-<h2 id="org8f1ae35">Example: Parent reflexes</h2>
+<section id="slide-org9489101">
+<h2 id="org9489101">Example: Parent reflexes</h2>
 <div class="org-center">
 <p>
 Does being the parent of a toddler sharpen your reflexes?
@@ -180,8 +191,8 @@ Does being the parent of a toddler sharpen your reflexes?
 </section>
 </section>
 <section>
-<section id="slide-orga8ce8a9">
-<h2 id="orga8ce8a9">Simulating data</h2>
+<section id="slide-orgf3edf8d">
+<h2 id="orgf3edf8d">Simulating data</h2>
 <div class="org-src-container">
 
 <pre  class="src src-R"   ><code trim>set.seed(2022) # RNG seed: arbitrary integer value
@@ -211,15 +222,15 @@ parents &lt;- rnorm(n = 50, mean = 490, sd = 40)
 </section>
 </section>
 <section>
-<section id="slide-org22b5f5b">
-<h2 id="org22b5f5b">\(t\)-test</h2>
+<section id="slide-orgbd46b85">
+<h2 id="orgbd46b85">\(t\)-test</h2>
 <div class="org-src-container">
 
 <pre  class="src src-R"   ><code trim>t.test(parents, control, var.equal = TRUE)
 </code></pre>
 </div>
 
-<pre class="example" id="orgbd621b0">
+<pre class="example" id="org9ab7e3b">
 
 	Two Sample t-test
 
@@ -236,8 +247,8 @@ mean of x mean of y
 </section>
 </section>
 <section>
-<section id="slide-org491deb4">
-<h2 id="org491deb4">ANOVA</h2>
+<section id="slide-org4dd9a8d">
+<h2 id="org4dd9a8d">ANOVA</h2>
 <div class="org-src-container">
 
 <pre  class="src src-R"   ><code trim>summary(aov(rt ~ group, dat))    
@@ -256,8 +267,8 @@ Signif. codes:
 </section>
 </section>
 <section>
-<section id="slide-org991d39f">
-<h2 id="org991d39f">Regression</h2>
+<section id="slide-org4249f6d">
+<h2 id="org4249f6d">Regression</h2>
 <p>
 \(Y_i = \beta_0 + \beta_1 X_i + e_i\)
 </p>
@@ -269,15 +280,15 @@ Signif. codes:
 </section>
 </section>
 <section>
-<section id="slide-org3e85801">
-<h2 id="org3e85801">Regression</h2>
+<section id="slide-org24adc84">
+<h2 id="org24adc84">Regression</h2>
 <div class="org-src-container">
 
 <pre  class="src src-R"   ><code trim>summary(lm(rt ~ group, dat))
 </code></pre>
 </div>
 
-<pre class="example" id="orgc0ab29c">
+<pre class="example" id="org222056a">
 
 Call:
 lm(formula = rt ~ group, data = dat)
@@ -302,15 +313,15 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org48982c6">
-<h2 id="org48982c6"></h2>
+<section id="slide-orgca561a9">
+<h2 id="orgca561a9"></h2>
 <a href="https://shiny.psy.gla.ac.uk/Dale/GLM">GLM shiny app</a>
 
 </section>
 </section>
 <section>
-<section id="slide-orge72c229">
-<h2 id="orge72c229">Single- vs Multi-level</h2>
+<section id="slide-org9cd47e4">
+<h2 id="org9cd47e4">Single- vs Multi-level</h2>
 <div class="column" style="float:left; width: 50%">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -441,8 +452,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org21d4c79">
-<h2 id="org21d4c79">Issues with multi-level data</h2>
+<section id="slide-org4f9cb6e">
+<h2 id="org4f9cb6e">Issues with multi-level data</h2>
 <ul>
 <li>GLMs assume independence of residuals</li>
 <li>Observations within a cluster (unit) are not independent</li>
@@ -454,8 +465,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org1c15bbb">
-<h2 id="org1c15bbb">Regression: Killer App</h2>
+<section id="slide-org3a55296">
+<h2 id="org3a55296">Regression: Killer App</h2>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -531,8 +542,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org3c649de">
-<h2 id="org3c649de">4 functions to rule them all</h2>
+<section id="slide-org0a11191">
+<h2 id="org0a11191">4 functions to rule them all</h2>
 <ol>
 <li>Is the data single- or multi-level?</li>
 <li>Is the response continuous or discrete?</li>
@@ -596,8 +607,8 @@ F-statistic: 15.76 on 1 and 98 DF,  p-value: 0.0001372
 </section>
 </section>
 <section>
-<section id="slide-org523b16e">
-<h2 id="org523b16e">workshop overview</h2>
+<section id="slide-org23b7559">
+<h2 id="org23b7559">workshop overview</h2>
 <p>
 <a href="https://dalejbarr.github.io/reading-lmem">https://dalejbarr.github.io/reading-lmem</a>
 </p>

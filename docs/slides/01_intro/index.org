@@ -16,7 +16,7 @@
 
 * 
 
-*How do I translate a longitudinal study design into a statistical model for analysis?*
+*How do I translate a study design into a statistical model for analysis?*
 
 #+begin_notes
 - many of the problems people have with longitudinal designs reflect a lack of understanding of regression or of mixed-effects modeling
