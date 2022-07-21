@@ -25,7 +25,7 @@ library("tidyverse")
 qdata <- readRDS("quadratic.rds")
 ```
 
-**Your task**: Using a single model, fit quadradic functions for both of the groups, with orthogonal polynomials.
+**Your task**: Using a single model, fit quadratic functions for both of the groups, with orthogonal polynomials.
 
 Tip: Use the following 'hack' to add the polynomial predictors to your tibble. (This is just an example of how to do it on a toy dataset, and so you'll need to adapt the code for your purposes).
 
@@ -102,7 +102,7 @@ summary(mod)
 
 </div>
 
-**Extra: if you wanted to simultaneously test whether the time-varying (linear, quadradic) components differed across the groups (a single p-value), how would you do this?**
+**Extra: if you wanted to simultaneously test whether the time-varying (linear, quadratic) components differed across the groups (a single p-value), how would you do this?**
 
 
 <div class='webex-solution'><button>solution</button>
@@ -132,8 +132,12 @@ anova(mod, mod2)
 
 Hint: `fitted()`
 
+How your plot should look:
 
-<div class='webex-solution'><button>hint: see the code that made the graph above</button>
+<img src="04_modeling-trends_files/figure-html/plot-data-sol-1.png" width="100%" style="display: block; margin: auto;" />
+
+
+<div class='webex-solution'><button>hint: see the code for graph at the beginning of the chapter</button>
 
 ```r
 ggplot(qdata, aes(time, response)) +
@@ -155,7 +159,7 @@ ggplot(qdata, aes(time, response)) +
   geom_line(data = qdata3, aes(y = fitted, color = group))
 ```
 
-<img src="04_modeling-trends_files/figure-html/plot-curves-1.png" width="100%" style="display: block; margin: auto;" />
+
 </div>
 
 :::

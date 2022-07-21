@@ -29,7 +29,7 @@ library("tidyverse")
 qdata <- readRDS("quadratic.rds")
 ```
 
-**Your task**: Using a single model, fit quadradic functions for both of the groups, with orthogonal polynomials.
+**Your task**: Using a single model, fit quadratic functions for both of the groups, with orthogonal polynomials.
 
 Tip: Use the following 'hack' to add the polynomial predictors to your tibble. (This is just an example of how to do it on a toy dataset, and so you'll need to adapt the code for your purposes).
 
@@ -68,7 +68,7 @@ mod <- lm(response ~ (t1 + t2) * grp, data = qdata2)
 summary(mod)
 ```
 
-**Extra: if you wanted to simultaneously test whether the time-varying (linear, quadradic) components differed across the groups (a single p-value), how would you do this?**
+**Extra: if you wanted to simultaneously test whether the time-varying (linear, quadratic) components differed across the groups (a single p-value), how would you do this?**
 
 ```{r mod-compare, webex.hide="solution"}
 mod2 <- update(mod, . ~ . -t1:grp -t2:grp)
@@ -80,16 +80,21 @@ anova(mod, mod2)
 
 Hint: `fitted()`
 
-```{r show-plot-code, webex.hide="hint: see the code that made the graph above", ref.label="plot-data", eval=FALSE}
-```
+How your plot should look:
 
-```{r plot-curves, webex.hide="solution"}
+```{r plot-data-sol, echo=FALSE}
 qdata3 <- qdata2 %>%
   mutate(fitted = fitted(mod))
 
 ggplot(qdata, aes(time, response)) +
   geom_point(aes(color = group, shape=group)) +
   geom_line(data = qdata3, aes(y = fitted, color = group))
+```
+
+```{r show-plot-code, webex.hide="hint: see the code for graph at the beginning of the chapter", ref.label="plot-data", eval=FALSE}
+```
+
+```{r plot-curves, webex.hide="solution", ref.label="plot-data-sol", eval=FALSE}
 ```
 
 :::

@@ -7,7 +7,7 @@
 <title>Chapter 7 Random effects structure | Workshop on linear mixed-effects models</title>
 <meta name="author" content="Dale J. Barr">
 <meta name="description" content="7.1 Resources Slides Crossed web app demonstrating random effects for a simple crossed design  7.2 Maximal random effects  For this first part, you will load in datasets created for you. Your task...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Random effects structure | Workshop on linear mixed-effects models">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://dalejbarr.github.io/reading-lmem/random-effects-structure.html">
@@ -24,7 +24,11 @@
     gtag('js', new Date());
   
     gtag('config', 'G-6NP3MF25W3');
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="include/psyteachr.css">
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="include/psyteachr.css">
 <link rel="stylesheet" href="include/webex.css">
 <link rel="stylesheet" href="include/style.css">
 </head>
@@ -94,12 +98,12 @@
 </ul>
 <p>Then load them in using</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-
-<span class="va">fdata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata1.rds"</span><span class="op">)</span>
-<span class="va">fdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata2.rds"</span><span class="op">)</span>
-<span class="va">fdata3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata3.rds"</span><span class="op">)</span>
-<span class="va">fdata4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata4.rds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fdata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata1.rds"</span><span class="op">)</span></span>
+<span><span class="va">fdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata2.rds"</span><span class="op">)</span></span>
+<span><span class="va">fdata3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata3.rds"</span><span class="op">)</span></span>
+<span><span class="va">fdata4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fdata4.rds"</span><span class="op">)</span></span></code></pre></div>
 <p>The dataset <code>fdata1</code> is from a factorial experiment with design factors <code>C</code>, <code>E</code>, and <code>W</code> and dependent variable <code>rtime</code>. Individual subjects are identified by the variable <code>subject_id</code>.</p>
 <p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects (just the formula, e.g., <code>Y ~ Z + (Z | id)</code>, not the full <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> call).</p>
 <p><strong>You do not need to create numeric predictors to use in the formula. Just use <code>C</code>, <code>E</code>, and <code>W</code> as they are.</strong></p>
@@ -108,7 +112,7 @@
 solution
 </button>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rtime</span> <span class="op">~</span> <span class="va">C</span> <span class="op">*</span> <span class="va">E</span> <span class="op">*</span> <span class="va">W</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">*</span> <span class="va">E</span> <span class="op">*</span> <span class="va">W</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rtime</span> <span class="op">~</span> <span class="va">C</span> <span class="op">*</span> <span class="va">E</span> <span class="op">*</span> <span class="va">W</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">*</span> <span class="va">E</span> <span class="op">*</span> <span class="va">W</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>The dataset <code>fdata2</code> is from a factorial experiment with design factors <code>J</code>, <code>T</code>, and <code>W</code> and dependent variable <code>depvar</code>. Individual subjects are identified by the variable <code>subject_id</code>.</p>
 <p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects.</p>
@@ -117,7 +121,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">depvar</span> <span class="op">~</span> <span class="va">J</span> <span class="op">*</span> <span class="cn">T</span> <span class="op">*</span> <span class="va">W</span> <span class="op">+</span> <span class="op">(</span><span class="va">W</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">depvar</span> <span class="op">~</span> <span class="va">J</span> <span class="op">*</span> <span class="cn">T</span> <span class="op">*</span> <span class="va">W</span> <span class="op">+</span> <span class="op">(</span><span class="va">W</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>The dataset <code>fdata3</code> is from a factorial experiment with independent variables <code>B</code>, <code>P</code>, and <code>U</code> and dependent variable <code>rtime</code>. The design includes crossed random factors of subjects and stimuli, with subjects identified by variable <code>subject_id</code>, and stimuli by variable <code>stim_id</code>.</p>
 <p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects.</p>
@@ -126,7 +130,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rtime</span> <span class="op">~</span> <span class="va">B</span> <span class="op">*</span> <span class="va">P</span> <span class="op">*</span> <span class="va">U</span> <span class="op">+</span> <span class="op">(</span><span class="va">B</span> <span class="op">*</span> <span class="va">U</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">P</span> <span class="op">|</span> <span class="va">stim_id</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rtime</span> <span class="op">~</span> <span class="va">B</span> <span class="op">*</span> <span class="va">P</span> <span class="op">*</span> <span class="va">U</span> <span class="op">+</span> <span class="op">(</span><span class="va">B</span> <span class="op">*</span> <span class="va">U</span> <span class="op">|</span> <span class="va">subject_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">P</span> <span class="op">|</span> <span class="va">stim_id</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>The dataset <code>fdata4</code> is from a factorial experiment with independent variables <code>G</code>, <code>L</code>, and <code>T</code> and dependent variable <code>rtime</code>. The design includes crossed random factors of subjects and stimuli, with subjects identified by variable <code>sub_id</code>, and stimuli by variable <code>stm_id</code>.</p>
 <p>Type the <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> model formula you would use to analyze these data with maximal random effects.</p>
@@ -135,7 +139,7 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rtime</span> <span class="op">~</span> <span class="va">G</span> <span class="op">*</span> <span class="va">L</span> <span class="op">*</span> <span class="cn">T</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">sub_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">L</span> <span class="op">|</span> <span class="va">stm_id</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rtime</span> <span class="op">~</span> <span class="va">G</span> <span class="op">*</span> <span class="va">L</span> <span class="op">*</span> <span class="cn">T</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">sub_id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">L</span> <span class="op">|</span> <span class="va">stm_id</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -157,10 +161,10 @@ solution
 <p>Make a new working directory, download the R binary (<code>.rds</code>) file <a href="data/kbbb_2000.rds">kbbb_2000.rds</a>, and place it in the directory. Start and new R script (or RMarkdown script) and save it in the working directory along with the data.</p>
 <p>At the top of your script, type the following lines to set up your session (you might want to restart R before doing this):</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span>
-
-<span class="va">kbbb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"kbbb_2000.rds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kbbb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"kbbb_2000.rds"</span><span class="op">)</span></span></code></pre></div>
 <p>Have a look at the tibble <code>kbbb</code>. A description of the fields is below.</p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
@@ -198,7 +202,7 @@ solution
 </tr>
 <tr class="odd">
 <td align="left"><code>regrab</code></td>
-<td align="left">reaches/grabs of critical hidden object (<code>R</code> = reach, <code>G</code> = grab, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> = none)</td>
+<td align="left">reaches/grabs of critical hidden object (<code>R</code> = reach, <code>G</code> = grab, <code>-</code> = none)</td>
 </tr>
 <tr class="even">
 <td align="left"><code>nfix</code></td>
@@ -217,15 +221,15 @@ solution
 solution
 </button>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## make deviation-coded predictors</span>
-<span class="va">kbbb2</span> <span class="op">&lt;-</span> <span class="va">kbbb</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>C <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"E"</span>, <span class="fl">.5</span>, <span class="op">-</span><span class="fl">.5</span><span class="op">)</span>,
-         PS <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">psource</span> <span class="op">==</span> <span class="st">"EX"</span>, <span class="fl">.5</span>, <span class="op">-</span><span class="fl">.5</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">## double check</span>
-<span class="va">kbbb2</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">cond</span>, <span class="va">psource</span>, <span class="va">C</span>, <span class="va">PS</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 5
+<code class="sourceCode R"><span><span class="co">## make deviation-coded predictors</span></span>
+<span><span class="va">kbbb2</span> <span class="op">&lt;-</span> <span class="va">kbbb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">cond</span> <span class="op">==</span> <span class="st">"E"</span>, <span class="fl">.5</span>, <span class="op">-</span><span class="fl">.5</span><span class="op">)</span>,</span>
+<span>         PS <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">psource</span> <span class="op">==</span> <span class="st">"EX"</span>, <span class="fl">.5</span>, <span class="op">-</span><span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## double check</span></span>
+<span><span class="va">kbbb2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cond</span>, <span class="va">psource</span>, <span class="va">C</span>, <span class="va">PS</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
 ##   cond  psource     C    PS     n
 ##   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
 ## 1 C     EX       -0.5   0.5   100
@@ -234,15 +238,15 @@ solution
 ## 4 E     RN        0.5  -0.5   100</code></pre>
 <p><strong>First fixation analysis</strong></p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## just get some descriptive stats</span>
-<span class="va">ff_means</span> <span class="op">&lt;-</span> <span class="va">kbbb2</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">summarise</span><span class="op">(</span>m <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">firstfix</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, 
-            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">firstfix</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-            .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span>
-
-<span class="va">ff_means</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 4
+<code class="sourceCode R"><span><span class="co">## just get some descriptive stats</span></span>
+<span><span class="va">ff_means</span> <span class="op">&lt;-</span> <span class="va">kbbb2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>m <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">firstfix</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">firstfix</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>            .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ff_means</span></span></code></pre></div>
+<pre><code>## # A tibble: 4 × 4
 ##   psource cond      m    sd
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 EX      C     1764. 1386.
@@ -251,15 +255,15 @@ solution
 ## 4 RN      E     2743. 3513.</code></pre>
 <p>(<em>Note</em>: it's a good idea to plot the data before analysis as well, so we'll make a factorial plot)</p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">ff_means</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">cond</span>, <span class="va">m</span>, colour <span class="op">=</span> <span class="va">psource</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">psource</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">psource</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ff_means</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cond</span>, <span class="va">m</span>, colour <span class="op">=</span> <span class="va">psource</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="va">psource</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">psource</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="07_random-effects-structure_files/figure-html/solution2-1.png" width="100%" style="display: block; margin: auto;"></div>
 <p>Check out the random effects structure, by subject.</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">kbbb2</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">subj</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 80 x 4
+<code class="sourceCode R"><span><span class="va">kbbb2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">subj</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 80 × 4
 ##    subj  psource cond      n
 ##    &lt;fct&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
 ##  1 S01   EX      C         5
@@ -276,9 +280,9 @@ solution
 <p>Need a by-subject random slope for <code>cond</code>.</p>
 <p>Check out the random effects structure, by stimulus.</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">kbbb2</span> <span class="op">%&gt;%</span>
-  <span class="fu">count</span><span class="op">(</span><span class="va">object</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 40 x 4
+<code class="sourceCode R"><span><span class="va">kbbb2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">psource</span>, <span class="va">cond</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 40 × 4
 ##    object psource cond      n
 ##    &lt;fct&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
 ##  1 blkpen EX      C        10
@@ -295,13 +299,13 @@ solution
 <p>Need by-stimulus random slopes for <code>psource</code>, <code>cond</code>, and their interaction.</p>
 <p>Now we're ready to fit the model</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ff_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">|</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">|</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,
-               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></code></pre></div>
-<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<code class="sourceCode R"><span><span class="va">ff_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">|</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">|</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,</span>
+<span>               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></span></code></pre></div>
+<pre><code>## boundary (singular) fit: see help('isSingular')</code></pre>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## we get boundary (singular) fit: see ?isSingular</span>
-<span class="co">## look at the results and see if we should simplify</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## we get boundary (singular) fit: see ?isSingular</span></span>
+<span><span class="co">## look at the results and see if we should simplify</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
 ## Formula: firstfix ~ PS * C + (C | subj) + (PS * C | object)
 ##    Data: kbbb2
@@ -311,35 +315,35 @@ solution
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -2.7731 -0.4516 -0.1774  0.3196  7.3644 
+## -2.7730 -0.4516 -0.1774  0.3196  7.3645 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev. Corr          
-##  subj     (Intercept)  530748   728.5                 
-##           C           1240744  1113.9   1.00          
-##  object   (Intercept) 1155349  1074.9                 
-##           PS           241804   491.7   1.00          
-##           C           1509480  1228.6   1.00 1.00     
-##           PS:C         135969   368.7   1.00 1.00 1.00
-##  Residual             4408340  2099.6                 
+##  subj     (Intercept)  530742   728.5                 
+##           C           1240695  1113.9   1.00          
+##  object   (Intercept) 1155440  1074.9                 
+##           PS           241786   491.7   1.00          
+##           C           1509593  1228.7   1.00 1.00     
+##           PS:C         135976   368.7   1.00 1.00 1.00
+##  Residual             4408338  2099.6                 
 ## Number of obs: 397, groups:  subj, 40; object, 10
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error t value
-## (Intercept)  2300.91     374.04   6.151
-## PS             65.19     348.82   0.187
-## C            1049.01     475.80   2.205
-## PS:C          197.28     561.57   0.351
+## (Intercept)   2300.9      374.1   6.151
+## PS              65.2      348.8   0.187
+## C             1049.0      475.8   2.205
+## PS:C           197.3      561.6   0.351
 ## optimizer (nloptwrap) convergence code: 0 (OK)
-## boundary (singular) fit: see ?isSingular</code></pre>
+## boundary (singular) fit: see help('isSingular')</code></pre>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ff_mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">||</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">||</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,
-               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></code></pre></div>
-<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<code class="sourceCode R"><span><span class="va">ff_mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">||</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">||</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,</span>
+<span>               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></span></code></pre></div>
+<pre><code>## boundary (singular) fit: see help('isSingular')</code></pre>
 <div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## still, boundary (singular) fit: see ?isSingular</span>
-<span class="co">## look at the results and see if we should simplify</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## still, boundary (singular) fit: see ?isSingular</span></span>
+<span><span class="co">## look at the results and see if we should simplify</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
 ## Formula: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) +  
 ##     (0 + PS | object) + (0 + C | object) + (0 + PS:C | object))
@@ -370,12 +374,12 @@ solution
 ## C            1047.79     415.68   2.521
 ## PS:C          195.19     495.80   0.394
 ## optimizer (nloptwrap) convergence code: 0 (OK)
-## boundary (singular) fit: see ?isSingular</code></pre>
+## boundary (singular) fit: see help('isSingular')</code></pre>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ff_mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">||</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">+</span> <span class="va">C</span> <span class="op">||</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,
-               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ff_mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">firstfix</span> <span class="op">~</span> <span class="va">PS</span> <span class="op">*</span> <span class="va">C</span> <span class="op">+</span> <span class="op">(</span><span class="va">C</span> <span class="op">||</span> <span class="va">subj</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">PS</span> <span class="op">+</span> <span class="va">C</span> <span class="op">||</span> <span class="va">object</span><span class="op">)</span>, <span class="va">kbbb2</span>,</span>
+<span>               REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># for model comparison</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ff_mod3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>corr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Linear mixed model fit by maximum likelihood  ['lmerMod']
 ## Formula: firstfix ~ PS * C + ((1 | subj) + (0 + C | subj)) + ((1 | object) +  
 ##     (0 + PS | object) + (0 + C | object))
@@ -405,18 +409,18 @@ solution
 ## C            1047.79     415.72   2.520
 ## PS:C          195.19     495.78   0.394</code></pre>
 <div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ff_mod_PS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">PS</span><span class="op">)</span>
-<span class="va">ff_mod_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">C</span><span class="op">)</span>
-<span class="va">ff_mod_PSC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">PS</span><span class="op">:</span><span class="va">C</span><span class="op">)</span>
-
-<span class="co">## test of main effect of PS</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_PS</span>, <span class="va">ff_mod3</span><span class="op">)</span>
-
-<span class="co">## test of main effect of C</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_C</span>, <span class="va">ff_mod3</span><span class="op">)</span>
-
-<span class="co">## test of PS:C interaction</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_PSC</span>, <span class="va">ff_mod3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ff_mod_PS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">PS</span><span class="op">)</span></span>
+<span><span class="va">ff_mod_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">C</span><span class="op">)</span></span>
+<span><span class="va">ff_mod_PSC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">ff_mod3</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">PS</span><span class="op">:</span><span class="va">C</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## test of main effect of PS</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_PS</span>, <span class="va">ff_mod3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## test of main effect of C</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_C</span>, <span class="va">ff_mod3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## test of PS:C interaction</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">ff_mod_PSC</span>, <span class="va">ff_mod3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Data: kbbb2
 ## Models:
 ## ff_mod_PS: firstfix ~ C + (1 | subj) + (0 + C | subj) + (1 | object) + (0 + PS | object) + (0 + C | object) + PS:C
@@ -587,7 +591,7 @@ $( document ).ready(function() {
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Workshop on linear mixed-effects models</strong>" was written by Dale J. Barr. It was last built on 2022-07-20.</p>
+    <p>"<strong>Workshop on linear mixed-effects models</strong>" was written by Dale J. Barr. It was last built on 2022-07-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -14,7 +14,7 @@ Note that the "code" pane of the app shows the code you would need to simulate d
 
 Play around with the app below until you are confident in interpreting variance-covariance matrices.
 
-<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px"></iframe>
+<iframe src="https://shiny.psy.gla.ac.uk/Dale/cvmx/?showcase=0" width="530px" height="480px" data-external="1"></iframe>
 
 ### Simulating data from covariance matrices
 
@@ -173,7 +173,7 @@ combined
 ```
 
 ```
-## # A tibble: 100 x 6
+## # A tibble: 100 × 6
 ##       id condition     W     X     Y     Z
 ##    <int> <chr>     <dbl> <dbl> <dbl> <dbl>
 ##  1     1 test       6.24 -3.06  39.6 -101.
