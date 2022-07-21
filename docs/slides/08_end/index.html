@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Going further: GLMMs and GAMMs</title>
+<meta name="author" content="Dale Barr (University of Glasgow)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme"/>
+
+<link rel="stylesheet" href="../css/mods.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '../reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="../img/titlescreen.png"><font color="yellow"><b>Going further: GLMMs and GAMMs</b></font><p><i>Dale Barr (University of Glasgow)</i></p><p>Mixed-effects workshop, July 20-21, 2022 (Reading)</p>
+</section>
+
+<section>
+<section id="slide-orgcc23fc8">
+<h2 id="orgcc23fc8">Generalized Linear (Mixed) Models</h2>
+<div class="outline-text-2" id="text-orgcc23fc8">
+</div>
+</section>
+<section id="slide-orge1387a7">
+<h4 id="orge1387a7">Discrete data</h4>
+<ul>
+<li>categorical (dichotomous/polychotomous)
+<ul>
+<li>type of linguistic structure produced (X, Y, Z)</li>
+<li>region viewed in a visual world study</li>
+<li>number of items recalled out of N</li>
+<li>accurate or inaccurate selection</li>
+<li>hired or not hired</li>
+<li>Likert scales</li>
+
+</ul></li>
+
+<li>counts (no. opportunities ill-defined)
+<ul>
+<li>no. of speech errors in a corpus</li>
+<li>no. of turn shifts in a conversation</li>
+<li>no. words in a utterance</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orge30a731">
+<h4 id="orge30a731">Why not treat discrete data as continuous?</h4>
+<ul>
+<li>Proportions range between 0 and 1</li>
+<li>Variance proportional to the mean (expected probability or rate)</li>
+<li>Spurious interactions due to scaling effects</li>
+
+</ul>
+
+</section>
+<section id="slide-org52be74c">
+<h4 id="org52be74c">Generalized linear models</h4>
+<ul>
+<li>Allows use of regular linear regression by projecting the DV onto an
+appropriate scale</li>
+
+<li>Key elements of GLMs: 
+<ul>
+<li>link function</li>
+<li>variance function</li>
+
+</ul></li>
+
+</ul>
+
+<div class="smalltbl" id="org3db3f20">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">data</th>
+<th scope="col" class="org-left">approach</th>
+<th scope="col" class="org-left">link</th>
+<th scope="col" class="org-left">variance</th>
+<th scope="col" class="org-left">function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">binary</td>
+<td class="org-left">logistic regression</td>
+<td class="org-left">logit</td>
+<td class="org-left">binomial</td>
+<td class="org-left"><code>glm()</code>, <code>lme4::glmer()</code></td>
+</tr>
+
+<tr>
+<td class="org-left">count</td>
+<td class="org-left">Poisson regression</td>
+<td class="org-left">log</td>
+<td class="org-left">Poisson</td>
+<td class="org-left"><code>glm()</code>, <code>lme4::glmer()</code></td>
+</tr>
+
+<tr>
+<td class="org-left">ordinal</td>
+<td class="org-left">ordinal regression</td>
+<td class="org-left">logit</td>
+<td class="org-left">binomial</td>
+<td class="org-left"><code>ordinal::clm()</code>, <code>ordinal::clmm()</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</section>
+<section id="slide-orga2790ca">
+<h3 id="orga2790ca">Logistic regression</h3>
+<div class="outline-text-3" id="text-orga2790ca">
+</div>
+</section>
+<section id="slide-org97c015f">
+<h4 id="org97c015f">Odds and log odds</h4>
+<div class="smalltbl" id="orgd78a346">
+<p>
+
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Bernoulli trial</b></td>
+<td class="org-left">An event that has a binary outcome, with one outcome typically referred to as 'success'</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>proportion</b></td>
+<td class="org-left">A ratio of successes to the total number of Bernoulli trials, proportion of days of the week that are Wednesday is 1/7 or about .14</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>odds</b></td>
+<td class="org-left">A ratio of successes to non-successes, i.e., odds of a day being Wednesday are 1 to 6, natural odds= 1/6 = .17</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>log odds</b></td>
+<td class="org-left">The (natural) log of the odds (turns multiplicative effects into additive effects)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</section>
+<section id="slide-orgd7f2609">
+<h4 id="orgd7f2609">Logit app</h4>
+<p>
+<a href="https://shiny.psy.gla.ac.uk/Dale/logit">https://shiny.psy.gla.ac.uk/Dale/logit</a>
+</p>
+
+</section>
+<section id="slide-orgc05796d">
+<h4 id="orgc05796d">Estimating logit models</h4>
+<ul>
+<li><p>
+single-level data, bernoulli trials
+</p>
+<pre class="example">
+mod &lt;- glm(DV ~ IV, family = binomial(link = "logit"), ...)
+</pre></li>
+
+<li><p>
+single-level data, binomial counts
+</p>
+<pre class="example">
+mod &lt;- glm(cbind(Y, K) ~ IV, family = binomial(link = "logit"), ...)
+</pre>
+
+<p>
+where K = N - Y
+</p></li>
+
+<li>multi-level data: same, but use <code>lme4::glmer()</code></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orga462664">
+<h2 id="orga462664">Generalized Additive Mixed Models (GAMMs)</h2>
+<div class="outline-text-2" id="text-orga462664">
+</div>
+</section>
+<section id="slide-org2deb315">
+<h3 id="org2deb315">What are GAMMs?</h3>
+
+<div id="org4ef6c78" class="figure">
+<p><img src="GAMMs.png" alt="GAMMs.png" />
+</p>
+</div>
+
+<p>
+(courtesy Márton Sóskuthy)
+</p>
+<ul>
+<li>for SL data, fit using <code>mgcv::gam()</code></li>
+<li>for ML data, fit using <code>mgcv::bam()</code></li>
+
+</ul>
+
+</section>
+<section id="slide-org04b117f">
+<h3 id="org04b117f">How to fit GAMMs?</h3>
+<p>
+You can fit LMMs with GAMM functions.
+</p>
+
+<p>
+ML data with within-factor A (A1, A2) and between-factor B (B1, B2)
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-R"   ><code trim>mgcv::bam(Y ~ A * B +
+	    s(subj_id, bs = "re") +
+	    s(subj_id, A, bs = "re"),
+	  data = dat)
+
+lme4::lmer(Y ~ A * B +
+	     (1 | subj_id) +
+	     (0 + A | subj_id),
+	   data = dat)
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org1e2194e">
+<h3 id="org1e2194e">Fitting wiggly patterns</h3>
+<div class="org-src-container">
+
+<pre  class="src src-R"   ><code trim>mgcv::bam(Y ~ A * B +
+	    ## wiggly main effect of tnum
+	    s(tnum, bs = "tp") +
+	    ## "factor smooth"
+	    s(subj_id, tnum, bs = "fs") + 
+	    s(subj_id, A, bs = "re"),
+	  data = dat)
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org7ab6c9d">
+<h3 id="org7ab6c9d">A word about temporal autocorrelation</h3>
+<p>
+If you randomized, you are probably OK; the worst you can expect is a mild hit to power.
+</p>
+
+<div class="citation" id="orgcc7e529">
+<p>
+Thül, Conklin, Barr (2021). <a href="https://www.sciencedirect.com/science/article/pii/S0749596X21000309">Using GAMMs to model trial-by-trial fluctuations in experimental data: More risks but hardly any benefit.</a> <i>Journal of Memory and Language</i>, <i>120</i>, 104207.
+</p>
+
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orge323f6c">
+<h2 id="orge323f6c">Generalized life advice</h2>
+<ul>
+<li>Learn how to wrangle data in R</li>
+<li>Learn how to make beautiful plots with ggplot2</li>
+<li>Learn how to simulate data</li>
+<li>Keep it simple, but also keep it maximal!</li>
+
+</ul>
+
+</section>
+<section id="slide-orgc5e1720">
+<h3 id="orgc5e1720"></h3>
+<div class="org-center">
+
+<div id="orgf998975" class="figure">
+<p><img src="adventure_time.jpg" alt="adventure_time.jpg" />
+</p>
+</div>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition:"fade"
+});
+
+</script>
+</body>
+</html>

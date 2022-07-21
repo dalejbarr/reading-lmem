@@ -287,25 +287,25 @@ summary(ff_mod) %>% print(corr = FALSE)
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -2.7730 -0.4516 -0.1774  0.3196  7.3645 
+## -2.7731 -0.4516 -0.1774  0.3196  7.3644 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev. Corr          
-##  subj     (Intercept)  530742   728.5                 
-##           C           1240695  1113.9   1.00          
-##  object   (Intercept) 1155440  1074.9                 
-##           PS           241786   491.7   1.00          
-##           C           1509593  1228.7   1.00 1.00     
-##           PS:C         135976   368.7   1.00 1.00 1.00
-##  Residual             4408338  2099.6                 
+##  subj     (Intercept)  530748   728.5                 
+##           C           1240744  1113.9   1.00          
+##  object   (Intercept) 1155349  1074.9                 
+##           PS           241804   491.7   1.00          
+##           C           1509480  1228.6   1.00 1.00     
+##           PS:C         135969   368.7   1.00 1.00 1.00
+##  Residual             4408340  2099.6                 
 ## Number of obs: 397, groups:  subj, 40; object, 10
 ## 
 ## Fixed effects:
 ##             Estimate Std. Error t value
-## (Intercept)   2300.9      374.1   6.151
-## PS              65.2      348.8   0.187
-## C             1049.0      475.8   2.205
-## PS:C           197.3      561.6   0.351
+## (Intercept)  2300.91     374.04   6.151
+## PS             65.19     348.82   0.187
+## C            1049.01     475.80   2.205
+## PS:C          197.28     561.57   0.351
 ## optimizer (nloptwrap) convergence code: 0 (OK)
 ## boundary (singular) fit: see help('isSingular')
 ```
